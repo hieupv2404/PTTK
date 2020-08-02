@@ -73,6 +73,25 @@
 					   value="/WEB-INF/views/product-done-detail/productDoneDetail-action.jsp"></put-attribute>
 	</definition>
 
+	<definition name="product-back-list-action" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/product-back-list/product-back-list-action.jsp"></put-attribute>
+	</definition>
+
+	<definition name="product-back-list-list" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/product-back-list/product-back-list-list.jsp"></put-attribute>
+	</definition>
+
+	<definition name="productBackDetail-list" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/product-back-detail/productBackDetail-list.jsp"></put-attribute>
+	</definition>
+	<definition name="productBackDetail-action" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/product-back-detail/productBackDetail-action.jsp"></put-attribute>
+	</definition>
+
 
 	<definition name="product-in-stock" extends="master">
 		<put-attribute name="body"

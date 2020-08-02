@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class ProductDoneListController {
+public class ProductBackListController {
     @Autowired
     private ProductStatusListService productStatusListService;
 
@@ -37,7 +37,7 @@ public class ProductDoneListController {
     @Autowired
     private VatService vatService;
 
-    static final Logger log = Logger.getLogger(ProductDoneListController.class);
+    static final Logger log = Logger.getLogger(ProductBackListController.class);
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -51,17 +51,17 @@ public class ProductDoneListController {
 //        }
     }
 
-    @RequestMapping(value= {"/product-done-list/list","/product-done-list/list/"})
+    @RequestMapping(value= {"/product-back-list/list","/product-back-list/list/"})
 
     public String redirect() {
-        return "redirect:/product-done-list/list/1";
+        return "redirect:/product-back-list/list/1";
     }
 
-    @RequestMapping(value= "/product-done-list/list/{page}")
+    @RequestMapping(value= "/product-back-list/list/{page}")
     public String showProductDone(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusList productStatusList, @PathVariable("page") int page) {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
-        productStatusList.setType(Constant.PRODUCT_DONE);
+        productStatusList.setType(Constant.PRODUCT_BACK);
         List<ProductStatusList> productStatusLists = productStatusListService.getAllProductStatusList(productStatusList,paging);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
@@ -73,10 +73,10 @@ public class ProductDoneListController {
         }
         model.addAttribute("pageInfo", paging);
         model.addAttribute("products", productStatusLists);
-        return "product-done-list-list";
+        return "product-back-list-list";
 
     }
-    @GetMapping("/product-done-list/add")
+    @GetMapping("/product-back-list/add")
     public String add(Model model) {
         model.addAttribute("titlePage", "Add Product Status");
         model.addAttribute("modelForm", new ProductStatusList());
@@ -91,9 +91,9 @@ public class ProductDoneListController {
 
         model.addAttribute("mapSupplier",mapSupplier);
         model.addAttribute("viewOnly", false);
-        return "product-done-list-action";
+        return "product-back-list-action";
     }
-    @GetMapping("/product-done-list/edit/{id}")
+    @GetMapping("/product-back-list/edit/{id}")
     public String edit(Model model , @PathVariable("id") int id) {
         log.info("Edit ProductStatusList with id="+id);
         ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(id);
@@ -106,34 +106,34 @@ public class ProductDoneListController {
             }
             productStatusList.setVatId(productStatusList.getVat().getId());
 
-            model.addAttribute("titlePage", "Edit Product Done List");
+            model.addAttribute("titlePage", "Edit Product Back List");
             model.addAttribute("mapSupplier", mapSupplier);
             model.addAttribute("modelForm", productStatusList);
             model.addAttribute("viewOnly", false);
-            return "product-done-list-action";
+            return "product-back-list-action";
         }
-        return "redirect:/product-done-list/list";
+        return "redirect:/product-back-list/list";
     }
-    @GetMapping("/product-done-list/view/{id}")
+    @GetMapping("/product-back-list/view/{id}")
     public String view(Model model , @PathVariable("id") int id) {
         log.info("View ProductStatusList with id="+id);
         ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(id);
         if(productStatusList!=null) {
-            model.addAttribute("titlePage", "View Product Done List");
+            model.addAttribute("titlePage", "View Product Back List");
             model.addAttribute("modelForm", productStatusList);
             model.addAttribute("viewOnly", true);
-            return "product-done-list-action";
+            return "product-back-list-action";
         }
-        return "redirect:/product-done-list/list";
+        return "redirect:/product-back-list/list";
     }
-    @PostMapping("/product-done-list/save")
+    @PostMapping("/product-back-list/save")
     public String save(Model model, @ModelAttribute("modelForm")  @Validated ProductStatusList productStatusList, BindingResult result, HttpSession session) {
         if(result.hasErrors())
         {
             if(productStatusList.getId()!=null) {
-                model.addAttribute("titlePage", "Edit Product Done List");
+                model.addAttribute("titlePage", "Edit Product Back List");
             }else {
-                model.addAttribute("titlePage", "Add Product Done List");
+                model.addAttribute("titlePage", "Add Product Back List");
             }
 
             List<Vat> suppliers = vatService.getAllVat(null, null);
@@ -157,7 +157,7 @@ public class ProductDoneListController {
         productStatusList.setUser(user);
         productStatusList.setUserId(user.getId());
 
-        productStatusList.setType(Constant.PRODUCT_DONE);
+        productStatusList.setType(Constant.PRODUCT_BACK);
 
         if(productStatusList.getId()!=null && productStatusList.getId()!=0 ) {
             try {
@@ -180,10 +180,10 @@ public class ProductDoneListController {
                 session.setAttribute(Constant.MSG_ERROR, "Insert has error!!!");
             }
         }
-        return "redirect:/product-done-list/list";
+        return "redirect:/product-back-list/list";
 
     }
-    @GetMapping("/product-done-list/delete/{id}")
+    @GetMapping("/product-back-list/delete/{id}")
     public String delete(Model model , @PathVariable("id") int id,HttpSession session) {
         log.info("Delete ProductStatusList with id="+id);
         ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(id);
@@ -197,6 +197,6 @@ public class ProductDoneListController {
                 session.setAttribute(Constant.MSG_ERROR, "Delete has error!!!");
             }
         }
-        return "redirect:/product-done-list/list";
+        return "redirect:/product-back-list/list";
     }
 }
