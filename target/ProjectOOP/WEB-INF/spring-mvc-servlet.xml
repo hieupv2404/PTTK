@@ -73,6 +73,7 @@
 <!--                <value>inventory/model/mapping/Users.hbm.xml</value>-->
 <!--                <value>Customer.hbm.xml</value>-->
                 <value>ProductDetail.hbm.xml</value>
+                <value>ProductDetailPt.hbm.xml</value>
                 <value>Supplier.hbm.xml</value>
                 <value>Vat.hbm.xml</value>
                 <value>VatDetail.hbm.xml</value>

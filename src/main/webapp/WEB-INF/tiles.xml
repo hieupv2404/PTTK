@@ -52,6 +52,15 @@
 					   value="/WEB-INF/views/product-detail/productDetail-list.jsp"></put-attribute>
 	</definition>
 
+	<definition name="productDetailPt-action" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/product-detail-pt/productDetailPt-action.jsp"></put-attribute>
+	</definition>
+	<definition name="productDetailPt-list" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/product-detail-pt/productDetailPt-list.jsp"></put-attribute>
+	</definition>
+
 	<definition name="vatDetail-list" extends="master">
 		<put-attribute name="body"
 					   value="/WEB-INF/views/vat-detail/vatDetail-list.jsp"></put-attribute>
