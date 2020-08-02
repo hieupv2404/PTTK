@@ -82,7 +82,7 @@ public class ProductBackDetailController {
     }
 
     @RequestMapping(value="/product-back-detail/code/{code}")
-    public String showProductInfoList(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("code") String code) {
+    public String showProductInfoListFilter(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("code") String code) {
         Paging paging = new Paging(5);
 
 //        Vat vat = vatService.findByIdVat(vatId);

@@ -61,6 +61,14 @@ public class ProductDoneListController {
     public String showProductDone(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusList productStatusList, @PathVariable("page") int page) {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
+        if (productStatusList.getVat() == null)
+        {
+            productStatusList.setVat(new Vat());
+        }
+        if (productStatusList.getUser() == null)
+        {
+            productStatusList.setUser(new Users());
+        }
         productStatusList.setType(Constant.PRODUCT_DONE);
         List<ProductStatusList> productStatusLists = productStatusListService.getAllProductStatusList(productStatusList,paging);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {

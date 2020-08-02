@@ -62,6 +62,14 @@ public class ProductBackListController {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
         productStatusList.setType(Constant.PRODUCT_BACK);
+        if (productStatusList.getVat() == null)
+        {
+            productStatusList.setVat(new Vat());
+        }
+        if (productStatusList.getUser() == null)
+        {
+            productStatusList.setUser(new Users());
+        }
         List<ProductStatusList> productStatusLists = productStatusListService.getAllProductStatusList(productStatusList,paging);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
