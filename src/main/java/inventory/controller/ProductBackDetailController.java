@@ -38,6 +38,9 @@ public class ProductBackDetailController {
     @Autowired
     private VatDetailService vatDetailService;
 
+    @Autowired
+    private ShelfService shelfService;
+
     static final Logger log = Logger.getLogger(ProductBackDetailController.class);
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -66,6 +69,10 @@ public class ProductBackDetailController {
         }
 
         productStatusDetail.getProductStatusList().setType(Constant.PRODUCT_BACK);
+        if (productStatusDetail.getProductInfo() == null)
+        {
+            productStatusDetail.setProductInfo(new ProductInfo());
+        }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
@@ -227,6 +234,10 @@ public class ProductBackDetailController {
         VatDetail vatDetail = new VatDetail();
 
         vatDetail.setVatId(vat.getId());
+
+        Shelf shelf = shelfService.findShelf("name","Z").get(0);
+        productStatusDetail.setShelfId(shelf.getId());
+        productStatusDetail.setShelf(shelf);
 
         if(productStatusDetail.getId()!=null && productStatusDetail.getId()!=0) {
             try {

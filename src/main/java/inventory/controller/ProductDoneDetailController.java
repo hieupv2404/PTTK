@@ -35,6 +35,9 @@ public class ProductDoneDetailController {
     @Autowired
     private VatDetailService vatDetailService;
 
+    @Autowired
+    private ShelfService shelfService;
+
     static final Logger log = Logger.getLogger(ProductDoneDetailController.class);
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -63,6 +66,10 @@ public class ProductDoneDetailController {
         }
 
         productStatusDetail.getProductStatusList().setType(Constant.PRODUCT_DONE);
+        if (productStatusDetail.getProductInfo() == null)
+        {
+            productStatusDetail.setProductInfo(new ProductInfo());
+        }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
@@ -130,10 +137,18 @@ public class ProductDoneDetailController {
             mapProductStatusList.put(String.valueOf(productStatusList.getId()), productStatusList.getCode());
         }
 
+        List<Shelf> shelves = shelfService.getAllShelf(null, null);
+        Map<String, String> mapShelf = new HashMap<>();
+        for(Shelf shelf : shelves) {
+            mapShelf.put(String.valueOf(shelf.getId()), shelf.getName());
+        }
+
         model.addAttribute("mapProductStatusList",mapProductStatusList);
         model.addAttribute("mapProductStatusList",mapProductStatusList);
         model.addAttribute("mapProductInfo", mapProductInfo);
         model.addAttribute("mapProductInfo", mapProductInfo);
+        model.addAttribute("mapShelf", mapShelf);
+        model.addAttribute("mapShelf", mapShelf);
 
         model.addAttribute("viewOnly", false);
         return "productDoneDetail-action";
@@ -152,9 +167,25 @@ public class ProductDoneDetailController {
             }
             productStatusDetail.setProductInfoId(productStatusDetail.getProductInfo().getId());
 
+            List<ProductStatusList> productStatusLists = productStatusListService.getAllProductStatusList(null, null);
+            Map<String, String> mapProductStatusList = new HashMap<>();
+            for(ProductStatusList productStatusList : productStatusLists) {
+                mapProductStatusList.put(String.valueOf(productStatusList.getId()), productStatusList.getCode());
+            }
+            productStatusDetail.setProductStatusListId(productStatusDetail.getProductStatusList().getId());
+
+            List<Shelf> shelves = shelfService.getAllShelf(null, null);
+            Map<String, String> mapShelf = new HashMap<>();
+            for(Shelf shelf : shelves) {
+                mapShelf.put(String.valueOf(shelf.getId()), shelf.getName());
+            }
+            productStatusDetail.setShelfId(productStatusDetail.getShelf().getId());
+
 
 
             model.addAttribute("mapProductInfo", mapProductInfo);
+            model.addAttribute("mapShelf", mapShelf);
+            model.addAttribute("mapProductStatusList", mapProductStatusList);
             model.addAttribute("titlePage", "Edit Product Done Detail");
             model.addAttribute("modelForm", productStatusDetail);
             model.addAttribute("viewOnly", false);
@@ -204,8 +235,16 @@ public class ProductDoneDetailController {
 //                mapVat.put(String.valueOf(vat.getId()), vat.getCode());
 //            }
 //            model.addAttribute("mapVat",vats);
+
+            List<Shelf> shelves = shelfService.getAllShelf(null, null);
+            Map<String, String> mapShelf = new HashMap<>();
+            for(Shelf shelf : shelves) {
+                mapShelf.put(String.valueOf(shelf.getId()), shelf.getName());
+            }
+
             model.addAttribute("mapProductInfo", mapProductInfo);
             model.addAttribute("mapProductStatusList", mapProductStatusList);
+            model.addAttribute("mapShelf", mapShelf);
 
             model.addAttribute("modelForm", productStatusDetail);
             model.addAttribute("viewOnly", false);
@@ -219,15 +258,25 @@ public class ProductDoneDetailController {
         productStatusList.setId(productStatusDetail.getProductStatusListId());
         productStatusDetail.setProductStatusList(productStatusList);
 
+        Shelf shelf = new Shelf();
+        shelf.setId(productStatusDetail.getShelfId());
+        productStatusDetail.setShelf(shelf);
+
         ProductStatusList productStatusList1 = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
         Vat vat = vatService.findByIdVat(productStatusList1.getVat().getId());
         VatDetail vatDetail = new VatDetail();
 
         vatDetail.setVatId(vat.getId());
 
+        Shelf shelf1 = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
+
         if(productStatusDetail.getId()!=null && productStatusDetail.getId()!=0) {
             try {
 
+                ProductStatusDetail productStatusDetail1 = productStatusDetailService.findByIdProductStatusDetail(productStatusDetail.getId());
+                int qtyTemp = productStatusDetail1.getQty() - productStatusDetail.getQty();
+                shelf1.setQty(shelf1.getQty()-qtyTemp);
+                shelfService.updateShelf(shelf1);
                 List<VatDetail> vatDetailList = vatDetailService.getAllVatDetail(vatDetail,null);
                 for (VatDetail vatDetail1 : vatDetailList)
                 {
@@ -255,7 +304,8 @@ public class ProductDoneDetailController {
         }else {
             try {
 
-
+                shelf1.setQty(shelf1.getQty()+productStatusDetail.getQty());
+                shelfService.updateShelf(shelf1);
                 List<VatDetail> vatDetailList = vatDetailService.getAllVatDetail(vatDetail,null);
                 for (VatDetail vatDetail1 : vatDetailList)
                 {

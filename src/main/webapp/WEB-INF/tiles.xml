@@ -47,6 +47,17 @@
 		<put-attribute name="body"
 					   value="/WEB-INF/views/product-detail/productDetail-action.jsp"></put-attribute>
 	</definition>
+
+	<definition name="shelf-list" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/shelf/shelf-list.jsp"></put-attribute>
+	</definition>
+
+	<definition name="shelf-action" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/shelf/shelf-action.jsp"></put-attribute>
+	</definition>
+
 	<definition name="productDetail-list" extends="master">
 		<put-attribute name="body"
 					   value="/WEB-INF/views/product-detail/productDetail-list.jsp"></put-attribute>

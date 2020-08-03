@@ -26,6 +26,8 @@ public class ProductStatusDetail implements Serializable {
     private BigDecimal fromPriceTotal;
     private BigDecimal toPriceTotal;
     private int qtyRest;
+    private Shelf shelf;
+    private int shelfId;
 
     public ProductStatusDetail() {
     }
@@ -140,5 +142,21 @@ public class ProductStatusDetail implements Serializable {
 
     public void setQtyRest(int qtyRest) {
         this.qtyRest = qtyRest;
+    }
+
+    public Shelf getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(Shelf shelf) {
+        this.shelf = shelf;
+    }
+
+    public int getShelfId() {
+        return shelfId;
+    }
+
+    public void setShelfId(int shelfId) {
+        this.shelfId = shelfId;
     }
 }
