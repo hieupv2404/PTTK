@@ -16,6 +16,8 @@
 
 				<div class="x_content">
 					<a href="<c:url value="/product-done-list/list"/>" class="btn btn-app"><i class="fa fa-backward"></i>Product Done List</a>
+					<a href="<c:url value="/product-done-detail/export"/>" class="btn btn-app"><i class="fa fa-cloud-download"></i>Export</a>
+
 					<div class="container" style="padding: 50px;">
 						<%--@elvariable id="searchForm" type=""--%>
 						<form:form modelAttribute="searchForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/product-done-detail/list/1" method="POST">
@@ -77,9 +79,9 @@
 							</div>
 
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="shelf">Shelf</label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="shelf.name">Shelf</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<form:input path="shelf" cssClass="form-control col-md-7 col-xs-12" />
+									<form:input path="shelf.name" cssClass="form-control col-md-7 col-xs-12" />
 								</div>
 							</div>
 

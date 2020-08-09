@@ -73,6 +73,9 @@ public class ProductDoneDetailController {
         if (productStatusDetail.getProductStatusList() == null) {
             productStatusDetail.setProductStatusList(new ProductStatusList());
         }
+        if (productStatusDetail.getShelf() == null) {
+            productStatusDetail.setShelf(new Shelf());
+        }
 
         productStatusDetail.getProductStatusList().setType(Constant.PRODUCT_DONE);
         if (productStatusDetail.getProductInfo() == null)
@@ -106,22 +109,41 @@ public class ProductDoneDetailController {
     }
 
     @RequestMapping(value="/product-done-detail/getAll/{page}")
-    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("page") int page) {
+    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
 //        Vat vat = vatService.findByIdVat(vatId);
 //        vatDetail.setVat(vat);
+        List<ProductStatusDetailTemp> productStatusDetailTempList = productStatusDetailTempService.findProductStatusDetailTemp("activeFlag",1);
+        for (ProductStatusDetailTemp productStatusDetailTemp:productStatusDetailTempList)
+        {
+            productStatusDetailTempService.deleteProductStatusDetailTemp(productStatusDetailTemp);
+        }
         ProductStatusDetail productStatusDetail1 = new ProductStatusDetail();
         if (productStatusDetail1.getProductStatusList() == null) {
             productStatusDetail1.setProductStatusList(new ProductStatusList());
         }
 
+        if (productStatusDetail.getShelf() == null) {
+            productStatusDetail.setShelf(new Shelf());
+        }
         productStatusDetail1.getProductStatusList().setType(Constant.PRODUCT_DONE);
         if (productStatusDetail1.getProductInfo() == null)
         {
             productStatusDetail1.setProductInfo(new ProductInfo());
         }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail1,paging);
+        for (ProductStatusDetail productStatusDetail2:productStatusDetails)
+        {
+            ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
+            productStatusDetailTemp.setProductName(productStatusDetail2.getProductInfo().getName());
+            productStatusDetailTemp.setProductStatusName(productStatusDetail2.getProductStatusList().getCode());
+            productStatusDetailTemp.setQty(productStatusDetail2.getQty());
+            productStatusDetailTemp.setPriceOne(productStatusDetail2.getPriceOne());
+            productStatusDetailTemp.setPriceTotal(productStatusDetail2.getPriceTotal());
+            productStatusDetailTemp.setShelfName(productStatusDetail2.getShelf().getName());
+            productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+        }
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -151,6 +173,9 @@ public class ProductDoneDetailController {
         productStatusDetail.setProductStatusList(productStatusList);
         if (productStatusDetail.getProductStatusList() == null) {
             productStatusDetail.setProductStatusList(new ProductStatusList());
+        }
+        if (productStatusDetail.getShelf() == null) {
+            productStatusDetail.setShelf(new Shelf());
         }
         if (productStatusDetail.getProductInfo() == null) {
             productStatusDetail.setProductInfo(new ProductInfo());
@@ -419,7 +444,7 @@ public class ProductDoneDetailController {
         return "redirect:/product-done-detail/list";
     }
 
-    @GetMapping("/product-status-detail/export")
+    @GetMapping("/product-done-detail/export")
     public ModelAndView exportReport(Model model, HttpSession session , @ModelAttribute("searchForm") @RequestBody ProductStatusDetailTemp productStatusDetailTemp
     ) {
         ModelAndView modelAndView = new ModelAndView();

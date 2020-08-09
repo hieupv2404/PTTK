@@ -15,7 +15,10 @@
 
 
 				<div class="x_content">
+
 					<a href="<c:url value="/product-back-list/list"/>" class="btn btn-app"><i class="fa fa-backward"></i>Product Back List</a>
+					<a href="<c:url value="/product-back-detail/export"/>" class="btn btn-app"><i class="fa fa-cloud-download"></i>Export</a>
+
 					<div class="container" style="padding: 50px;">
 						<%--@elvariable id="searchForm" type=""--%>
 						<form:form modelAttribute="searchForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/product-back-detail/list/1" method="POST">
@@ -94,7 +97,7 @@
 								<tr class="headings">
 									<th class="column-title">#</th>
 									<th class="column-title">Id</th>
-									<th class="column-title">Product Done List</th>
+									<th class="column-title">Product Back List</th>
 									<th class="column-title">Product</th>
 									<th class="column-title">Qty</th>
 									<th class="column-title">Price One</th>

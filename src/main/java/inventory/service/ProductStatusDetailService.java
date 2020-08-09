@@ -59,7 +59,7 @@ public class ProductStatusDetailService {
         log.info("Show all ProductStatusDetail");
         StringBuilder queryStr = new StringBuilder();
         Map<String, Object> mapParams = new HashMap<>();
-        if(productStatusDetail!=null && productStatusDetail.getProductInfo()!=null && productStatusDetail.getProductStatusList()!=null) {
+        if(productStatusDetail!=null && productStatusDetail.getProductInfo()!=null && productStatusDetail.getProductStatusList()!=null && productStatusDetail.getShelf() !=null) {
             if(productStatusDetail.getId()!=null && productStatusDetail.getId()!=0) {
                 queryStr.append(" and model.id=:id");
                 mapParams.put("id", productStatusDetail.getId());
@@ -98,6 +98,11 @@ public class ProductStatusDetailService {
             if(productStatusDetail.getProductInfo().getName()!=null && !StringUtils.isEmpty(productStatusDetail.getProductInfo().getName()) ) {
                 queryStr.append(" and model.productInfo.name like :name");
                 mapParams.put("name", "%"+productStatusDetail.getProductInfo().getName()+"%");
+            }
+
+            if(productStatusDetail.getShelf().getName()!=null && !StringUtils.isEmpty(productStatusDetail.getShelf().getName()) ) {
+                queryStr.append(" and model.shelf.name like :nameShelf");
+                mapParams.put("nameShelf", "%"+productStatusDetail.getShelf().getName()+"%");
             }
 
         }

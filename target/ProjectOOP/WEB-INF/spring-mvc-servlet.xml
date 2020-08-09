@@ -82,6 +82,7 @@
                 <value>InvoiceTemp.hbm.xml</value>
                 <value>Shelf.hbm.xml</value>
                 <value>VatDetailTemp.hbm.xml</value>
+                <value>ProductStatusDetailTemp.hbm.xml</value>
             </list>
         </property>
     </bean>
