@@ -16,6 +16,8 @@
 
 				<div class="x_content">
 					<a href="<c:url value="/vat/list"/>" class="btn btn-app"><i class="fa fa-backward"></i>Vat List</a>
+					<a href="<c:url value="/vat-detail/export"/>" class="btn btn-app"><i class="fa fa-cloud-download"></i>Export</a>
+
 					<div class="container" style="padding: 50px;">
 						<%--@elvariable id="searchForm" type=""--%>
 						<form:form modelAttribute="searchForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/vat-detail/list/1" method="POST">
@@ -81,6 +83,8 @@
 							<div class="form-group">
 								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 									<button type="submit" class="btn btn-success">Search</button>
+									<button class="btn btn-success"><a href="<c:url value="/vat-detail/getAll/1"/>"  style="color: white">Get All</a></button>
+
 								</div>
 							</div>
 

@@ -29,6 +29,9 @@ public class VatDetailController {
     private ProductInfoService productInfoService;
 
     @Autowired
+    private VatDetailTempService vatDetailTempService;
+
+    @Autowired
     private ProductDetailService productDetailService;
 
     static final Logger log = Logger.getLogger(VatDetailController.class);
@@ -49,12 +52,30 @@ public class VatDetailController {
     }
 
     @RequestMapping(value="/vat-detail/list/{page}")
-    public String showProductInfoList(Model model, HttpSession session , @ModelAttribute("searchForm") VatDetail vatDetail, @PathVariable("page") int page) {
+    public String showProductInfoList(Model model, HttpSession session , @ModelAttribute("searchForm") VatDetail vatDetail, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
 //        Vat vat = vatService.findByIdVat(vatId);
 //        vatDetail.setVat(vat);
+        List<VatDetailTemp> vatDetailTempList = vatDetailTempService.findVatDetailTemp("activeFlag",1);
+        for (VatDetailTemp vatDetailTemp : vatDetailTempList)
+        {
+            vatDetailTempService.deleteVatDetailTemp(vatDetailTemp);
+        }
+
         List<VatDetail> vatDetails = vatDetailService.getAllVatDetail(vatDetail,paging);
+
+        for (VatDetail vatDetail1 : vatDetails)
+        {
+            VatDetailTemp vatDetailTemp = new VatDetailTemp();
+            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
+            vatDetailTemp.setQty(vatDetail1.getQty());
+            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
+            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
+            vatDetailTemp.setVatName(vatDetail1.getVat().getCode());
+            vatDetailTemp.setSupplierName(vatDetail1.getVat().getSupplier().getName());
+            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+        }
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -91,7 +112,7 @@ public class VatDetailController {
     }
 
     @RequestMapping(value="/vat-detail/vat/{code}")
-    public String showProductInfoList(Model model, HttpSession session , @ModelAttribute("searchForm") VatDetail vatDetail, @PathVariable("code") String code) {
+    public String showProductInfoList(Model model, HttpSession session , @ModelAttribute("searchForm") VatDetail vatDetail, @PathVariable("code") String code) throws Exception {
         Paging paging = new Paging(5);
 
         Vat vat = vatService.findVat("code",code).get(0);
@@ -101,7 +122,26 @@ public class VatDetailController {
         if (vatDetail.getProductInfo() == null) {
             vatDetail.setProductInfo(new ProductInfo());
         }
+
+        List<VatDetailTemp> vatDetailTempList = vatDetailTempService.findVatDetailTemp("activeFlag",1);
+        for (VatDetailTemp vatDetailTemp : vatDetailTempList)
+        {
+            vatDetailTempService.deleteVatDetailTemp(vatDetailTemp);
+        }
+
         List<VatDetail> vatDetails = vatDetailService.getAllVatDetail(vatDetail,paging);
+
+        for (VatDetail vatDetail1 : vatDetails)
+        {
+            VatDetailTemp vatDetailTemp = new VatDetailTemp();
+            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
+            vatDetailTemp.setQty(vatDetail1.getQty());
+            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
+            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
+            vatDetailTemp.setVatName(vatDetail1.getVat().getCode());
+            vatDetailTemp.setSupplierName(vatDetail1.getVat().getSupplier().getName());
+            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+        }
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -281,5 +321,17 @@ public class VatDetailController {
             }
         }
         return "redirect:/vat-detail/list";
+    }
+
+    @GetMapping("/vat-detail/export")
+    public ModelAndView exportReport(Model model, HttpSession session , @ModelAttribute("searchForm") @RequestBody VatDetail vatDetail
+    ) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<VatDetailTemp> vatDetailTempList = vatDetailTempService.findVatDetailTemp("activeFlag",1);
+
+        modelAndView.addObject(Constant.KEY_GOODS_RECEIPT_REPORT, vatDetailTempList);
+        modelAndView.setView(new VatDetailReport());
+        return modelAndView;
     }
 }

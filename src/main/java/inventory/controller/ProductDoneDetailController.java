@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,9 @@ public class ProductDoneDetailController {
     private VatDetailService vatDetailService;
 
     @Autowired
+    private ProductStatusDetailTempService productStatusDetailTempService;
+
+    @Autowired
     private ShelfService shelfService;
 
     static final Logger log = Logger.getLogger(ProductDoneDetailController.class);
@@ -56,11 +60,16 @@ public class ProductDoneDetailController {
     }
 
     @RequestMapping(value="/product-done-detail/list/{page}")
-    public String showProductInfoList(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("page") int page) {
+    public String showProductInfoList(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
 //        Vat vat = vatService.findByIdVat(vatId);
 //        vatDetail.setVat(vat);
+        List<ProductStatusDetailTemp> productStatusDetailTempList = productStatusDetailTempService.findProductStatusDetailTemp("activeFlag",1);
+        for (ProductStatusDetailTemp productStatusDetailTemp:productStatusDetailTempList)
+        {
+            productStatusDetailTempService.deleteProductStatusDetailTemp(productStatusDetailTemp);
+        }
         if (productStatusDetail.getProductStatusList() == null) {
             productStatusDetail.setProductStatusList(new ProductStatusList());
         }
@@ -71,6 +80,17 @@ public class ProductDoneDetailController {
             productStatusDetail.setProductInfo(new ProductInfo());
         }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
+        for (ProductStatusDetail productStatusDetail1:productStatusDetails)
+        {
+            ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
+            productStatusDetailTemp.setProductName(productStatusDetail1.getProductInfo().getName());
+            productStatusDetailTemp.setProductStatusName(productStatusDetail1.getProductStatusList().getCode());
+            productStatusDetailTemp.setQty(productStatusDetail1.getQty());
+            productStatusDetailTemp.setPriceOne(productStatusDetail1.getPriceOne());
+            productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
+            productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
+            productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+        }
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -117,11 +137,16 @@ public class ProductDoneDetailController {
     }
 
     @RequestMapping(value="/product-done-detail/code/{code}")
-    public String showProductInfoListFilter(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("code") String code) {
+    public String showProductInfoListFilter(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("code") String code) throws Exception {
         Paging paging = new Paging(5);
 
 //        Vat vat = vatService.findByIdVat(vatId);
 //        vatDetail.setVat(vat);
+        List<ProductStatusDetailTemp> productStatusDetailTempList = productStatusDetailTempService.findProductStatusDetailTemp("activeFlag",1);
+        for (ProductStatusDetailTemp productStatusDetailTemp:productStatusDetailTempList)
+        {
+            productStatusDetailTempService.deleteProductStatusDetailTemp(productStatusDetailTemp);
+        }
         ProductStatusList productStatusList = productStatusListService.findProductStatusList("code",code).get(0);
         productStatusDetail.setProductStatusList(productStatusList);
         if (productStatusDetail.getProductStatusList() == null) {
@@ -132,6 +157,17 @@ public class ProductDoneDetailController {
         }
         productStatusDetail.getProductStatusList().setType(Constant.PRODUCT_DONE);
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
+        for (ProductStatusDetail productStatusDetail1:productStatusDetails)
+        {
+            ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
+            productStatusDetailTemp.setProductName(productStatusDetail1.getProductInfo().getName());
+            productStatusDetailTemp.setProductStatusName(productStatusDetail1.getProductStatusList().getCode());
+            productStatusDetailTemp.setQty(productStatusDetail1.getQty());
+            productStatusDetailTemp.setPriceOne(productStatusDetail1.getPriceOne());
+            productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
+            productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
+            productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+        }
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -381,5 +417,17 @@ public class ProductDoneDetailController {
             }
         }
         return "redirect:/product-done-detail/list";
+    }
+
+    @GetMapping("/product-status-detail/export")
+    public ModelAndView exportReport(Model model, HttpSession session , @ModelAttribute("searchForm") @RequestBody ProductStatusDetailTemp productStatusDetailTemp
+    ) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<ProductStatusDetailTemp> productStatusDetailTempList = productStatusDetailTempService.findProductStatusDetailTemp("activeFlag",1);
+
+        modelAndView.addObject(Constant.KEY_GOODS_RECEIPT_REPORT, productStatusDetailTempList);
+        modelAndView.setView(new ProductStatusDetailReport());
+        return modelAndView;
     }
 }
