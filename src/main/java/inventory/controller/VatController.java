@@ -78,6 +78,26 @@ public class VatController {
         return "vat-list";
 
     }
+
+    @RequestMapping(value= "/vat/getAll/{page}")
+    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") Vat vat, @PathVariable("page") int page) {
+        Paging paging = new Paging(5);
+        paging.setIndexPage(page);
+        List<Vat> vats = vatService.getAllVat(null,paging);
+        if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
+            model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
+            session.removeAttribute(Constant.MSG_SUCCESS);
+        }
+        if(session.getAttribute(Constant.MSG_ERROR)!=null ) {
+            model.addAttribute(Constant.MSG_ERROR, session.getAttribute(Constant.MSG_ERROR));
+            session.removeAttribute(Constant.MSG_ERROR);
+        }
+        model.addAttribute("pageInfo", paging);
+        model.addAttribute("products", vats);
+        return "vat-list";
+
+    }
+
     @GetMapping("/vat/add")
     public String add(Model model) {
         model.addAttribute("titlePage", "Add Vat");

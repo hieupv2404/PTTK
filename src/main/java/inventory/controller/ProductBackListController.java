@@ -61,7 +61,9 @@ public class ProductBackListController {
     public String showProductDone(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusList productStatusList, @PathVariable("page") int page) {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
+
         productStatusList.setType(Constant.PRODUCT_BACK);
+
         if (productStatusList.getVat() == null)
         {
             productStatusList.setVat(new Vat());
@@ -71,6 +73,36 @@ public class ProductBackListController {
             productStatusList.setUser(new Users());
         }
         List<ProductStatusList> productStatusLists = productStatusListService.getAllProductStatusList(productStatusList,paging);
+        if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
+            model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
+            session.removeAttribute(Constant.MSG_SUCCESS);
+        }
+        if(session.getAttribute(Constant.MSG_ERROR)!=null ) {
+            model.addAttribute(Constant.MSG_ERROR, session.getAttribute(Constant.MSG_ERROR));
+            session.removeAttribute(Constant.MSG_ERROR);
+        }
+        model.addAttribute("pageInfo", paging);
+        model.addAttribute("products", productStatusLists);
+        return "product-back-list-list";
+
+    }
+
+    @RequestMapping(value= "/product-back-list/getAll/{page}")
+    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusList productStatusList, @PathVariable("page") int page) {
+        Paging paging = new Paging(5);
+        paging.setIndexPage(page);
+        ProductStatusList productStatusList1 = new ProductStatusList();
+        productStatusList1.setType(Constant.PRODUCT_BACK);
+
+        if (productStatusList1.getVat() == null)
+        {
+            productStatusList1.setVat(new Vat());
+        }
+        if (productStatusList1.getUser() == null)
+        {
+            productStatusList1.setUser(new Users());
+        }
+        List<ProductStatusList> productStatusLists = productStatusListService.getAllProductStatusList(productStatusList1,paging);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);

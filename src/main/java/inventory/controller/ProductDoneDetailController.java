@@ -85,6 +85,37 @@ public class ProductDoneDetailController {
 
     }
 
+    @RequestMapping(value="/product-done-detail/getAll/{page}")
+    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("page") int page) {
+        Paging paging = new Paging(5);
+        paging.setIndexPage(page);
+//        Vat vat = vatService.findByIdVat(vatId);
+//        vatDetail.setVat(vat);
+        ProductStatusDetail productStatusDetail1 = new ProductStatusDetail();
+        if (productStatusDetail1.getProductStatusList() == null) {
+            productStatusDetail1.setProductStatusList(new ProductStatusList());
+        }
+
+        productStatusDetail1.getProductStatusList().setType(Constant.PRODUCT_DONE);
+        if (productStatusDetail1.getProductInfo() == null)
+        {
+            productStatusDetail1.setProductInfo(new ProductInfo());
+        }
+        List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail1,paging);
+        if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
+            model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
+            session.removeAttribute(Constant.MSG_SUCCESS);
+        }
+        if(session.getAttribute(Constant.MSG_ERROR)!=null ) {
+            model.addAttribute(Constant.MSG_ERROR, session.getAttribute(Constant.MSG_ERROR));
+            session.removeAttribute(Constant.MSG_ERROR);
+        }
+        model.addAttribute("pageInfo", paging);
+        model.addAttribute("products", productStatusDetails);
+        return "productDoneDetail-list";
+
+    }
+
     @RequestMapping(value="/product-done-detail/code/{code}")
     public String showProductInfoListFilter(Model model, HttpSession session , @ModelAttribute("searchForm") ProductStatusDetail productStatusDetail, @PathVariable("code") String code) {
         Paging paging = new Paging(5);
