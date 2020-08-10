@@ -2,7 +2,9 @@ package inventory.service;
 
 import inventory.dao.ProductStatusListDAO;
 import inventory.model.Paging;
+import inventory.model.ProductStatusDetail;
 import inventory.model.ProductStatusList;
+import inventory.model.Shelf;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,13 @@ import java.util.Map;
 public class ProductStatusListService {
     @Autowired
     private ProductStatusListDAO<ProductStatusList> productStatusListDAO;
+
+    @Autowired
+    private ProductStatusDetailService productStatusDetailService;
+
+    @Autowired
+    private ShelfService shelfService;
+
 
     private static final Logger log = Logger.getLogger(ProductStatusListService.class);
 
@@ -47,6 +56,16 @@ public class ProductStatusListService {
         productStatusList.setUpdateDate(new Date());
         log.info("Delete ProductStatusList "+productStatusList.toString());
         productStatusListDAO.update(productStatusList);
+        ProductStatusDetail productStatusDetail1 = new ProductStatusDetail();
+        productStatusDetail1.setProductStatusList(productStatusList);
+        List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id",productStatusDetail1.getProductStatusList().getId());
+        for (ProductStatusDetail productStatusDetail : productStatusDetailList)
+        {
+            productStatusDetailService.deleteProductStatusDetail(productStatusDetail);
+            Shelf shelf = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
+            shelf.setQty(shelf.getQty()-productStatusDetail.getQty());
+            shelfService.updateShelf(shelf);
+        }
     }
     public List<ProductStatusList> findProductStatusList(String property , Object value){
         log.info("=====Find by property ProductStatusList start====");

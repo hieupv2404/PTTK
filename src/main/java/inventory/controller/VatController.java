@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import inventory.model.*;
 import inventory.service.ProductDetailService;
 import inventory.service.UserService;
+import inventory.service.VatDetailService;
 import inventory.service.VatService;
 import inventory.validate.VatValidator;
 import org.apache.log4j.Logger;
@@ -43,6 +44,9 @@ public class VatController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private VatDetailService vatDetailService;
 
     static final Logger log = Logger.getLogger(VatController.class);
 

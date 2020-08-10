@@ -1,8 +1,7 @@
 package inventory.service;
 
 import inventory.dao.VatDAO;
-import inventory.model.Paging;
-import inventory.model.Vat;
+import inventory.model.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,12 @@ import java.util.Map;
 public class VatService {
     @Autowired
     private VatDAO<Vat> vatDAO;
+
+    @Autowired
+    private VatDetailService vatDetailService;
+
+    @Autowired
+    private ProductStatusListService productStatusListService;
 
     private static final Logger log = Logger.getLogger(VatService.class);
 
@@ -48,6 +53,19 @@ public class VatService {
         vat.setUpdateDate(new Date());
         log.info("Delete Vat "+vat.toString());
         vatDAO.update(vat);
+        List<VatDetail> vatDetailList = vatDetailService.findVatDetail("vat.id",vat.getId());
+        for(VatDetail vatDetail : vatDetailList)
+        {
+            vatDetailService.deleteVatDetail(vatDetail);
+        }
+        ProductStatusList productStatusList1 = new ProductStatusList();
+        productStatusList1.setVat(vat);
+        List<ProductStatusList> productStatusListList = productStatusListService.findProductStatusList("vat.id",productStatusList1.getVat().getId());
+        for (ProductStatusList productStatusList : productStatusListList)
+        {
+            productStatusListService.deleteProductStatusList(productStatusList);
+        }
+
     }
     public List<Vat> findVat(String property , Object value){
         log.info("=====Find by property Vat start====");
