@@ -400,11 +400,7 @@ public class ProductDoneDetailController {
             productStatusDetail.setQty(Math.abs(productStatusDetail.getQty()));
             checkQty=1;
         }
-        if(productStatusDetail.getPriceOne().compareTo(new BigDecimal(0)) < 0)
-        {
-            productStatusDetail.setPriceOne(productStatusDetail.getPriceOne().abs());
-            checkPrice = 1;
-        }
+
         if(productStatusDetail.getId()!=null && productStatusDetail.getId()!=0) {
             try {
 
@@ -460,7 +456,7 @@ public class ProductDoneDetailController {
                     }
 
                 }
-                List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.code",productStatusDetail.getProductStatusList().getCode());
+                List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id",productStatusDetail.getProductStatusList().getId());
                 int updateCheck =0;
                 for ( ProductStatusDetail productStatusDetail1 : productStatusDetailList)
                 {
@@ -510,6 +506,9 @@ public class ProductDoneDetailController {
                 ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
                 productStatusList.setPrice(productStatusList.getPrice().subtract(productStatusDetail.getPriceTotal()));
                 productStatusListService.updateProductStatusList(productStatusList);
+                Shelf shelf = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
+                shelf.setQty(shelf.getQty()-productStatusDetail.getQty());
+                shelfService.updateShelf(shelf);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
