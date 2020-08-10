@@ -135,6 +135,29 @@
 
 							</tbody>
 						</table>
+
+						<div class="table-responsive">
+							<table class="table table-striped jambo_table bulk_action">
+								<tbody>
+								<td width="39.2px"></td>
+								<td width="44px"></td>
+								<td width="200.8px"></td>
+								<td width="103.2px">Total</td>
+								<td width="60px">${totalQty}</td>
+								<td class="price" style="font-size: 14px" width="122.5px">${totalPriceOne }</td>
+								<td class="price" style="font-size: 14px" width="129px">${totalPriceTotal }</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								</tbody>
+							</table>
+						</div>
+
 						<jsp:include page="../layout/paging.jsp"></jsp:include>
 					</div>
 				</div>

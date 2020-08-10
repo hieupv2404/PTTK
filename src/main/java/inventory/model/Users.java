@@ -26,6 +26,7 @@ public class Users extends NewObj implements java.io.Serializable {
 	private Integer roleID;
 	private int status;
 
+
 	public Users() {
 		super();
 	}

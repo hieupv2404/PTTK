@@ -27,6 +27,8 @@ public class Vat implements Serializable {
     private Integer supplierId;
     private Set vatDetails = new HashSet(0);
     private Set productStatusLists = new HashSet(0);
+    private Users user;
+    private int userId;
 
     public Vat() {
     }
@@ -150,5 +152,21 @@ public class Vat implements Serializable {
 
     public void setProductStatusLists(Set productStatusLists) {
         this.productStatusLists = productStatusLists;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

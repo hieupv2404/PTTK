@@ -85,6 +85,9 @@ public class ProductDoneDetailController {
             productStatusDetail.setProductInfo(new ProductInfo());
         }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (ProductStatusDetail productStatusDetail1:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
@@ -95,7 +98,16 @@ public class ProductDoneDetailController {
             productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
             productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+            totalQty+=productStatusDetail1.getQty();
+            totalPriceOne = totalPriceOne.add(productStatusDetail1.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(productStatusDetail1.getPriceTotal());
+
         }
+
+
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -135,6 +147,9 @@ public class ProductDoneDetailController {
             productStatusDetail1.setProductInfo(new ProductInfo());
         }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail1,paging);
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (ProductStatusDetail productStatusDetail2:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
@@ -145,7 +160,13 @@ public class ProductDoneDetailController {
             productStatusDetailTemp.setPriceTotal(productStatusDetail2.getPriceTotal());
             productStatusDetailTemp.setShelfName(productStatusDetail2.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+            totalQty+=productStatusDetail2.getQty();
+            totalPriceOne = totalPriceOne.add(productStatusDetail2.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(productStatusDetail2.getPriceTotal());
         }
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -184,6 +205,9 @@ public class ProductDoneDetailController {
         }
         productStatusDetail.getProductStatusList().setType(Constant.PRODUCT_DONE);
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (ProductStatusDetail productStatusDetail1:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
@@ -194,7 +218,13 @@ public class ProductDoneDetailController {
             productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
             productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+            totalQty+=productStatusDetail1.getQty();
+            totalPriceOne = totalPriceOne.add(productStatusDetail1.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(productStatusDetail1.getPriceTotal());
         }
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -363,6 +393,7 @@ public class ProductDoneDetailController {
         vatDetail.setVatId(vat.getId());
 
         Shelf shelf1 = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
+
        int checkPrice =0, checkQty =0;
         if (productStatusDetail.getQty() < 0)
         {

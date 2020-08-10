@@ -100,6 +100,7 @@
 									<th class="column-title">Price</th>
 									<th class="column-title">Total</th>
 									<th class="column-title">Update Date</th>
+									<th class="column-title">User</th>
 									<th class="column-title no-link last text-center" colspan="4"><span class="nobr">Action</span></th>
 								</tr>
 							</thead>
@@ -124,6 +125,7 @@
 									<td class=" ">${product.price }</td>
 									<td class=" ">${product.total }</td>
 									<td class=" ">${product.updateDate }</td>
+									<td class=" ">${product.user.name }</td>
 
 									<td class="text-center"><a href="<c:url value="/vat/view/${product.id }"/>" class="btn btn-round btn-default">View</a></td>
 									<td class="text-center"><a href="<c:url value="/vat/edit/${product.id }"/>" class="btn btn-round btn-primary">Edit</a></td>

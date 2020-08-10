@@ -46,6 +46,9 @@ public class ProductBackDetailController {
     @Autowired
     private ProductStatusDetailTempService productStatusDetailTempService;
 
+    @Autowired
+    private UserService userService;
+
     static final Logger log = Logger.getLogger(ProductBackDetailController.class);
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -87,6 +90,9 @@ public class ProductBackDetailController {
             productStatusDetail.setProductInfo(new ProductInfo());
         }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (ProductStatusDetail productStatusDetail1:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
@@ -97,7 +103,16 @@ public class ProductBackDetailController {
             productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
             productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+            totalQty+=productStatusDetail1.getQty();
+            totalPriceOne = totalPriceOne.add(productStatusDetail1.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(productStatusDetail1.getPriceTotal());
+
         }
+
+
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -137,6 +152,9 @@ public class ProductBackDetailController {
             productStatusDetail1.setProductInfo(new ProductInfo());
         }
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail1,paging);
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (ProductStatusDetail productStatusDetail2:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
@@ -147,7 +165,13 @@ public class ProductBackDetailController {
             productStatusDetailTemp.setPriceTotal(productStatusDetail2.getPriceTotal());
             productStatusDetailTemp.setShelfName(productStatusDetail2.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+            totalQty+=productStatusDetail2.getQty();
+            totalPriceOne = totalPriceOne.add(productStatusDetail2.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(productStatusDetail2.getPriceTotal());
         }
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -186,6 +210,9 @@ public class ProductBackDetailController {
         }
         productStatusDetail.getProductStatusList().setType(Constant.PRODUCT_BACK);
         List<ProductStatusDetail> productStatusDetails = productStatusDetailService.getAllProductStatusDetail(productStatusDetail,paging);
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (ProductStatusDetail productStatusDetail1:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
@@ -196,7 +223,13 @@ public class ProductBackDetailController {
             productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
             productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
+            totalQty+=productStatusDetail1.getQty();
+            totalPriceOne = totalPriceOne.add(productStatusDetail1.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(productStatusDetail1.getPriceTotal());
         }
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);

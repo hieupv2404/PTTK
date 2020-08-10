@@ -35,6 +35,7 @@ public class VatDetailController {
     @Autowired
     private ProductDetailService productDetailService;
 
+
     static final Logger log = Logger.getLogger(VatDetailController.class);
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -66,6 +67,9 @@ public class VatDetailController {
 
         List<VatDetail> vatDetails = vatDetailService.getAllVatDetail(vatDetail,paging);
 
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (VatDetail vatDetail1 : vatDetails)
         {
             VatDetailTemp vatDetailTemp = new VatDetailTemp();
@@ -76,7 +80,13 @@ public class VatDetailController {
             vatDetailTemp.setVatName(vatDetail1.getVat().getCode());
             vatDetailTemp.setSupplierName(vatDetail1.getVat().getSupplier().getName());
             vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+            totalQty+=vatDetail1.getQty();
+            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
         }
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -92,12 +102,37 @@ public class VatDetailController {
     }
 
     @RequestMapping(value="/vat-detail/getAll/{page}")
-    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") VatDetail vatDetail, @PathVariable("page") int page) {
+    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") VatDetail vatDetail, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
 //        Vat vat = vatService.findByIdVat(vatId);
 //        vatDetail.setVat(vat);
+        List<VatDetailTemp> vatDetailTempList = vatDetailTempService.findVatDetailTemp("activeFlag",1);
+        for (VatDetailTemp vatDetailTemp : vatDetailTempList)
+        {
+            vatDetailTempService.deleteVatDetailTemp(vatDetailTemp);
+        }
         List<VatDetail> vatDetails = vatDetailService.getAllVatDetail(null,paging);
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
+        for (VatDetail vatDetail1 : vatDetails)
+        {
+            VatDetailTemp vatDetailTemp = new VatDetailTemp();
+            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
+            vatDetailTemp.setQty(vatDetail1.getQty());
+            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
+            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
+            vatDetailTemp.setVatName(vatDetail1.getVat().getCode());
+            vatDetailTemp.setSupplierName(vatDetail1.getVat().getSupplier().getName());
+            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+            totalQty+=vatDetail1.getQty();
+            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
+        }
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -132,6 +167,9 @@ public class VatDetailController {
 
         List<VatDetail> vatDetails = vatDetailService.getAllVatDetail(vatDetail,paging);
 
+        int totalQty = 0;
+        BigDecimal totalPriceOne = new BigDecimal(0);
+        BigDecimal totalPriceTotal = new BigDecimal(0);
         for (VatDetail vatDetail1 : vatDetails)
         {
             VatDetailTemp vatDetailTemp = new VatDetailTemp();
@@ -142,7 +180,13 @@ public class VatDetailController {
             vatDetailTemp.setVatName(vatDetail1.getVat().getCode());
             vatDetailTemp.setSupplierName(vatDetail1.getVat().getSupplier().getName());
             vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+            totalQty+=vatDetail1.getQty();
+            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
         }
+        model.addAttribute("totalQty",totalQty);
+        model.addAttribute("totalPriceOne",totalPriceOne);
+        model.addAttribute("totalPriceTotal",totalPriceTotal);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);

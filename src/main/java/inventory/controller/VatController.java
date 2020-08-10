@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import inventory.model.*;
 import inventory.service.ProductDetailService;
+import inventory.service.UserService;
 import inventory.service.VatService;
 import inventory.validate.VatValidator;
 import org.apache.log4j.Logger;
@@ -39,6 +40,9 @@ public class VatController {
 
     @Autowired
     private VatValidator vatValidator;
+
+    @Autowired
+    private UserService userService;
 
     static final Logger log = Logger.getLogger(VatController.class);
 
@@ -170,6 +174,10 @@ public class VatController {
         Supplier supplier = new Supplier();
         supplier.setId(vat.getSupplierId());
         vat.setSupplier(supplier);
+
+        Users user = userService.findByProperty("status",1).get(0);
+        vat.setUser(user);
+        vat.setUserId(user.getId());
 
         if(vat.getId()!=null && vat.getId()!=0 ) {
             try {
