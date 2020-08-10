@@ -3,6 +3,7 @@ package inventory.controller;
 import inventory.model.*;
 import inventory.service.*;
 import inventory.util.Constant;
+import org.apache.commons.math3.analysis.function.Abs;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -361,7 +363,17 @@ public class ProductDoneDetailController {
         vatDetail.setVatId(vat.getId());
 
         Shelf shelf1 = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
-
+       int checkPrice =0, checkQty =0;
+        if (productStatusDetail.getQty() < 0)
+        {
+            productStatusDetail.setQty(Math.abs(productStatusDetail.getQty()));
+            checkQty=1;
+        }
+        if(productStatusDetail.getPriceOne().compareTo(new BigDecimal(0)) < 0)
+        {
+            productStatusDetail.setPriceOne(productStatusDetail.getPriceOne().abs());
+            checkPrice = 1;
+        }
         if(productStatusDetail.getId()!=null && productStatusDetail.getId()!=0) {
             try {
 
@@ -385,7 +397,10 @@ public class ProductDoneDetailController {
                 productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail.getPriceTotal()));
 
                 productStatusListService.updateProductStatusList(productStatusList1);
-                session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
+                if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Update success!!!");
+                else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Update success!!!");
+                else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Update success!!!");
+                else session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -398,23 +413,52 @@ public class ProductDoneDetailController {
 
                 shelf1.setQty(shelf1.getQty()+productStatusDetail.getQty());
                 shelfService.updateShelf(shelf1);
+
+
+
                 List<VatDetail> vatDetailList = vatDetailService.getAllVatDetail(vatDetail,null);
+
                 for (VatDetail vatDetail1 : vatDetailList)
                 {
                     if (productStatusDetail.getProductInfo().getId() == vatDetail1.getProductInfo().getId())
                     {
                         productStatusDetail.setQtyRest(vatDetail1.getQty()- productStatusDetail.getQty());
                         productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
+                        if ( productStatusDetail.getQtyRest()<0) throw new Exception();
                         break;
                     }
 
                 }
-                productStatusDetailService.saveProductStatusDetail(productStatusDetail);
-                session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
+                List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.code",productStatusDetail.getProductStatusList().getCode());
+                int updateCheck =0;
+                for ( ProductStatusDetail productStatusDetail1 : productStatusDetailList)
+                {
+                    if (productStatusDetail1.getProductInfo().getId() == productStatusDetail.getProductInfo().getId())
+                    {
+                        productStatusDetail1.setQty(productStatusDetail1.getQty()+productStatusDetail.getQty());
+                        productStatusDetailService.updateProductStatusDetail(productStatusDetail1);
+                        updateCheck= 1;
+                        break;
+
+
+                    }
+                }
+                if (updateCheck ==0) {
+                    productStatusDetailService.saveProductStatusDetail(productStatusDetail);
+
+                    if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
+                    else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
+                    else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
+                    else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
+                }
+
 //                ProductStatusList productStatusList1 = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
                 productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail.getPriceTotal()));
                 productStatusListService.updateProductStatusList(productStatusList1);
-
+                if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Update success!!!");
+                else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Update success!!!");
+                else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Update success!!!");
+                else session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

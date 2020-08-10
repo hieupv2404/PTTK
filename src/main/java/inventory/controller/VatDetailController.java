@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -268,6 +269,18 @@ public class VatDetailController {
         vat.setId(vatDetail.getVatId());
         vatDetail.setVat(vat);
 
+        int checkPrice =0, checkQty =0;
+        if (vatDetail.getQty() < 0)
+        {
+            vatDetail.setQty(Math.abs(vatDetail.getQty()));
+            checkQty=1;
+        }
+        if(vatDetail.getPriceOne().compareTo(new BigDecimal(0)) < 0)
+        {
+            vatDetail.setPriceOne(vatDetail.getPriceOne().abs());
+            checkPrice = 1;
+        }
+
         if(vatDetail.getId()!=null && vatDetail.getId()!=0) {
             try {
 
@@ -276,7 +289,10 @@ public class VatDetailController {
                 vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
                 vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
                 vatService.updateVat(vat1);
-                session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
+                if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Update success!!!");
+                else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Update success!!!");
+                else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Update success!!!");
+                else session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -287,7 +303,10 @@ public class VatDetailController {
         }else {
             try {
                 vatDetailService.saveVatDetail(vatDetail);
-                session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
+                if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
+                else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
+                else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
+                else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
                 Vat vat1 = vatService.findByIdVat(vatDetail.getVat().getId());
                 vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
                 vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
