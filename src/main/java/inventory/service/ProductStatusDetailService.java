@@ -38,7 +38,7 @@ public class ProductStatusDetailService {
     public void updateProductStatusDetail(ProductStatusDetail productStatusDetail) throws Exception {
         log.info("Update ProductStatusDetail "+productStatusDetail.toString());
         productStatusDetail.setPriceTotal(BigDecimal.valueOf(productStatusDetail.getQty()).multiply(productStatusDetail.getPriceOne()));
-
+        productStatusDetail.setActiveFlag(1);
         productStatusDetailDAO.update(productStatusDetail);
     }
 

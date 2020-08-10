@@ -387,7 +387,8 @@ public class ProductBackDetailController {
                     {
                         productStatusDetail.setQtyRest(vatDetail1.getQty()- productStatusDetail.getQty());
                         productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
-                        break;
+                        if ( productStatusDetail.getQtyRest()<0) throw new Exception();
+                        return "redirect:/product-back-detail/list";
                     }
 
                 }
@@ -421,8 +422,7 @@ public class ProductBackDetailController {
                         productStatusDetail.setQtyRest(vatDetail1.getQty()- productStatusDetail.getQty());
                         productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
                         if ( productStatusDetail.getQtyRest()<0) throw new Exception();
-
-                        break;
+                        return "redirect:/product-back-detail/list";
                     }
 
                 }
@@ -433,7 +433,7 @@ public class ProductBackDetailController {
                     if (productStatusDetail1.getProductInfo().getId() == productStatusDetail.getProductInfo().getId())
                     {
                         productStatusDetail1.setQty(productStatusDetail1.getQty()+productStatusDetail.getQty());
-                        productStatusDetail1.setQtyRest(productStatusDetail.getQtyRest() - productStatusDetail1.getQtyRest());
+                        productStatusDetail1.setQtyRest(productStatusDetail1.getQtyRest() - productStatusDetail.getQty());
                         productStatusDetailService.updateProductStatusDetail(productStatusDetail1);
                         updateCheck= 1;
                         break;

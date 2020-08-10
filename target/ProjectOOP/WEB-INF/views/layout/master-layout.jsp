@@ -41,7 +41,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Inventory Management!</span></a>
+              <a href=" <c:url value="/index"/>" class="site_title"><i class="fa fa-paw"></i> <span>Inventory Management!</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -52,7 +52,7 @@
                 <img src="<c:url value="/static/images/user.jpeg" />" alt="User Ava" class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Xin chào,</span>
+                <span>Hello,</span>
                 <h2>${userInfo.name}</h2>
               </div>
             </div>

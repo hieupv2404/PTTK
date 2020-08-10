@@ -95,7 +95,7 @@
 
                 <div>
                   <h1><i class="fa fa-paw"></i> Inventory Management System :)</h1>
-                  <p>Project OOP by Group 1</p>
+                  <p>Project Group 1</p>
                 </div>
               </div>
             </form:form>
