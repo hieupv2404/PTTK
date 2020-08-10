@@ -280,11 +280,11 @@ public class ProductDetailPtController {
         {
             if (productStatusDetail1.getProductInfo().getId() == productDetail.getProductInfo().getId())
             {
-                productStatusDetail.setPriceOne(productStatusDetail1.getPriceOne());
+                productDetail.setPriceIn(productStatusDetail1.getPriceOne());
                 break;
             }
         }
-        productDetail.setPriceIn(productStatusDetail.getPriceOne());
+
 
 
         if(productDetail.getId()!=null && productDetail.getId()!=0) {
