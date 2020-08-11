@@ -42,6 +42,9 @@ public class ProductDetailPtController {
     @Autowired
     private ProductStatusListService productStatusListService;
 
+    @Autowired
+    private ShelfService shelfService;
+
     static final Logger log = Logger.getLogger(ProductDetailPtController.class);
     @InitBinder
     private void initBinder(WebDataBinder binder) {
@@ -191,13 +194,18 @@ public class ProductDetailPtController {
     public String changeStatus(Model model , @PathVariable("id") int id) throws Exception {
         log.info("Change Status productDetail with id="+id);
         ProductDetailPt productDetail = productDetailService.findByIdProductDetailPt(id);
+        Shelf shelf = shelfService.findShelf("name",productDetail.getShelfName()).get(0);
         if (productDetail.getStatus().equals("Valid"))
         {
             productDetail.setStatus("InValid");
+            shelf.setQty(shelf.getQty()-1);
+            shelfService.updateShelf(shelf);
         }
         else
         {
             productDetail.setStatus("Valid");
+            shelf.setQty(shelf.getQty()+1);
+            shelfService.updateShelf(shelf);
         }
         productDetailService.updateProductDetailPt(productDetail);
         return "redirect:/product-detail-pt/list";
@@ -281,6 +289,7 @@ public class ProductDetailPtController {
             if (productStatusDetail1.getProductInfo().getId() == productDetail.getProductInfo().getId())
             {
                 productDetail.setPriceIn(productStatusDetail1.getPriceOne());
+                productDetail.setShelfName(productStatusDetail1.getShelf().getName());
                 break;
             }
         }
@@ -318,10 +327,14 @@ public class ProductDetailPtController {
     public String delete(Model model , @PathVariable("id") int id,HttpSession session) {
         log.info("Delete productDetail with id="+id);
         ProductDetailPt productDetail = productDetailService.findByIdProductDetailPt(id);
+        Shelf shelf = shelfService.findShelf("name",productDetail.getShelfName()).get(0);
         if(productDetail!=null) {
             try {
                 productDetailService.deleteProductDetailPt(productDetail);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete success!!!");
+                shelf.setQty(shelf.getQty()-1);
+                shelfService.updateShelf(shelf);
+
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

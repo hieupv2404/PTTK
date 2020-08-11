@@ -28,6 +28,7 @@ public class ProductDetailPt implements Serializable {
     private Integer supplierId;
     private Integer invoiceId;
     private String status;
+    private String shelfName;
 
 
 
@@ -181,5 +182,11 @@ public class ProductDetailPt implements Serializable {
         this.status = status;
     }
 
+    public String getShelfName() {
+        return shelfName;
+    }
 
+    public void setShelfName(String shelfName) {
+        this.shelfName = shelfName;
+    }
 }
