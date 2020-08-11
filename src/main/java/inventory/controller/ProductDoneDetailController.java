@@ -138,8 +138,8 @@ public class ProductDoneDetailController {
             productStatusDetail1.setProductStatusList(new ProductStatusList());
         }
 
-        if (productStatusDetail.getShelf() == null) {
-            productStatusDetail.setShelf(new Shelf());
+        if (productStatusDetail1.getShelf() == null) {
+            productStatusDetail1.setShelf(new Shelf());
         }
         productStatusDetail1.getProductStatusList().setType(Constant.PRODUCT_DONE);
         if (productStatusDetail1.getProductInfo() == null)

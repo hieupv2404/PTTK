@@ -118,7 +118,7 @@ public class ProductBackListController {
     }
     @GetMapping("/product-back-list/add")
     public String add(Model model) {
-        model.addAttribute("titlePage", "Add Product Status");
+        model.addAttribute("titlePage", "Add Product Back");
         model.addAttribute("modelForm", new ProductStatusList());
 
         List<Vat> vats = vatService.getAllVat(null,null);

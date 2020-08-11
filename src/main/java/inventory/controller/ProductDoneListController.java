@@ -115,7 +115,7 @@ public class ProductDoneListController {
     }
     @GetMapping("/product-done-list/add")
     public String add(Model model) {
-        model.addAttribute("titlePage", "Add Product Status");
+        model.addAttribute("titlePage", "Add Product Done");
         model.addAttribute("modelForm", new ProductStatusList());
 
         List<Vat> vats = vatService.getAllVat(null,null);
