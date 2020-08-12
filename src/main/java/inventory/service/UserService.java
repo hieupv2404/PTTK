@@ -68,7 +68,7 @@ public class UserService {
 			user.setUpdateDate(new Date());
 			userRoleDAO.update(userRole);
 		}
-		
+
 		userDAO.update(user);
 	}
 

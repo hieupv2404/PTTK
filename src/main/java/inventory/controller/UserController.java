@@ -55,11 +55,11 @@ public class UserController {
 		}
 	}
 	@RequestMapping(value= {"/user/list","/user/list/"})
-	
+
 	public String redirect() {
 		return "redirect:/user/list/1";
 	}
-	
+
 	@RequestMapping(value="/user/list/{page}")
 	public String showUsersList(Model model,HttpSession session , @ModelAttribute("searchForm") Users user,@PathVariable("page") int page) {
 		Paging paging = new Paging(5);
@@ -76,7 +76,7 @@ public class UserController {
 		model.addAttribute("pageInfo", paging);
 		model.addAttribute("users", users);
 		return "user-list";
-		
+
 	}
 
 	@RequestMapping(value="/user/getAll/{page}")
@@ -97,7 +97,6 @@ public class UserController {
 		return "user-list";
 
 	}
-
 	@GetMapping("/user/add")
 	public String add(Model model) {
 		model.addAttribute("titlePage", "Add Users");
@@ -107,7 +106,7 @@ public class UserController {
 		for(Role role : roles) {
 			mapRole.put(String.valueOf(role.getId()), role.getRoleName());
 		}
-		model.addAttribute("mapRole", mapRole); 
+		model.addAttribute("mapRole", mapRole);
 		model.addAttribute("viewOnly", false);
 		return "user-action";
 	}
@@ -129,6 +128,7 @@ public class UserController {
 			model.addAttribute("modelForm", user);
 			model.addAttribute("viewOnly", false);
 			model.addAttribute("editMode", true);
+			model.addAttribute("userName", false);
 			return "user-action";
 		}
 		return "redirect:/user/list";
@@ -142,8 +142,12 @@ public class UserController {
 			List<Role> roles = roleService.getRoleList(null, null);
 			Map<String, String> mapRole = new HashMap<>();
 			for(Role role : roles) {
-				mapRole.put(String.valueOf(role.getId()), role.getRoleName());
-			}
+
+						mapRole.put(String.valueOf(role.getId()), role.getRoleName());
+
+
+		}
+//			String mapRole = user.getUserRoles().getClass().getName();
 			model.addAttribute("mapRole", mapRole);
 			model.addAttribute("titlePage", "View Users");
 			model.addAttribute("modelForm", user);
@@ -170,34 +174,39 @@ public class UserController {
 			model.addAttribute("mapRole", mapRole);
 			model.addAttribute("modelForm", user);
 			model.addAttribute("viewOnly", false);
+			model.addAttribute("userName", false);
+
 			return "user-action";
-			
+
 		}
-		
-	//	UserRole userRole =(UserRole) user.getUserRoles().iterator().next();
+
+
+		//	UserRole userRole =(UserRole) user.getUserRoles().iterator().next();
 		if(user.getId()!=null && user.getId()!=0) {
 			try {
+				Users users = userService.findById(user.getId());
+				user.setUserName(users.getUserName());
 				userService.update(user);
 				session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
-			} catch (Exception e) { 
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				log.error(e.getMessage());
 				session.setAttribute(Constant.MSG_ERROR, "Update has error");
 			}
-			
+
 		}else {
-				try {
-					userService.save(user);
-					session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					session.setAttribute(Constant.MSG_ERROR, "Insert has error!!!");
-				}
+			try {
+				userService.save(user);
+				session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				session.setAttribute(Constant.MSG_ERROR, "Insert has error!!!");
+			}
 		}
 		return "redirect:/user/list";
-		
+
 	}
 	@GetMapping("/user/delete/{id}")
 	public String delete(Model model , @PathVariable("id") int id,HttpSession session) {

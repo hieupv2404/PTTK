@@ -65,6 +65,18 @@ public class ProductDetailPtController {
     public String showProductInfoList(Model model,HttpSession session , @ModelAttribute("searchForm") ProductDetailPt productDetail,@PathVariable("page") int page) {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
+        if (productDetail.getProductInfo() == null)
+        {
+            productDetail.setProductInfo(new ProductInfo());
+        }
+        if (productDetail.getSupplier() == null)
+        {
+            productDetail.setSupplier(new Supplier());
+        }
+        if (productDetail.getProductStatusList() == null)
+        {
+            productDetail.setProductStatusList(new ProductStatusList());
+        }
         List<ProductDetailPt> products = productDetailService.getAllProductDetailPt(productDetail,paging);
         if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));

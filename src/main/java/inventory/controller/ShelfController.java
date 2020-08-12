@@ -1,7 +1,7 @@
 package inventory.controller;
 
-import inventory.model.Shelf;
 import inventory.model.Paging;
+import inventory.model.Shelf;
 import inventory.service.ShelfService;
 import inventory.util.Constant;
 import org.apache.log4j.Logger;
@@ -32,16 +32,16 @@ public class ShelfController {
 		}
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-		
+
 	}
 	@RequestMapping(value= {"/shelf/list","/shelf/list/"})
-	
+
 	public String redirect() {
 		return "redirect:/shelf/list/1";
 	}
-	
+
 	@RequestMapping(value="/shelf/list/{page}")
-	public String showShelfList(Model model,HttpSession session , @ModelAttribute("searchForm") Shelf category,@PathVariable("page") int page) {
+	public String showShelfList(Model model, HttpSession session , @ModelAttribute("searchForm") Shelf category, @PathVariable("page") int page) {
 		Paging paging = new Paging(5);
 		paging.setIndexPage(page);
 		List<Shelf> categories = shelfService.getAllShelf(category,paging);
@@ -56,7 +56,7 @@ public class ShelfController {
 		model.addAttribute("pageInfo", paging);
 		model.addAttribute("categories", categories);
 		return "shelf-list";
-		
+
 	}
 
 	@RequestMapping(value="/shelf/getAll/{page}")
@@ -111,21 +111,23 @@ public class ShelfController {
 		return "redirect:/shelf/list";
 	}
 	@PostMapping("/shelf/save")
-	public String save(Model model,@ModelAttribute("modelForm") @Validated Shelf category,BindingResult result,HttpSession session) {
+	public String save(Model model, @ModelAttribute("modelForm") @Validated Shelf category, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			if(category.getId()!=null) {
 				model.addAttribute("titlePage", "Edit Shelf");
 			}else {
 				model.addAttribute("titlePage", "Add Shelf");
 			}
-			
+
 			model.addAttribute("modelForm", category);
 			model.addAttribute("viewOnly", false);
 			return "shelf-action";
-			
+
 		}
 		if(category.getId()!=null && category.getId()!=0) {
 			try {
+				Shelf shelfTemp = shelfService.findByIdShelf(category.getId());
+				category.setQty(shelfTemp.getQty());
 				shelfService.updateShelf(category);
 				session.setAttribute(Constant.MSG_SUCCESS, "Update success!!!");
 			} catch (Exception e) {
@@ -134,21 +136,21 @@ public class ShelfController {
 				log.error(e.getMessage());
 				session.setAttribute(Constant.MSG_ERROR, "Update has error");
 			}
-			
+
 		}else {
-				try {
-					category.setQty(0);
-					category.setQtyRest(category.getTotal()-category.getQty());
-					shelfService.saveShelf(category);
-					session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					session.setAttribute(Constant.MSG_ERROR, "Insert has error!!!");
-				}
+			try {
+				category.setQty(0);
+				category.setQtyRest(category.getTotal()-category.getQty());
+				shelfService.saveShelf(category);
+				session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				session.setAttribute(Constant.MSG_ERROR, "Insert has error!!!");
+			}
 		}
 		return "redirect:/shelf/list";
-		
+
 	}
 	@GetMapping("/shelf/delete/{id}")
 	public String delete(Model model , @PathVariable("id") int id,HttpSession session) {
@@ -166,5 +168,5 @@ public class ShelfController {
 		}
 		return "redirect:/shelf/list";
 	}
-	
+
 }

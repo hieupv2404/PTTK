@@ -39,37 +39,37 @@
 					<div class="table-responsive">
 						<table class="table table-striped jambo_table bulk_action">
 							<thead>
-								<tr class="headings">
-									<th class="column-title">#</th>
-									<th class="column-title">Id</th>
-									<th class="column-title">User Name</th>
-									<th class="column-title">Name</th>
-									<th class="column-title">Email</th>
-									<th class="column-title no-link last text-center" colspan="3"><span class="nobr">Action</span></th>
-								</tr>
+							<tr class="headings">
+								<th class="column-title">#</th>
+								<th class="column-title">Id</th>
+								<th class="column-title">User Name</th>
+								<th class="column-title">Name</th>
+								<th class="column-title">Email</th>
+								<th class="column-title no-link last text-center" colspan="3"><span class="nobr">Action</span></th>
+							</tr>
 							</thead>
 
 							<tbody>
-								<c:forEach items="${users}" var="user" varStatus="loop">
+							<c:forEach items="${users}" var="user" varStatus="loop">
 
-									<c:choose>
-										<c:when test="${loop.index%2==0 }">
-											<tr class="even pointer">
-										</c:when>
-										<c:otherwise>
-											<tr class="odd pointer">
-										</c:otherwise>
-									</c:choose>
-									<td class=" ">${pageInfo.getOffset()+loop.index+1}</td>
-									<td class=" ">${user.id }</td>
-									<td class=" ">${user.userName }</td>
-									<td class=" ">${user.name }</td>
-									<td class=" ">${user.email }</td>
-									<td class="text-center"><a href="<c:url value="/user/view/${user.id }"/>" class="btn btn-round btn-default">View</a></td>
-									<td class="text-center"><a href="<c:url value="/user/edit/${user.id }"/>" class="btn btn-round btn-primary">Edit</a></td>
-									<td class="text-center"><a href="javascript:void(0);" onclick="confirmDelete(${user.id});" class="btn btn-round btn-danger">Delete</a></td>
-									</tr>
-								</c:forEach>
+								<c:choose>
+									<c:when test="${loop.index%2==0 }">
+										<tr class="even pointer">
+									</c:when>
+									<c:otherwise>
+										<tr class="odd pointer">
+									</c:otherwise>
+								</c:choose>
+								<td class=" ">${pageInfo.getOffset()+loop.index+1}</td>
+								<td class=" ">${user.id }</td>
+								<td class=" ">${user.userName }</td>
+								<td class=" ">${user.name }</td>
+								<td class=" ">${user.email }</td>
+								<td class="text-center"><a href="<c:url value="/user/view/${user.id }"/>" class="btn btn-round btn-default">View</a></td>
+								<td class="text-center"><a href="<c:url value="/user/edit/${user.id }"/>" class="btn btn-round btn-primary">Edit</a></td>
+								<td class="text-center"><a href="javascript:void(0);" onclick="confirmDelete(${user.id});" class="btn btn-round btn-danger">Delete</a></td>
+								</tr>
+							</c:forEach>
 
 							</tbody>
 						</table>
@@ -81,38 +81,38 @@
 	</div>
 </div>
 <script type="text/javascript">
-	 function confirmDelete(id){
-		 if(confirm('Do you want delete this record?')){
-			 window.location.href = '<c:url value="/user/delete/"/>'+id;
-		 }
-	 }
-	 function gotoPage(page){
-		 $('#searchForm').attr('action','<c:url value="/user/list/"/>'+page);
-		 $('#searchForm').submit();
-	 }
-	 $(document).ready(function(){
-		 processMessage();
-	 });
-	 function processMessage(){
-		 var msgSuccess = '${msgSuccess}';
-		 var msgError = '${msgError}';
-		 if(msgSuccess){
-			 new PNotify({
-                 title: ' Success',
-                 text: msgSuccess,
-                 type: 'success',
-                 styling: 'bootstrap3'
-             });
-		 }
-		 if(msgError){
-			 new PNotify({
-                 title: ' Error',
-                 text: msgError,
-                 type: 'error',
-                 styling: 'bootstrap3'
-             });
-		 }
-	 }
-	
-	
+	function confirmDelete(id){
+		if(confirm('Do you want delete this record?')){
+			window.location.href = '<c:url value="/user/delete/"/>'+id;
+		}
+	}
+	function gotoPage(page){
+		$('#searchForm').attr('action','<c:url value="/user/list/"/>'+page);
+		$('#searchForm').submit();
+	}
+	$(document).ready(function(){
+		processMessage();
+	});
+	function processMessage(){
+		var msgSuccess = '${msgSuccess}';
+		var msgError = '${msgError}';
+		if(msgSuccess){
+			new PNotify({
+				title: ' Success',
+				text: msgSuccess,
+				type: 'success',
+				styling: 'bootstrap3'
+			});
+		}
+		if(msgError){
+			new PNotify({
+				title: ' Error',
+				text: msgError,
+				type: 'error',
+				styling: 'bootstrap3'
+			});
+		}
+	}
+
+
 </script>

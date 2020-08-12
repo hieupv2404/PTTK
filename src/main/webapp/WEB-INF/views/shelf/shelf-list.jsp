@@ -93,9 +93,9 @@
 
 									<td class=" ">${category.name }</td>
 									<td class=" ">${category.description }</td>
-									<td class=" ">${category.total }</td>
-									<td class=" ">${category.qty }</td>
-									<td class=" ">${category.qtyRest }</td>
+									<td class=" " style="color: deepskyblue">${category.total }</td>
+									<td class=" " style="color: deepskyblue">${category.qty }</td>
+									<td class=" " style="color: mediumvioletred">${category.qtyRest }</td>
 									<td class="text-center"><a href="<c:url value="/shelf/view/${category.id }"/>" class="btn btn-round btn-default">View</a></td>
 									<td class="text-center"><a href="<c:url value="/shelf/edit/${category.id }"/>" class="btn btn-round btn-primary">Edit</a></td>
 									<td class="text-center"><a href="javascript:void(0);" onclick="confirmDelete(${category.id});" class="btn btn-round btn-danger">Delete</a></td>
