@@ -3,6 +3,7 @@ package inventory.controller;
 import inventory.model.*;
 import inventory.service.UserService;
 import inventory.util.Constant;
+import inventory.util.HashingPassword;
 import inventory.validate.LoginValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +59,8 @@ public class LoginController {
         if (userList.size() != 0) {
 
                 Users user = userList.get(0);
-                if (users.getPassword().equals(user.getPassword())) {
+                String passMD = HashingPassword.encrypt(users.getPassword());
+                if (passMD.equals(user.getPassword())) {
                     UserRole userRole = (UserRole) user.getUserRoles().iterator().next();
                     List<Menu> menuList = new ArrayList<>();
                     Role role = userRole.getRole();
