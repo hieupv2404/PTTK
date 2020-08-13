@@ -69,7 +69,7 @@
 
             <%--@elvariable id="loginForm" type=""--%>
             <form:form modelAttribute="loginForm" servletRelativeAction="/processLogin" method="POST" >
-              <h1>Login Form</h1>
+              <h1>Login</h1>
               <div>
                 <form:input path="userName" cssClass="form-control" placeholder="Username"/>
                 <div class="has-error">
