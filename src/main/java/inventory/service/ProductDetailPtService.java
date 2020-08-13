@@ -94,6 +94,10 @@ public class ProductDetailPtService {
                 queryStr.append(" and model.supplier.name like :supplierName");
                 mapParams.put("supplierName", "%"+productDetailPt.getSupplier().getName()+"%");
             }
+            if(productDetailPt.getShelfName()!=null && !StringUtils.isEmpty(productDetailPt.getShelfName())) {
+                queryStr.append(" and model.shelfName like :shelfName");
+                mapParams.put("shelfName",productDetailPt.getShelfName()+"%");
+            }
         }
         return productDetailPtDAO.findAll(queryStr.toString(), mapParams,paging);
     }
