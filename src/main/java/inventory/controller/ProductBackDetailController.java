@@ -436,15 +436,14 @@ public class ProductBackDetailController {
                             productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
                             checkProductVat = 1;
                             if ( productStatusDetail.getQtyRest()<0) {
-                                session.setAttribute(Constant.MSG_ERROR,"Insert Error");
-                                return "redirect:/product-back-detail/list";
+                                session.setAttribute(Constant.MSG_ERROR,"Insert Error! Out of Vat's Qty");                                return "redirect:/product-back-detail/list";
                             }
                         }
 
                 }
                 if (checkProductVat == 0)
                 {
-                    session.setAttribute(Constant.MSG_ERROR,"Insert Error");
+                    session.setAttribute(Constant.MSG_ERROR,"Insert Error! Not existing in Vat");
                     return "redirect:/product-back-detail/list";
                 }
                 List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id",productStatusDetail.getProductStatusList().getId());

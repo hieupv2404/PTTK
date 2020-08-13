@@ -464,7 +464,7 @@ public class ProductDoneDetailController {
                         productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
                         checkProductVat = 1;
                         if ( productStatusDetail.getQtyRest()<0) {
-                            session.setAttribute(Constant.MSG_ERROR,"Insert Error");
+                            session.setAttribute(Constant.MSG_ERROR,"Insert Error! Out of Vat's Qty");
                             return "redirect:/product-done-detail/list";
                         }
                     }
@@ -473,7 +473,7 @@ public class ProductDoneDetailController {
                 }
                 if (checkProductVat == 0)
                 {
-                    session.setAttribute(Constant.MSG_ERROR,"Insert Error");
+                    session.setAttribute(Constant.MSG_ERROR,"Insert Error! Not existing in Vat");
                     return "redirect:/product-done-detail/list";
                 }
                 List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id",productStatusDetail.getProductStatusList().getId());
