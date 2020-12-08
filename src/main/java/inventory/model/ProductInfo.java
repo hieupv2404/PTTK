@@ -8,6 +8,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class ProductInfo implements java.io.Serializable {
@@ -17,6 +18,7 @@ public class ProductInfo implements java.io.Serializable {
 	@GeneratedValue
 	private Integer id;
 	private Category category;
+	@NotNull(message = "{msg.required}")
 	private String name;
 	private String description;
 	private String imgUrl;

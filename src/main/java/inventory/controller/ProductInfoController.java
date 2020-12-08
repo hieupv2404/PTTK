@@ -48,7 +48,7 @@ public class ProductInfoController {
 			binder.setValidator(productInfoValidator);
 		}
 	}
-	@RequestMapping(value= {"/product-info/list", "/vat/list/"})
+	@RequestMapping(value= {"/product-info/list", "/product-info/list/"})
 	
 	public String redirect() {
 		return "redirect:/product-info/list/1";

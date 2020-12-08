@@ -118,12 +118,22 @@
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="/message/message.properties"></property>
+        <property name="basename" value="classpath:message"></property>
+        <property name="defaultEncoding" value="UTF-8"></property>
+<!--        <property name="basename" value="/"></property>-->
+    </bean>
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="vi_VN" />
+        <property name="cookieName" value="myAppLocaleCookie"></property>
+        <property name="cookieMaxAge" value="3600"></property>
     </bean>
 
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="268435456" />
+        
     </bean>
 
     <mvc:interceptors>
