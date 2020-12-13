@@ -15,6 +15,7 @@ public class VatDetail implements Serializable {
     private ProductInfo productInfo;
     private int qty;
     private BigDecimal priceOne;
+    @Transient
     private BigDecimal priceTotal;
     private Integer vatId;
     private Integer productInfoId;

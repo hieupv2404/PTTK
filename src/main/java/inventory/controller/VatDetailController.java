@@ -73,6 +73,7 @@ public class VatDetailController {
         for (VatDetail vatDetail1 : vatDetails)
         {
             VatDetailTemp vatDetailTemp = new VatDetailTemp();
+            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
             vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
             vatDetailTemp.setQty(vatDetail1.getQty());
             vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
@@ -119,6 +120,7 @@ public class VatDetailController {
         for (VatDetail vatDetail1 : vatDetails)
         {
             VatDetailTemp vatDetailTemp = new VatDetailTemp();
+            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
             vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
             vatDetailTemp.setQty(vatDetail1.getQty());
             vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
@@ -173,6 +175,7 @@ public class VatDetailController {
         for (VatDetail vatDetail1 : vatDetails)
         {
             VatDetailTemp vatDetailTemp = new VatDetailTemp();
+            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
             vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
             vatDetailTemp.setQty(vatDetail1.getQty());
             vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());

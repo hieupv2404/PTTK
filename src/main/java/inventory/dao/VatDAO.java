@@ -1,5 +1,7 @@
 package inventory.dao;
 
-public interface VatDAO<E> extends BaseDAO<E> {
+import inventory.model.Vat;
 
+public interface VatDAO<E> extends BaseDAO<E> {
+    public void saveDTO(Vat vat);
 }

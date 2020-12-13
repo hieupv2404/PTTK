@@ -39,7 +39,7 @@ public class VatService {
         vat.setActiveFlag(1);
         vat.setCreateDate(new Date());
         vat.setUpdateDate(new Date());
-        vatDAO.save(vat);
+        vatDAO.saveDTO(vat);
     }
 
     public void updateVat(Vat vat) throws Exception {

@@ -1,11 +1,32 @@
 package inventory.dao;
 
 import inventory.model.Vat;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-@Transactional(rollbackFor=Exception.class)
-public class VatDAOImpl extends BaseDAOImpl<Vat> implements VatDAO<Vat>{
+import javax.sql.DataSource;
+import java.util.Date;
 
+@Repository
+@Transactional(rollbackFor = Exception.class)
+public class VatDAOImpl extends BaseDAOImpl<Vat> implements VatDAO<Vat> {
+
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    @Override
+    public void saveDTO(Vat vat) {
+        String sql = "INSERT INTO vat (code, tax, percent, active_flag, create_date, update_date," +
+                "supplier_id, user_id)"
+                + " VALUES (?, ?, ?, ?,?,?,?,?)";
+
+        jdbcTemplate.update(sql, vat.getCode(), vat.getTax(), vat.getPercent(), vat.getActiveFlag(), vat.getCreateDate(), vat.getUpdateDate(),
+                vat.getSupplierId(), vat.getUserId());
+    }
 }

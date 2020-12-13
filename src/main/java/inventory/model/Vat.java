@@ -18,6 +18,7 @@ public class Vat implements Serializable {
     private Supplier supplier;
     private BigDecimal percent;
     private BigDecimal price;
+    @Transient
     private BigDecimal total;
     private int activeFlag;
     private Date createDate;
