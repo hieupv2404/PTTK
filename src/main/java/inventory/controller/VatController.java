@@ -102,10 +102,13 @@ public class VatController {
             model.addAttribute(Constant.MSG_ERROR, session.getAttribute(Constant.MSG_ERROR));
             session.removeAttribute(Constant.MSG_ERROR);
         }
+        for (Vat vat1:vats)
+        {
+            vat1.setTotal(vat1.getPrice().add(vat1.getPrice().multiply(vat1.getPercent())));
+        }
         model.addAttribute("pageInfo", paging);
         model.addAttribute("products", vats);
         return "vat-list";
-
     }
 
     @GetMapping("/vat/add")
@@ -134,7 +137,7 @@ public class VatController {
             for(Supplier supplier : suppliers) {
                 mapSupplier.put(String.valueOf(supplier.getId()), supplier.getName());
             }
-            vat.setSupplierId(vat.getSupplier().getId());
+            vat.setSupplierId(vat.getSupplierId());
 
             model.addAttribute("titlePage", "Edit Vat");
             model.addAttribute("mapSupplier", mapSupplier);

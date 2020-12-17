@@ -25,8 +25,8 @@
         <property generated="never" lazy="false" name="priceOne" optimistic-lock="true" type="big_decimal" unique="false">
             <column name="price_one"  precision="15"/>
         </property>
-        <property generated="never" lazy="false" name="priceTotal" optimistic-lock="true" type="big_decimal" unique="false">
-            <column name="price_total"  precision="15"/>
-        </property>
+<!--        <property generated="never" lazy="false" name="priceTotal" optimistic-lock="true" type="big_decimal" unique="false">-->
+<!--            <column name="price_total"  precision="15"/>-->
+<!--        </property>-->
     </class>
 </hibernate-mapping>
