@@ -6,9 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ProjectOOP" />
-        <module name="PTTK" />
         <module name="ProjectOOP1" />
+        <module name="ProjectOOP" />
       </profile>
     </annotationProcessing>
   </component>
