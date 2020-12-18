@@ -2,6 +2,7 @@ package inventory.dao;
 
 import inventory.model.Vat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,5 +29,22 @@ public class VatDAOImpl extends BaseDAOImpl<Vat> implements VatDAO<Vat> {
 
         jdbcTemplate.update(sql, vat.getCode(), vat.getTax(), vat.getPercent(), vat.getActiveFlag(), vat.getCreateDate(), vat.getUpdateDate(),
                 vat.getSupplierId(), vat.getUserId());
+    }
+
+    @Override
+    public void updateDTO(Vat vat) {
+        String sql = "UPDATE vat SET " +
+                "supplier_id=?, code =?, tax=?, update_date=?, user_id=?, active_flag=? WHERE id=?";
+
+        jdbcTemplate.update(sql, vat.getSupplierId(), vat.getCode(), vat.getTax(), vat.getUpdateDate(), vat.getUserId(), vat.getActiveFlag(), vat.getId());
+    }
+
+    @Override
+    public Vat findByIdDTO(int id) {
+        String sql = "SELECT * FROM vat WHERE id=?";
+
+        return jdbcTemplate.queryForObject(sql, new Object[]{id},
+                new BeanPropertyRowMapper<>(Vat.class));
+
     }
 }

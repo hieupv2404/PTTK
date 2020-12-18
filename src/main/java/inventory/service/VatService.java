@@ -46,13 +46,13 @@ public class VatService {
         log.info("Update vat "+vat.toString());
 
         vat.setUpdateDate(new Date());
-        vatDAO.update(vat);
+        vatDAO.updateDTO(vat);
     }
     public void deleteVat(Vat vat) throws Exception{
         vat.setActiveFlag(0);
         vat.setUpdateDate(new Date());
         log.info("Delete Vat "+vat.toString());
-        vatDAO.update(vat);
+        vatDAO.updateDTO(vat);
         List<VatDetail> vatDetailList = vatDetailService.findVatDetail("vat.id",vat.getId());
         for(VatDetail vatDetail : vatDetailList)
         {
@@ -72,7 +72,7 @@ public class VatService {
         log.info("property ="+property +" value"+ value.toString());
         return vatDAO.findByProperty(property, value);
     }
-    public List<Vat> getAllVat(Vat vat, Paging paging){
+    public List<Vat>  getAllVat(Vat vat, Paging paging){
         log.info("Show all Vat");
         StringBuilder queryStr = new StringBuilder();
         Map<String, Object> mapParams = new HashMap<>();
@@ -107,7 +107,8 @@ public class VatService {
     }
     public Vat findByIdVat(int id) {
         log.info("find Vat by id ="+id);
-        return vatDAO.findById(Vat.class, id);
+//        return vatDAO.findById(Vat.class, id);
+        return vatDAO.findByIdDTO( id);
     }
 
 }
