@@ -31,21 +31,21 @@ public class VatDetailService {
         log.info("Insert VatDetail "+vatDetail.toString());
         vatDetail.setPriceTotal(BigDecimal.valueOf(vatDetail.getQty()).multiply(vatDetail.getPriceOne()));
        vatDetail.setActiveFlag(1);
-        vatDetailDAO.save(vatDetail);
+        vatDetailDAO.saveDTO(vatDetail);
     }
 
     public void updateVatDetail(VatDetail vatDetail) throws Exception {
         log.info("Update VatDetail "+vatDetail.toString());
         vatDetail.setPriceTotal(BigDecimal.valueOf(vatDetail.getQty()).multiply(vatDetail.getPriceOne()));
-
-        vatDetailDAO.update(vatDetail);
+        vatDetail.setActiveFlag(1);
+        vatDetailDAO.updateDTO(vatDetail);
     }
 
     public void deleteVatDetail(VatDetail vatDetail) throws Exception{
 
         log.info("Delete VatDetail "+vatDetail.toString());
         vatDetail.setActiveFlag(0);
-        vatDetailDAO.update(vatDetail);
+        vatDetailDAO.updateDTO(vatDetail);
     }
 
     public List<VatDetail> findVatDetail(String property , Object value){

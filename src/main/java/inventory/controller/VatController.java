@@ -1,5 +1,6 @@
 package inventory.controller;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -67,7 +68,7 @@ public class VatController {
     }
 
     @RequestMapping(value= "/vat/list/{page}")
-    public String showVat(Model model, HttpSession session , @ModelAttribute("searchForm") Vat vat, @PathVariable("page") int page) {
+    public String showVat(Model model, HttpSession session , @ModelAttribute("searchForm") Vat vat, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
         List<Vat> vats = vatService.getAllVat(vat,paging);
@@ -81,7 +82,14 @@ public class VatController {
         }
         for (Vat vat1:vats)
         {
+//            List<VatDetail> vatDetailList = vatDetailService.findVatDetail("vat.id",vat1.getId());
+//            for (VatDetail vatDetail:vatDetailList){
+//                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceOne().multiply(BigDecimal.valueOf(vatDetail.getQty()))));
+//            }
             vat1.setTotal(vat1.getPrice().add(vat1.getPrice().multiply(vat1.getPercent())));
+//            vat1.setSupplierId(vat1.getSupplier().getId());
+//            vat1.setUserId(vat1.getUser().getId());
+//            vatService.updateVat(vat1);
         }
         model.addAttribute("pageInfo", paging);
         model.addAttribute("products", vats);
@@ -90,7 +98,7 @@ public class VatController {
     }
 
     @RequestMapping(value= "/vat/getAll/{page}")
-    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") Vat vat, @PathVariable("page") int page) {
+    public String getAll(Model model, HttpSession session , @ModelAttribute("searchForm") Vat vat, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
         List<Vat> vats = vatService.getAllVat(null,paging);
@@ -104,7 +112,14 @@ public class VatController {
         }
         for (Vat vat1:vats)
         {
+            List<VatDetail> vatDetailList = vatDetailService.findVatDetail("vat.id",vat1.getId());
+            for (VatDetail vatDetail:vatDetailList){
+                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceOne().multiply(BigDecimal.valueOf(vatDetail.getQty()))));
+            }
             vat1.setTotal(vat1.getPrice().add(vat1.getPrice().multiply(vat1.getPercent())));
+            vat1.setSupplierId(vat1.getSupplier().getId());
+            vat1.setUserId(vat1.getUser().getId());
+            vatService.updateVat(vat1);
         }
         model.addAttribute("pageInfo", paging);
         model.addAttribute("products", vats);
