@@ -1,17 +1,23 @@
 package inventory.dao;
 
+import inventory.model.Paging;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import inventory.model.Paging;
-
 public interface BaseDAO<E> {
-	public List<E> findAll(String queryStr, Map<String, Object> mapParams, Paging paging);
-	public E findById(Class<E> e, Serializable id);
-	public List<E> findByProperty(String property, Object value);
-	public void save(E instance);
-	public int insert(E instance);
-	public void update(E instance);
-	public void deleteDone(E instance);
+    List<E> findAll(String queryStr, Map<String, Object> mapParams, Paging paging);
+
+    E findById(Class<E> e, Serializable id);
+
+    List<E> findByProperty(String property, Object value);
+
+    void save(E instance);
+
+    int insert(E instance);
+
+    void update(E instance);
+
+    void deleteDone(E instance);
 }

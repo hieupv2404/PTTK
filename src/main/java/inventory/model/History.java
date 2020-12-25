@@ -15,6 +15,7 @@ public class History implements java.io.Serializable {
 	@GeneratedValue
 	private Integer id;
 	private ProductInfo productInfo;
+	private Integer productId;
 	private String actionName;
 	private int type;
 	private int qty;
@@ -23,6 +24,7 @@ public class History implements java.io.Serializable {
 	private Date createDate;
 	private Date updateDate;
 	private Users user;
+	private Integer userId;
 
 	public History() {
 	}
@@ -117,5 +119,20 @@ public class History implements java.io.Serializable {
 
 	public void setUser(Users user) {
 		this.user = user;
+	}
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 }

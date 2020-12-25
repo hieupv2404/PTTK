@@ -24,13 +24,13 @@ public class InvoiceTempService {
     public void saveInvoiceTemp(InvoiceTemp invoiceTemp)  throws Exception{
         log.info("Insert category "+invoiceTemp.toString());
 
-        invoiceTempDAO.save(invoiceTemp);
+        invoiceTempDAO.saveDTO(invoiceTemp);
     }
 
     public void updateInvoiceTemp(InvoiceTemp invoiceTemp) throws Exception {
         log.info("Update category "+invoiceTemp.toString());
         invoiceTemp.setActiveFlag(0);
-        invoiceTempDAO.update(invoiceTemp);
+        invoiceTempDAO.updateDTO(invoiceTemp);
     }
     public void deleteInvoiceTemp(InvoiceTemp invoiceTemp) throws Exception{
 

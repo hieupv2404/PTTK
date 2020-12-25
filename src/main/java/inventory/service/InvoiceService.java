@@ -32,14 +32,14 @@ public class InvoiceService {
 		invoice.setActiveFlag(1);
 		invoice.setCreateDate(new Date());
 		invoice.setUpdateDate(new Date());
-		invoiceDAO.save(invoice);
+		invoiceDAO.saveDTO(invoice);
 		historyService.save(invoice, Constant.ACTION_ADD);
 		
 		productInStockService.saveOrUpdate(invoice);
 	}
 	public void updateTemp(Invoice invoice) throws Exception {
 
-		invoiceDAO.update(invoice);
+		invoiceDAO.updateDTO(invoice);
 
 	}
 
@@ -51,7 +51,7 @@ public class InvoiceService {
 		invoice2.setProductInfo(invoice.getProductInfo());
 		invoice2.setQty(invoice.getQty()-originQty);
 		invoice2.setPrice(invoice.getPrice());
-		invoiceDAO.update(invoice);
+		invoiceDAO.updateDTO(invoice);
 		historyService.save(invoice, Constant.ACTION_EDIT);
 		productInStockService.saveOrUpdate(invoice2);
 		

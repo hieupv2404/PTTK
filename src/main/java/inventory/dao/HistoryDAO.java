@@ -1,5 +1,7 @@
 package inventory.dao;
 
-public interface HistoryDAO<E> extends BaseDAO<E> {
+import inventory.model.History;
 
+public interface HistoryDAO<E> extends BaseDAO<E> {
+    void saveDTO(History history);
 }
