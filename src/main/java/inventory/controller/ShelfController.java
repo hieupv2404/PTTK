@@ -45,6 +45,10 @@ public class ShelfController {
 		Paging paging = new Paging(5);
 		paging.setIndexPage(page);
 		List<Shelf> categories = shelfService.getAllShelf(category,paging);
+		for(Shelf shelf:categories)
+		{
+			shelf.setQtyRest(shelf.getTotal()-shelf.getQty());
+		}
 		if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
 			model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
 			session.removeAttribute(Constant.MSG_SUCCESS);
@@ -64,6 +68,10 @@ public class ShelfController {
 		Paging paging = new Paging(5);
 		paging.setIndexPage(page);
 		List<Shelf> categories = shelfService.getAllShelf(null,paging);
+		for(Shelf shelf:categories)
+		{
+			shelf.setQtyRest(shelf.getTotal()-shelf.getQty());
+		}
 		if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
 			model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
 			session.removeAttribute(Constant.MSG_SUCCESS);

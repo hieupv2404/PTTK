@@ -40,6 +40,15 @@ public class VatDAOImpl extends BaseDAOImpl<Vat> implements VatDAO<Vat> {
     }
 
     @Override
+    public void deleteDTO(Vat vat) {
+        String sql = "UPDATE vat SET " +
+                "active_flag=? WHERE id=?";
+
+        jdbcTemplate.update(sql, vat.getActiveFlag(), vat.getId());
+
+    }
+
+    @Override
     public Vat findByIdDTO(int id) {
         String sql = "SELECT * FROM vat WHERE id=?";
 

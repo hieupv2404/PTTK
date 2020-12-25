@@ -2,6 +2,7 @@ package inventory.model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ public class Shelf implements Serializable {
     private Date createDate;
     private int total;
     private int qty;
+    @Transient
     private int qtyRest;
     private Set productStatusDetails = new HashSet(0);
 
