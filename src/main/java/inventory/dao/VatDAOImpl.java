@@ -34,9 +34,9 @@ public class VatDAOImpl extends BaseDAOImpl<Vat> implements VatDAO<Vat> {
     @Override
     public void updateDTO(Vat vat) {
         String sql = "UPDATE vat SET " +
-                "supplier_id=?, code =?, tax=?, update_date=?, user_id=?, active_flag=? WHERE id=?";
+                "supplier_id=?, code =?, tax=?, update_date=?, user_id=?, price=?, active_flag=? WHERE id=?";
 
-        jdbcTemplate.update(sql, vat.getSupplierId(), vat.getCode(), vat.getTax(), vat.getUpdateDate(), vat.getUserId(), vat.getActiveFlag(), vat.getId());
+        jdbcTemplate.update(sql, vat.getSupplierId(), vat.getCode(), vat.getTax(), vat.getUpdateDate(), vat.getUserId(), vat.getPrice(), vat.getActiveFlag(), vat.getId());
     }
 
     @Override

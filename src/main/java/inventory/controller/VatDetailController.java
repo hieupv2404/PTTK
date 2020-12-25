@@ -248,9 +248,18 @@ public class VatDetailController {
             }
             vatDetail.setProductInfoId(vatDetail.getProductInfo().getId());
 
+            List<Vat> vats = vatService.getAllVat(null, null);
+            Collections.sort(vats,new UpdateDateCompatatorVat());
+            Map<String, String> mapVat = new HashMap<>();
+            for(Vat vat : vats) {
+                mapVat.put(String.valueOf(vat.getId()), vat.getCode());
+            }
+
+            vatDetail.setVatId(vatDetail.getVat().getId());
 
 
             model.addAttribute("mapProductInfo", mapProductInfo);
+            model.addAttribute("mapVat", mapVat);
             model.addAttribute("titlePage", "Edit Vat Detail");
             model.addAttribute("modelForm", vatDetail);
             model.addAttribute("modelForm", vatDetail);
@@ -332,10 +341,10 @@ public class VatDetailController {
             try {
 
                 vatDetailService.updateVatDetail(vatDetail);
-                Vat vat1 = vatService.findByIdVat(vatDetail.getVat().getId());
-                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
-                vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
-                vatService.updateVat(vat1);
+//                Vat vat1 = vatService.findByIdVat(vatDetail.getVat().getId());
+//                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
+//                vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
+//                vatService.updateVat(vat1);
                 if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Update success!!!");
                 else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Update success!!!");
                 else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Update success!!!");
@@ -354,10 +363,10 @@ public class VatDetailController {
                 else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
                 else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
                 else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
-                Vat vat1 = vatService.findByIdVat(vatDetail.getVat().getId());
-                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
-                vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
-                vatService.updateVat(vat1);
+//                Vat vat1 = vatService.findByIdVat(vatDetail.getVat().getId());
+//                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
+//                vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
+//                vatService.updateVat(vat1);
 
             } catch (Exception e) {
                 // TODO Auto-generated catch block
