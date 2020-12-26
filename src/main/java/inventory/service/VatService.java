@@ -52,19 +52,19 @@ public class VatService {
         vat.setActiveFlag(0);
         vat.setUpdateDate(new Date());
         log.info("Delete Vat "+vat.toString());
-        vatDAO.updateDTO(vat);
-        List<VatDetail> vatDetailList = vatDetailService.findVatDetail("vat.id",vat.getId());
-        for(VatDetail vatDetail : vatDetailList)
-        {
-            vatDetailService.deleteVatDetail(vatDetail);
-        }
-        ProductStatusList productStatusList1 = new ProductStatusList();
-        productStatusList1.setVat(vat);
-        List<ProductStatusList> productStatusListList = productStatusListService.findProductStatusList("vat.id",productStatusList1.getVat().getId());
-        for (ProductStatusList productStatusList : productStatusListList)
-        {
-            productStatusListService.deleteProductStatusList(productStatusList);
-        }
+        vatDAO.deleteDTO(vat);
+//        List<VatDetail> vatDetailList = vatDetailService.findVatDetail("vat.id",vat.getId());
+//        for(VatDetail vatDetail : vatDetailList)
+//        {
+//            vatDetailService.deleteVatDetail(vatDetail);
+//        }
+//        ProductStatusList productStatusList1 = new ProductStatusList();
+//        productStatusList1.setVat(vat);
+//        List<ProductStatusList> productStatusListList = productStatusListService.findProductStatusList("vat.id",productStatusList1.getVat().getId());
+//        for (ProductStatusList productStatusList : productStatusListList)
+//        {
+//            productStatusListService.deleteProductStatusList(productStatusList);
+//        }
 
     }
     public List<Vat> findVat(String property , Object value){

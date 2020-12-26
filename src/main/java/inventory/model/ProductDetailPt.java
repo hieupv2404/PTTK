@@ -21,11 +21,12 @@ public class ProductDetailPt implements Serializable {
     private ProductInfo productInfo;
     private ProductStatusList productStatusList;
     private Supplier supplier;
+    private Shelf shelf;
     private Integer productInfoId;
     private Integer supplierId;
     private Integer invoiceId;
+    private Integer shelfId;
     private String status;
-    private String shelfName;
 
 
 
@@ -179,11 +180,19 @@ public class ProductDetailPt implements Serializable {
         this.status = status;
     }
 
-    public String getShelfName() {
-        return shelfName;
+    public Shelf getShelf() {
+        return shelf;
     }
 
-    public void setShelfName(String shelfName) {
-        this.shelfName = shelfName;
+    public void setShelf(Shelf shelf) {
+        this.shelf = shelf;
+    }
+
+    public Integer getShelfId() {
+        return shelfId;
+    }
+
+    public void setShelfId(Integer shelfId) {
+        this.shelfId = shelfId;
     }
 }

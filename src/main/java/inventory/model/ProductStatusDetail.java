@@ -1,9 +1,6 @@
 package inventory.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -17,6 +14,7 @@ public class ProductStatusDetail implements Serializable {
     private ProductInfo productInfo;
     private int qty;
     private BigDecimal priceOne;
+    @Transient
     private BigDecimal priceTotal;
     private int activeFlag;
     private Integer productStatusListId;
