@@ -42,7 +42,7 @@ public class MenuService {
 		Menu menu = menuDAO.findById(Menu.class, id);
 		if(menu!=null) {
 			menu.setActiveFlag(menu.getActiveFlag()==1? 0 :1);
-			menuDAO.update(menu);
+			menuDAO.updateDTO(menu);
 			return;
 		}
 		

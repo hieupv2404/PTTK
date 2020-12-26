@@ -50,19 +50,19 @@ public class SupplierService {
         supplier.setActiveFlag(1);
         supplier.setCreateDate(new Date());
         supplier.setUpdateDate(new Date());
-        supplierDAO.save(supplier);
+        supplierDAO.saveDTO(supplier);
     }
 
     public void updateSupplier(Supplier supplier) throws Exception {
         log.info("Update supplier "+supplier.toString());
         supplier.setUpdateDate(new Date());
-        supplierDAO.update(supplier);
+        supplierDAO.updateDTO(supplier);
     }
     public void deleteSupplier(Supplier supplier) throws Exception{
         supplier.setActiveFlag(0);
         supplier.setUpdateDate(new Date());
         log.info("Delete supplier "+supplier.toString());
-        supplierDAO.update(supplier);
+        supplierDAO.updateDTO(supplier);
     }
     public List<Supplier> findSupplier(String property , Object value){
         log.info("=====Find by property supplier start====");

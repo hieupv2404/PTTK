@@ -1,5 +1,8 @@
 package inventory.dao;
 
-public interface ShelfDAO<E> extends BaseDAO<E> {
+import inventory.model.Shelf;
 
+public interface ShelfDAO<E> extends BaseDAO<E> {
+    void saveDTO(Shelf shelf);
+    void updateDTO(Shelf shelf);
 }

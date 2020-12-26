@@ -28,12 +28,12 @@ public class RoleService {
 		role.setActiveFlag(1);
 		role.setCreateDate(new Date());
 		role.setUpdateDate(new Date());
-		roleDAO.save(role);
+		roleDAO.saveDTO(role);
 	}
 	public void updateRole(Role role) throws Exception {
 		log.info("Update role "+role.toString());
 		role.setUpdateDate(new Date());
-		roleDAO.update(role);
+		roleDAO.updateDTO(role);
 	}
 	public void deleteRole(Role role) throws Exception{
 		role.setActiveFlag(0);
