@@ -96,6 +96,7 @@ public class ProductBackDetailController {
         for (ProductStatusDetail productStatusDetail1:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
+            productStatusDetail1.setPriceTotal(productStatusDetail1.getPriceOne().multiply(BigDecimal.valueOf(productStatusDetail1.getQty())));
             productStatusDetailTemp.setProductName(productStatusDetail1.getProductInfo().getName());
             productStatusDetailTemp.setProductStatusName(productStatusDetail1.getProductStatusList().getCode());
             productStatusDetailTemp.setQty(productStatusDetail1.getQty());
@@ -158,6 +159,7 @@ public class ProductBackDetailController {
         for (ProductStatusDetail productStatusDetail2:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
+            productStatusDetail1.setPriceTotal(productStatusDetail1.getPriceOne().multiply(BigDecimal.valueOf(productStatusDetail1.getQty())));
             productStatusDetailTemp.setProductName(productStatusDetail2.getProductInfo().getName());
             productStatusDetailTemp.setProductStatusName(productStatusDetail2.getProductStatusList().getCode());
             productStatusDetailTemp.setQty(productStatusDetail2.getQty());
@@ -216,6 +218,7 @@ public class ProductBackDetailController {
         for (ProductStatusDetail productStatusDetail1:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
+            productStatusDetail1.setPriceTotal(productStatusDetail1.getPriceOne().multiply(BigDecimal.valueOf(productStatusDetail1.getQty())));
             productStatusDetailTemp.setProductName(productStatusDetail1.getProductInfo().getName());
             productStatusDetailTemp.setProductStatusName(productStatusDetail1.getProductStatusList().getCode());
             productStatusDetailTemp.setQty(productStatusDetail1.getQty());

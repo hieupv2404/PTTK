@@ -99,7 +99,7 @@
 									<td class=" ">
 										<c:choose>
 											<c:when test="${product.status=='Valid'}">
-												${product.shelfName}
+												${product.shelf.name}
 											</c:when>
 											<c:when test="${product.status=='InValid'}">
 

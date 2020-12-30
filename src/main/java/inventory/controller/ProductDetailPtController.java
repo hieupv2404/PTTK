@@ -316,7 +316,7 @@ public class ProductDetailPtController {
         Vat vat = vatService.findByIdVat(invoice.getVat().getId());
 
         Supplier supplier = new Supplier();
-        supplier.setId(vat.getSupplier().getId());
+        supplier.setId(vat.getSupplierId());
         productDetail.setSupplier(supplier);
 
         List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id",invoice.getId());

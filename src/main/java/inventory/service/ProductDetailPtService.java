@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,14 +43,14 @@ public class ProductDetailPtService {
 
     // PRODUCT Deatil
 
-    public void saveProductDetailPt(ProductDetailPt productDetailPt){
+    public void saveProductDetailPt(ProductDetailPt productDetailPt) throws SQLException {
         log.info("Insert productDetailPt "+productDetailPt.toString());
         productDetailPt.setActiveFlag(1);
         productDetailPt.setStatus("Valid");
         productDetailPt.setCreateDate(new Date());
         productDetailPt.setUpdateDate(new Date());
 
-        productDetailPtDAO.save(productDetailPt);
+        productDetailPtDAO.saveDTO(productDetailPt);
     }
 
     public void updateProductDetailPt(ProductDetailPt productDetailPt) throws Exception {

@@ -122,7 +122,7 @@
 
 <%--							</div>--%>
 
-<%--							<div class="form-group">--%>
+							<div class="form-group">
 
 									<%--@declare id="invoiceid"--%>
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="invoiceId">Product Done<span class="required">*</span>
@@ -143,6 +143,31 @@
 										</c:otherwise>
 									</c:choose>
 								</div>
+							</div>
+
+						<div class="form-group">
+
+								<%--@declare id="productinfoid"--%>
+							<label class="control-label col-md-3 col-sm-3 col-xs-12" for="shelfId">Shelf<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<c:choose>
+									<c:when test="${!viewOnly}">
+
+										<form:select path="shelfId" cssClass="form-control">
+											<form:options items="${mapShelf}" />
+										</form:select>
+										<div class="has-error">
+											<form:errors path="shelfId" cssClass="help-block"></form:errors>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<form:input path="shelf.name" disabled="true" cssClass="form-control col-md-7 col-xs-12"/>
+									</c:otherwise>
+								</c:choose>
+							</div>
+
+						</div>
 
 							</div>
 
