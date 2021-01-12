@@ -53,12 +53,20 @@ public class ProductDetailPtService {
         productDetailPtDAO.saveDTO(productDetailPt);
     }
 
+    public void changeStatusProductDetailPt(ProductDetailPt productDetailPt)
+    {
+        log.info("Update productDetailPt "+productDetailPt.toString());
+        productDetailPt.setUpdateDate(new Date());
+        productDetailPtDAO.update(productDetailPt);
+    }
+
     public void updateProductDetailPt(ProductDetailPt productDetailPt) throws Exception {
         log.info("Update productDetailPt "+productDetailPt.toString());
 
         productDetailPt.setUpdateDate(new Date());
-        productDetailPtDAO.update(productDetailPt);
+        productDetailPtDAO.updateDTO(productDetailPt);
     }
+
     public void deleteProductDetailPt(ProductDetailPt productDetailPt) throws Exception{
         productDetailPt.setActiveFlag(0);
         productDetailPt.setUpdateDate(new Date());

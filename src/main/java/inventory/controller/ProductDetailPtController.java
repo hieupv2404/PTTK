@@ -31,7 +31,7 @@ public class ProductDetailPtController {
 
     @Autowired
     private VatService vatService;
-    
+
 
     @Autowired
     private ProductInfoService productInfoService;
@@ -46,43 +46,42 @@ public class ProductDetailPtController {
     private ShelfService shelfService;
 
     static final Logger log = Logger.getLogger(ProductDetailPtController.class);
+
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-        if(binder.getTarget()==null) {
+        if (binder.getTarget() == null) {
             return;
         }
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
-        
+
     }
-    @RequestMapping(value= {"/product-detail-pt/list","/product-detail-pt/list/"})
+
+    @RequestMapping(value = {"/product-detail-pt/list", "/product-detail-pt/list/"})
 
     public String redirect() {
         return "redirect:/product-detail-pt/list/1";
     }
 
-    @RequestMapping(value="/product-detail-pt/list/{page}")
-    public String showProductInfoList(Model model,HttpSession session , @ModelAttribute("searchForm") ProductDetailPt productDetail,@PathVariable("page") int page) {
+    @RequestMapping(value = "/product-detail-pt/list/{page}")
+    public String showProductInfoList(Model model, HttpSession session, @ModelAttribute("searchForm") ProductDetailPt productDetail, @PathVariable("page") int page) {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
-        if (productDetail.getProductInfo() == null)
-        {
+        if (productDetail.getProductInfo() == null) {
             productDetail.setProductInfo(new ProductInfo());
         }
-        if (productDetail.getSupplier() == null)
-        {
+        if (productDetail.getSupplier() == null) {
             productDetail.setSupplier(new Supplier());
         }
-        if (productDetail.getProductStatusList() == null)
-        {
+        if (productDetail.getProductStatusList() == null) {
             productDetail.setProductStatusList(new ProductStatusList());
         }
-        List<ProductDetailPt> products = productDetailService.getAllProductDetailPt(productDetail,paging);
-        if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
+        List<ProductDetailPt> products = productDetailService.getAllProductDetailPt(productDetail, paging);
+        if (session.getAttribute(Constant.MSG_SUCCESS) != null) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
         }
-        if(session.getAttribute(Constant.MSG_ERROR)!=null ) {
+        if (session.getAttribute(Constant.MSG_ERROR) != null) {
             model.addAttribute(Constant.MSG_ERROR, session.getAttribute(Constant.MSG_ERROR));
             session.removeAttribute(Constant.MSG_ERROR);
         }
@@ -92,16 +91,16 @@ public class ProductDetailPtController {
 
     }
 
-    @RequestMapping(value="/product-detail-pt/getAll/{page}")
-    public String getAll(Model model,HttpSession session , @ModelAttribute("searchForm") ProductDetailPt productDetail,@PathVariable("page") int page) {
+    @RequestMapping(value = "/product-detail-pt/getAll/{page}")
+    public String getAll(Model model, HttpSession session, @ModelAttribute("searchForm") ProductDetailPt productDetail, @PathVariable("page") int page) {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
-        List<ProductDetailPt> products = productDetailService.getAllProductDetailPt(null,paging);
-        if(session.getAttribute(Constant.MSG_SUCCESS)!=null ) {
+        List<ProductDetailPt> products = productDetailService.getAllProductDetailPt(null, paging);
+        if (session.getAttribute(Constant.MSG_SUCCESS) != null) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
         }
-        if(session.getAttribute(Constant.MSG_ERROR)!=null ) {
+        if (session.getAttribute(Constant.MSG_ERROR) != null) {
             model.addAttribute(Constant.MSG_ERROR, session.getAttribute(Constant.MSG_ERROR));
             session.removeAttribute(Constant.MSG_ERROR);
         }
@@ -118,88 +117,85 @@ public class ProductDetailPtController {
 
         List<ProductInfo> productInfos = productDetailService.getAllProductInfo(null, null);
         Map<String, String> mapProductInfo = new HashMap<>();
-        for(ProductInfo productInfo : productInfos) {
+        for (ProductInfo productInfo : productInfos) {
             mapProductInfo.put(String.valueOf(productInfo.getId()), productInfo.getName());
         }
 
         List<Supplier> suppliers = productDetailService.getAllSupplier(null, null);
         Map<String, String> mapSupplier = new HashMap<>();
-        for(Supplier supplier : suppliers) {
+        for (Supplier supplier : suppliers) {
             mapSupplier.put(String.valueOf(supplier.getId()), supplier.getName());
         }
 
         List<Shelf> shelves = shelfService.getAllShelf(null, null);
         Map<String, String> mapShelf = new HashMap<>();
-        for(Shelf shelf : shelves) {
+        for (Shelf shelf : shelves) {
             mapShelf.put(String.valueOf(shelf.getId()), shelf.getName());
         }
 
         ProductStatusList productStatusListTemp = new ProductStatusList();
         productStatusListTemp.setType(Constant.PRODUCT_DONE);
-        if (productStatusListTemp.getUser() == null)
-        {
+        if (productStatusListTemp.getUser() == null) {
             productStatusListTemp.setUser(new Users());
         }
-        if (productStatusListTemp.getVat() == null)
-        {
+        if (productStatusListTemp.getVat() == null) {
             productStatusListTemp.setVat(new Vat());
         }
         List<ProductStatusList> invoices = productStatusListService.getAllProductStatusList(productStatusListTemp, null);
         Map<String, String> mapInvoice = new HashMap<>();
-        for(ProductStatusList invoice : invoices) {
+        for (ProductStatusList invoice : invoices) {
             mapInvoice.put(String.valueOf(invoice.getId()), invoice.getCode());
         }
 
         model.addAttribute("mapProductInfo", mapProductInfo);
         model.addAttribute("mapProductInfo", mapProductInfo);
         model.addAttribute("mapShelf", mapShelf);
-        model.addAttribute("mapSupplier",mapSupplier);
-        model.addAttribute("mapSupplier",mapSupplier);
-        model.addAttribute("mapInvoice",mapInvoice);
-        model.addAttribute("mapInvoice",mapInvoice);
+        model.addAttribute("mapSupplier", mapSupplier);
+        model.addAttribute("mapSupplier", mapSupplier);
+        model.addAttribute("mapInvoice", mapInvoice);
+        model.addAttribute("mapInvoice", mapInvoice);
         model.addAttribute("viewOnly", false);
         return "productDetailPt-action";
     }
+
     @GetMapping("/product-detail-pt/edit/{id}")
-    public String edit(Model model , @PathVariable("id") int id) {
-        log.info("Edit productDetail with id="+id);
+    public String edit(Model model, @PathVariable("id") int id) {
+        log.info("Edit productDetail with id=" + id);
         ProductDetailPt productDetail = productDetailService.findByIdProductDetailPt(id);
-        if(productDetail!=null) {
+        if (productDetail != null) {
 
             List<ProductInfo> productInfos = productDetailService.getAllProductInfo(null, null);
             Map<String, String> mapProductInfo = new HashMap<>();
-            for(ProductInfo productInfo : productInfos) {
+            for (ProductInfo productInfo : productInfos) {
                 mapProductInfo.put(String.valueOf(productInfo.getId()), productInfo.getName());
             }
             productDetail.setProductInfoId(productDetail.getProductInfo().getId());
 
             List<Shelf> shelves = shelfService.getAllShelf(null, null);
             Map<String, String> mapShelf = new HashMap<>();
-            for(Shelf shelf : shelves) {
+            for (Shelf shelf : shelves) {
                 mapShelf.put(String.valueOf(shelf.getId()), shelf.getName());
             }
             productDetail.setShelfId(productDetail.getShelf().getId());
 
             List<Supplier> suppliers = productDetailService.getAllSupplier(null, null);
             Map<String, String> mapSupplier = new HashMap<>();
-            for(Supplier supplier : suppliers) {
+            for (Supplier supplier : suppliers) {
                 mapSupplier.put(String.valueOf(supplier.getId()), supplier.getName());
             }
             productDetail.setSupplierId(productDetail.getSupplier().getId());
 
             ProductStatusList productStatusListTemp = new ProductStatusList();
             productStatusListTemp.setType(Constant.PRODUCT_DONE);
-            if (productStatusListTemp.getUser() == null)
-            {
+            if (productStatusListTemp.getUser() == null) {
                 productStatusListTemp.setUser(new Users());
             }
-            if (productStatusListTemp.getVat() == null)
-            {
+            if (productStatusListTemp.getVat() == null) {
                 productStatusListTemp.setVat(new Vat());
             }
             List<ProductStatusList> invoices = productStatusListService.getAllProductStatusList(productStatusListTemp, null);
             Map<String, String> mapInvoice = new HashMap<>();
-            for(ProductStatusList invoice : invoices) {
+            for (ProductStatusList invoice : invoices) {
                 mapInvoice.put(String.valueOf(invoice.getId()), invoice.getCode());
             }
             productDetail.setInvoiceId(productDetail.getProductStatusList().getId());
@@ -207,7 +203,7 @@ public class ProductDetailPtController {
             model.addAttribute("mapProductInfo", mapProductInfo);
             model.addAttribute("mapShelf", mapShelf);
             model.addAttribute("mapSupplier", mapSupplier);
-            model.addAttribute("mapInvoice",mapInvoice);
+            model.addAttribute("mapInvoice", mapInvoice);
             model.addAttribute("titlePage", "Edit Product Detail");
             model.addAttribute("modelForm", productDetail);
             model.addAttribute("modelForm", productDetail);
@@ -218,30 +214,28 @@ public class ProductDetailPtController {
     }
 
     @GetMapping("/product-detail-pt/changeStatus/{id}")
-    public String changeStatus(Model model , @PathVariable("id") int id) throws Exception {
-        log.info("Change Status productDetail with id="+id);
+    public String changeStatus(Model model, @PathVariable("id") int id) throws Exception {
+        log.info("Change Status productDetail with id=" + id);
         ProductDetailPt productDetail = productDetailService.findByIdProductDetailPt(id);
 //        Shelf shelf = shelfService.findShelf("name",productDetail.getShelfName()).get(0);
-        if (productDetail.getStatus().equals("Valid"))
-        {
+        if (productDetail.getStatus().equals("Valid")) {
             productDetail.setStatus("InValid");
 //            shelf.setQty(shelf.getQty()-1);
 //            shelfService.updateShelf(shelf);
-        }
-        else
-        {
+        } else {
             productDetail.setStatus("Valid");
 //            shelf.setQty(shelf.getQty()+1);
 //            shelfService.updateShelf(shelf);
         }
-        productDetailService.updateProductDetailPt(productDetail);
+        productDetailService.changeStatusProductDetailPt(productDetail);
         return "redirect:/product-detail-pt/list";
     }
+
     @GetMapping("/product-detail-pt/view/{id}")
-    public String view(Model model , @PathVariable("id") int id) {
-        log.info("View productDetail with id="+id);
+    public String view(Model model, @PathVariable("id") int id) {
+        log.info("View productDetail with id=" + id);
         ProductDetailPt productDetail = productDetailService.findByIdProductDetailPt(id);
-        if(productDetail!=null) {
+        if (productDetail != null) {
             model.addAttribute("titlePage", "View Product Detail");
             model.addAttribute("modelForm", productDetail);
             model.addAttribute("viewOnly", true);
@@ -249,53 +243,52 @@ public class ProductDetailPtController {
         }
         return "redirect:/product-detail-pt/list";
     }
-    @PostMapping("/product-detail-pt/save") 
-    public String save(Model model,@ModelAttribute("modelForm") @Validated ProductDetailPt productDetail,BindingResult result,HttpSession session) {
-        if(result.hasErrors()) {
-            if(productDetail.getId()!=null) {
+
+    @PostMapping("/product-detail-pt/save")
+    public String save(Model model, @ModelAttribute("modelForm") @Validated ProductDetailPt productDetail, BindingResult result, HttpSession session) {
+        if (result.hasErrors()) {
+            if (productDetail.getId() != null) {
                 model.addAttribute("titlePage", "Edit Product Detail");
-            }else {
+            } else {
                 model.addAttribute("titlePage", "Add Product Detail");
             }
 
             List<ProductInfo> productInfos = productDetailService.getAllProductInfo(null, null);
             Map<String, String> mapProductInfo = new HashMap<>();
-            for(ProductInfo productInfo : productInfos) {
+            for (ProductInfo productInfo : productInfos) {
                 mapProductInfo.put(String.valueOf(productInfo.getId()), productInfo.getName());
             }
 
             List<Supplier> suppliers = productDetailService.getAllSupplier(null, null);
             Map<String, String> mapSupplier = new HashMap<>();
-            for(Supplier supplier : suppliers) {
+            for (Supplier supplier : suppliers) {
                 mapSupplier.put(String.valueOf(supplier.getId()), supplier.getName());
             }
 
             List<Shelf> shelves = shelfService.getAllShelf(null, null);
             Map<String, String> mapShelf = new HashMap<>();
-            for(Shelf shelf : shelves) {
+            for (Shelf shelf : shelves) {
                 mapShelf.put(String.valueOf(shelf.getId()), shelf.getName());
             }
 
             ProductStatusList productStatusListTemp = new ProductStatusList();
             productStatusListTemp.setType(Constant.PRODUCT_DONE);
-            if (productStatusListTemp.getUser() == null)
-            {
+            if (productStatusListTemp.getUser() == null) {
                 productStatusListTemp.setUser(new Users());
             }
-            if (productStatusListTemp.getVat() == null)
-            {
+            if (productStatusListTemp.getVat() == null) {
                 productStatusListTemp.setVat(new Vat());
             }
             List<ProductStatusList> invoices = productStatusListService.getAllProductStatusList(productStatusListTemp, null);
             Map<String, String> mapInvoice = new HashMap<>();
-            for(ProductStatusList invoice : invoices) {
+            for (ProductStatusList invoice : invoices) {
                 mapInvoice.put(String.valueOf(invoice.getId()), invoice.getCode());
             }
 
             model.addAttribute("mapProductInfo", mapProductInfo);
             model.addAttribute("mapSupplier", mapSupplier);
             model.addAttribute("mapShelf", mapShelf);
-            model.addAttribute("mapInvoice",mapInvoice);
+            model.addAttribute("mapInvoice", mapInvoice);
             model.addAttribute("modelForm", productDetail);
             model.addAttribute("viewOnly", false);
         }
@@ -308,7 +301,6 @@ public class ProductDetailPtController {
         productDetail.setShelf(shelf);
 
 
-
         ProductStatusList invoice = productStatusListService.findByIdProductStatusList(productDetail.getInvoiceId());
 //        invoice.setId(productDetail.getInvoiceId());
         productDetail.setProductStatusList(invoice);
@@ -319,20 +311,18 @@ public class ProductDetailPtController {
         supplier.setId(vat.getSupplierId());
         productDetail.setSupplier(supplier);
 
-        List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id",invoice.getId());
-        ProductStatusDetail productStatusDetail = new ProductStatusDetail();
-        for (ProductStatusDetail productStatusDetail1: productStatusDetailList)
-        {
-            if (productStatusDetail1.getProductInfo().getId() == productDetail.getProductInfo().getId())
-            {
-                productDetail.setPriceIn(productStatusDetail1.getPriceOne());
-                break;
-            }
-        }
+//        List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id", invoice.getId());
+//        ProductStatusDetail productStatusDetail = new ProductStatusDetail();
+//        for (ProductStatusDetail productStatusDetail1: productStatusDetailList)
+//        {
+//            if (productStatusDetail1.getProductInfo().getId() == productDetail.getProductInfo().getId())
+//            {
+//                productDetail.setPriceIn(productStatusDetail1.getPriceOne());
+//                break;
+//            }
+//        }
 
-
-
-        if(productDetail.getId()!=null && productDetail.getId()!=0) {
+        if (productDetail.getId() != null && productDetail.getId() != 0) {
             try {
 
 
@@ -345,7 +335,7 @@ public class ProductDetailPtController {
                 session.setAttribute(Constant.MSG_ERROR, "Update has error");
             }
 
-        }else {
+        } else {
             try {
 
                 productDetailService.saveProductDetailPt(productDetail);
@@ -359,11 +349,12 @@ public class ProductDetailPtController {
         return "redirect:/product-detail-pt/list";
 
     }
+
     @GetMapping("/product-detail-pt/delete/{id}")
-    public String delete(Model model , @PathVariable("id") int id,HttpSession session) {
-        log.info("Delete productDetail with id="+id);
+    public String delete(Model model, @PathVariable("id") int id, HttpSession session) {
+        log.info("Delete productDetail with id=" + id);
         ProductDetailPt productDetail = productDetailService.findByIdProductDetailPt(id);
-        if(productDetail!=null) {
+        if (productDetail != null) {
             try {
                 productDetailService.deleteProductDetailPt(productDetail);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete success!!!");

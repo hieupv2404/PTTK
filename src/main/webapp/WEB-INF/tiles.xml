@@ -82,6 +82,16 @@
 					   value="/WEB-INF/views/vat-detail/vatDetail-action.jsp"></put-attribute>
 	</definition>
 
+	<definition name="issueDetail-list" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/issue-detail/issueDetail-list.jsp"></put-attribute>
+	</definition>
+
+	<definition name="issueDetail-action" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/issue-detail/issueDetail-action.jsp"></put-attribute>
+	</definition>
+
 	<definition name="product-done-list-action" extends="master">
 		<put-attribute name="body"
 					   value="/WEB-INF/views/product-done-list/product-done-list-action.jsp"></put-attribute>
@@ -178,6 +188,15 @@
 	<definition name="vat-action" extends="master">
 		<put-attribute name="body"
 					   value="/WEB-INF/views/vat/vat-action.jsp"></put-attribute>
+	</definition>
+
+	<definition name="issue-list" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/issue/issue-list.jsp"></put-attribute>
+	</definition>
+	<definition name="issue-action" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/issue/issue-action.jsp"></put-attribute>
 	</definition>
 
 </tiles-definitions>

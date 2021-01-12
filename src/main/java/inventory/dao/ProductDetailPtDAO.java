@@ -6,5 +6,6 @@ import java.sql.SQLException;
 
 public interface ProductDetailPtDAO<E> extends BaseDAO<E> {
     void saveDTO(ProductDetailPt productDetailPt) throws SQLException;
+    void updateDTO(ProductDetailPt productDetailPt) throws SQLException;
 
 }

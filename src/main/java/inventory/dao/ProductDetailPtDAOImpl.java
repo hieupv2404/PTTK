@@ -35,17 +35,37 @@ public class ProductDetailPtDAOImpl extends BaseDAOImpl<ProductDetailPt> impleme
     @Override
     public void saveDTO(ProductDetailPt productDetailPt) throws SQLException {
 
-            CallableStatement statement = conn.prepareCall("{call insert_product_detail(?, ?,?,?,?,?)}");
+            CallableStatement statement = conn.prepareCall("{call insert_product_detail(?, ?,?,?,?,?,?)}");
             statement.setInt(1, productDetailPt.getProductInfoId());
             statement.setInt(2, productDetailPt.getProductStatusList().getId());
             statement.setInt(3, productDetailPt.getActiveFlag());
             statement.setString(4, productDetailPt.getCode());
             statement.setInt(5, productDetailPt.getSupplier().getId());
             statement.setInt(6, productDetailPt.getShelfId());
+            statement.setBigDecimal(7, productDetailPt.getPriceOut());
             if(!statement.execute())
             {
                 statement.close();
                 throw  new SQLException();
             }
         }
+
+    @Override
+    public void updateDTO(ProductDetailPt productDetailPt) throws SQLException {
+        CallableStatement statement = conn.prepareCall("{call update_product_detail(?,?, ?,?,?,?,?,?)}");
+        statement.setInt(1, productDetailPt.getProductInfoId());
+        statement.setInt(2, productDetailPt.getProductStatusList().getId());
+        statement.setInt(3, productDetailPt.getActiveFlag());
+        statement.setString(4, productDetailPt.getCode());
+        statement.setInt(5, productDetailPt.getSupplier().getId());
+        statement.setInt(6, productDetailPt.getShelfId());
+        statement.setBigDecimal(7, productDetailPt.getPriceOut());
+        statement.setInt(8, productDetailPt.getId());
+
+        if(!statement.execute())
+        {
+            statement.close();
+            throw  new SQLException();
+        }
+    }
 }
