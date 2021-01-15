@@ -1,10 +1,11 @@
 package inventory.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
 
 @Entity
 
@@ -12,20 +13,20 @@ public class Customer implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue
-    private int id;
+    private Integer id;
     private String name;
     private String phone;
     private String address;
-    private Timestamp createDate;
-    private Timestamp updateDate;
+    private Date createDate;
+    private Date updateDate;
     private Integer activeFlag;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,20 +58,20 @@ public class Customer implements Serializable {
     }
 
 
-    public Timestamp getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
 
-    public Timestamp getUpdateDate() {
+    public Date getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(Timestamp updateDate) {
+    public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
 

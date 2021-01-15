@@ -16,8 +16,8 @@
         <many-to-one class="inventory.model.ProductInfo" embed-xml="true" lazy="false" fetch="select" insert="true" name="productInfo" not-found="exception" optimistic-lock="true" unique="false" update="true">
             <column name="product_id" />
         </many-to-one>
-        <property generated="never" lazy="false" name="qty" optimistic-lock="true" type="int" unique="false">
-            <column length="11" name="qty" />
+        <property generated="never" lazy="false" name="imei" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="imei" />
         </property>
         <property generated="never" lazy="false" name="activeFlag" optimistic-lock="true" type="int" unique="false">
             <column length="11" name="active_flag" />

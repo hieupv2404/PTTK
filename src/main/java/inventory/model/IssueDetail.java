@@ -13,7 +13,7 @@ public class IssueDetail implements Serializable {
 
     private Issue issue;
     private ProductInfo productInfo;
-    private int qty;
+    private String imei;
     private BigDecimal priceOne;
     @Transient
     private BigDecimal priceTotal;
@@ -52,12 +52,12 @@ public class IssueDetail implements Serializable {
         this.productInfo = productInfo;
     }
 
-    public int getQty() {
-        return qty;
+    public String getImei() {
+        return imei;
     }
 
-    public void setQty(int qty) {
-        this.qty = qty;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     public BigDecimal getPriceOne() {
