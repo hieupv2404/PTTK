@@ -70,19 +70,20 @@
                 <value>Role.hbm.xml</value>
                 <value>UserRole.hbm.xml</value>
                 <value>Users.hbm.xml</value>
-<!--                <value>inventory/model/mapping/Users.hbm.xml</value>-->
-<!--                <value>Customer.hbm.xml</value>-->
                 <value>ProductDetail.hbm.xml</value>
                 <value>ProductDetailPt.hbm.xml</value>
                 <value>Supplier.hbm.xml</value>
                 <value>Vat.hbm.xml</value>
                 <value>VatDetail.hbm.xml</value>
+                <value>IssueDetail.hbm.xml</value>
+                <value>Issue.hbm.xml</value>
                 <value>ProductStatusList.hbm.xml</value>
                 <value>ProductStatusDetail.hbm.xml</value>
                 <value>InvoiceTemp.hbm.xml</value>
                 <value>Shelf.hbm.xml</value>
                 <value>VatDetailTemp.hbm.xml</value>
                 <value>ProductStatusDetailTemp.hbm.xml</value>
+                <value>Customer.hbm.xml</value>
             </list>
         </property>
     </bean>

@@ -47,13 +47,13 @@ public class IssueDetailController {
 
     }
 
-    @RequestMapping(value = {"/vat-detail/list", "/vat-detail/list/"})
+    @RequestMapping(value = {"/issue-detail/list", "/issue-detail/list/"})
 
     public String redirect() {
-        return "redirect:/vat-detail/list/1";
+        return "redirect:/issue-detail/list/1";
     }
 
-    @RequestMapping(value = "/vat-detail/list/{page}")
+    @RequestMapping(value = "/issue-detail/list/{page}")
     public String showProductInfoList(Model model, HttpSession session, @ModelAttribute("searchForm") IssueDetail vatDetail, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
@@ -64,25 +64,25 @@ public class IssueDetailController {
             vatDetailTempService.deleteVatDetailTemp(vatDetailTemp);
         }
 
-        List<IssueDetail> vatDetails = issueDetailService.getAllIssueDetail(vatDetail, paging);
+        List<IssueDetail> issueDetails = issueDetailService.getAllIssueDetail(vatDetail, paging);
 
         int totalQty = 0;
         BigDecimal totalPriceOne = new BigDecimal(0);
         BigDecimal totalPriceTotal = new BigDecimal(0);
-        for (IssueDetail vatDetail1 : vatDetails) {
-            VatDetailTemp vatDetailTemp = new VatDetailTemp();
-            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
-            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
-            vatDetailTemp.setQty(vatDetail1.getQty());
-            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
-            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
-            vatDetailTemp.setIssueName(vatDetail1.getIssue().getCode());
-            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
-            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
-            totalQty += vatDetail1.getQty();
-            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
-            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
-        }
+//        for (IssueDetail vatDetail1 : issueDetails) {
+//            VatDetailTemp vatDetailTemp = new VatDetailTemp();
+//            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
+//            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
+//            vatDetailTemp.setQty(vatDetail1.getQty());
+//            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
+//            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
+//            vatDetailTemp.setIssueName(vatDetail1.getIssue().getCode());
+//            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
+//            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+//            totalQty += vatDetail1.getQty();
+//            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+//            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
+//        }
         model.addAttribute("totalQty", totalQty);
         model.addAttribute("totalPriceOne", totalPriceOne);
         model.addAttribute("totalPriceTotal", totalPriceTotal);
@@ -95,12 +95,12 @@ public class IssueDetailController {
             session.removeAttribute(Constant.MSG_ERROR);
         }
         model.addAttribute("pageInfo", paging);
-        model.addAttribute("products", vatDetails);
-        return "vatDetail-list";
+        model.addAttribute("products", issueDetails);
+        return "issueDetail-list";
 
     }
 
-    @RequestMapping(value = "/vat-detail/getAll/{page}")
+    @RequestMapping(value = "/issue-detail/getAll/{page}")
     public String getAll(Model model, HttpSession session, @ModelAttribute("searchForm") IssueDetail vatDetail, @PathVariable("page") int page) throws Exception {
         Paging paging = new Paging(5);
         paging.setIndexPage(page);
@@ -110,24 +110,24 @@ public class IssueDetailController {
         for (VatDetailTemp vatDetailTemp : vatDetailTempList) {
             vatDetailTempService.deleteVatDetailTemp(vatDetailTemp);
         }
-        List<IssueDetail> vatDetails = issueDetailService.getAllIssueDetail(null, paging);
+        List<IssueDetail> issueDetails = issueDetailService.getAllIssueDetail(null, paging);
         int totalQty = 0;
         BigDecimal totalPriceOne = new BigDecimal(0);
         BigDecimal totalPriceTotal = new BigDecimal(0);
-        for (IssueDetail vatDetail1 : vatDetails) {
-            VatDetailTemp vatDetailTemp = new VatDetailTemp();
-            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
-            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
-            vatDetailTemp.setQty(vatDetail1.getQty());
-            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
-            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
-            vatDetailTemp.setIssueName(vatDetail1.getIssue().getCode());
-            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
-            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
-            totalQty += vatDetail1.getQty();
-            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
-            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
-        }
+//        for (IssueDetail vatDetail1 : issueDetails) {
+//            VatDetailTemp vatDetailTemp = new VatDetailTemp();
+//            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
+//            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
+//            vatDetailTemp.setQty(vatDetail1.getQty());
+//            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
+//            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
+//            vatDetailTemp.setIssueName(vatDetail1.getIssue().getCode());
+//            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
+//            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+//            totalQty += vatDetail1.getQty();
+//            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+//            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
+//        }
         model.addAttribute("totalQty", totalQty);
         model.addAttribute("totalPriceOne", totalPriceOne);
         model.addAttribute("totalPriceTotal", totalPriceTotal);
@@ -140,12 +140,12 @@ public class IssueDetailController {
             session.removeAttribute(Constant.MSG_ERROR);
         }
         model.addAttribute("pageInfo", paging);
-        model.addAttribute("products", vatDetails);
-        return "vatDetail-list";
+        model.addAttribute("products", issueDetails);
+        return "issueDetail-list";
 
     }
 
-    @RequestMapping(value = "/vat-detail/vat/{code}")
+    @RequestMapping(value = "/issue-detail/vat/{code}")
     public String showProductInfoList(Model model, HttpSession session, @ModelAttribute("searchForm") IssueDetail vatDetail, @PathVariable("code") String code) throws Exception {
         Paging paging = new Paging(5);
 
@@ -162,25 +162,25 @@ public class IssueDetailController {
             vatDetailTempService.deleteVatDetailTemp(vatDetailTemp);
         }
 
-        List<IssueDetail> vatDetails = issueDetailService.getAllIssueDetail(vatDetail, paging);
+        List<IssueDetail> issueDetails = issueDetailService.getAllIssueDetail(vatDetail, paging);
 
         int totalQty = 0;
         BigDecimal totalPriceOne = new BigDecimal(0);
         BigDecimal totalPriceTotal = new BigDecimal(0);
-        for (IssueDetail vatDetail1 : vatDetails) {
-            VatDetailTemp vatDetailTemp = new VatDetailTemp();
-            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
-            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
-            vatDetailTemp.setQty(vatDetail1.getQty());
-            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
-            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
-            vatDetailTemp.setIssueName(vatDetail1.getIssue().getCode());
-            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
-            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
-            totalQty += vatDetail1.getQty();
-            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
-            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
-        }
+//        for (IssueDetail vatDetail1 : issueDetails) {
+//            VatDetailTemp vatDetailTemp = new VatDetailTemp();
+//            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
+//            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
+//            vatDetailTemp.setQty(vatDetail1.getQty());
+//            vatDetailTemp.setPriceOne(vatDetail1.getPriceOne());
+//            vatDetailTemp.setPriceTotal(vatDetail1.getPriceTotal());
+//            vatDetailTemp.setIssueName(vatDetail1.getIssue().getCode());
+//            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
+//            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
+//            totalQty += vatDetail1.getQty();
+//            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+//            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
+//        }
         model.addAttribute("totalQty", totalQty);
         model.addAttribute("totalPriceOne", totalPriceOne);
         model.addAttribute("totalPriceTotal", totalPriceTotal);
@@ -193,12 +193,12 @@ public class IssueDetailController {
             session.removeAttribute(Constant.MSG_ERROR);
         }
         model.addAttribute("pageInfo", paging);
-        model.addAttribute("products", vatDetails);
-        return "vatDetail-list";
+        model.addAttribute("products", issueDetails);
+        return "issueDetail-list";
 
     }
 
-    @GetMapping("/vat-detail/{vatId}/add")
+    @GetMapping("/issue-detail/{vatId}/add")
     public String add(Model model, @PathVariable("vatId") int vatId) {
         model.addAttribute("titlePage", "Add Issue Detail");
 //
@@ -227,10 +227,10 @@ public class IssueDetailController {
         model.addAttribute("mapProductInfo", mapProductInfo);
 
         model.addAttribute("viewOnly", false);
-        return "vatDetail-action";
+        return "issueDetail-action";
     }
 
-    @GetMapping("/vat-detail/edit/{id}")
+    @GetMapping("/issue-detail/edit/{id}")
     public String edit(Model model, @PathVariable("id") int id) {
         log.info("Edit vat Detail with id=" + id);
         IssueDetail vatDetail = issueDetailService.findByIdIssueDetail(id);
@@ -259,12 +259,12 @@ public class IssueDetailController {
             model.addAttribute("modelForm", vatDetail);
             model.addAttribute("modelForm", vatDetail);
             model.addAttribute("viewOnly", false);
-            return "vatDetail-action";
+            return "issueDetail-action";
         }
-        return "redirect:/vat-detail/list";
+        return "redirect:/issue-detail/list";
     }
 
-    @GetMapping("/vat-detail/view/{id}")
+    @GetMapping("/issue-detail/view/{id}")
     public String view(Model model, @PathVariable("id") int id) {
         log.info("View productDetail with id=" + id);
         IssueDetail vatDetail = issueDetailService.findByIdIssueDetail(id);
@@ -272,12 +272,12 @@ public class IssueDetailController {
             model.addAttribute("titlePage", "View Issue Detail");
             model.addAttribute("modelForm", vatDetail);
             model.addAttribute("viewOnly", true);
-            return "vatDetail-action";
+            return "issueDetail-action";
         }
-        return "redirect:/vat-detail/list";
+        return "redirect:/issue-detail/list";
     }
 
-    @PostMapping("/vat-detail/save")
+    @PostMapping("/issue-detail/save")
     public String save(Model model, @ModelAttribute("modelForm") @Validated IssueDetail vatDetail, BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
             if (vatDetail.getId() != null) {
@@ -321,10 +321,7 @@ public class IssueDetailController {
         vatDetail.setIssue(vat);
 
         int checkPrice = 0, checkQty = 0;
-        if (vatDetail.getQty() < 0) {
-            vatDetail.setQty(Math.abs(vatDetail.getQty()));
-            checkQty = 1;
-        }
+
         if (vatDetail.getPriceOne().compareTo(new BigDecimal(0)) < 0) {
             vatDetail.setPriceOne(vatDetail.getPriceOne().abs());
             checkPrice = 1;
@@ -371,11 +368,11 @@ public class IssueDetailController {
                 session.setAttribute(Constant.MSG_ERROR, "Insert has error!!!");
             }
         }
-        return "redirect:/vat-detail/list";
+        return "redirect:/issue-detail/list";
 
     }
 
-    @GetMapping("/vat-detail/delete/{id}")
+    @GetMapping("/issue-detail/delete/{id}")
     public String delete(Model model, @PathVariable("id") int id, HttpSession session) {
         log.info("Delete vatDetail with id=" + id);
         IssueDetail vatDetail = issueDetailService.findByIdIssueDetail(id);
@@ -384,8 +381,6 @@ public class IssueDetailController {
                 issueDetailService.deleteIssueDetail(vatDetail);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete success!!!");
                 Issue vat = issueService.findByIdIssue(vatDetail.getIssue().getId());
-                vat.setPrice(vat.getPrice().subtract(vatDetail.getPriceTotal()));
-                vat.setTotal(vat.getPrice().add(vat.getPercent().multiply(vat.getPrice())));
                 issueService.updateIssue(vat);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -393,10 +388,10 @@ public class IssueDetailController {
                 session.setAttribute(Constant.MSG_ERROR, "Delete has error!!!");
             }
         }
-        return "redirect:/vat-detail/list";
+        return "redirect:/issue-detail/list";
     }
 
-    @GetMapping("/vat-detail/export")
+    @GetMapping("/issue-detail/export")
     public ModelAndView exportReport(Model model, HttpSession session, @ModelAttribute("searchForm") @RequestBody IssueDetail vatDetail
     ) {
         ModelAndView modelAndView = new ModelAndView();
@@ -404,7 +399,7 @@ public class IssueDetailController {
         List<VatDetailTemp> vatDetailTempList = vatDetailTempService.findVatDetailTemp("activeFlag", 1);
 
         modelAndView.addObject(Constant.KEY_GOODS_RECEIPT_REPORT, vatDetailTempList);
-        modelAndView.setView(new IssueDetailReport());
+//        modelAndView.setView(new IssueDetailReport());
         return modelAndView;
     }
 }

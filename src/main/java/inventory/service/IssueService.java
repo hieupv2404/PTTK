@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class IssueService {
     private static final Logger log = Logger.getLogger(IssueService.class);
 
     //  service
-    public void saveIssue(Issue issue){
+    public void saveIssue(Issue issue) throws SQLException {
         log.info("Insert Issue "+issue.toString());
 //        if(issue.getTax()!=null && !StringUtils.isEmpty(issue.getTax()))
 //        {
@@ -50,7 +51,7 @@ public class IssueService {
         issue.setActiveFlag(0);
         issue.setUpdateDate(new Date());
         log.info("Delete Issue "+issue.toString());
-        issueDAO.deleteDTO(issue);
+        issueDAO.updateDTO(issue);
 
 
     }

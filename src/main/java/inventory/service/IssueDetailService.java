@@ -1,11 +1,9 @@
 package inventory.service;
 
 import inventory.dao.ProductInfoDAO;
-import inventory.dao.VatDAO;
 import inventory.dao.IssueDetailDAO;
 import inventory.model.Paging;
 import inventory.model.ProductInfo;
-import inventory.model.Vat;
 import inventory.model.IssueDetail;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,41 +19,37 @@ import java.util.Map;
 @Service
 public class IssueDetailService {
     @Autowired
-    private IssueDetailDAO<IssueDetail> vatDetailDAO;
+    private IssueDetailDAO<IssueDetail> issueDetailDAO;
     
     @Autowired
     private ProductInfoDAO<ProductInfo> productInfoDAO;
-    
-    @Autowired
-    private VatDAO<Vat> vatDao;
+
 
     private static final Logger log = Logger.getLogger(IssueDetailService.class);
 
-    public void saveIssueDetail(IssueDetail vatDetail){
-        log.info("Insert IssueDetail "+vatDetail.toString());
-        vatDetail.setPriceTotal(BigDecimal.valueOf(vatDetail.getQty()).multiply(vatDetail.getPriceOne()));
-       vatDetail.setActiveFlag(1);
-        vatDetailDAO.saveDTO(vatDetail);
+    public void saveIssueDetail(IssueDetail issueDetail) throws SQLException {
+        log.info("Insert IssueDetail "+issueDetail.toString());
+       issueDetail.setActiveFlag(1);
+        issueDetailDAO.saveDTO(issueDetail);
     }
 
-    public void updateIssueDetail(IssueDetail vatDetail) throws Exception {
-        log.info("Update IssueDetail "+vatDetail.toString());
-        vatDetail.setPriceTotal(BigDecimal.valueOf(vatDetail.getQty()).multiply(vatDetail.getPriceOne()));
-        vatDetail.setActiveFlag(1);
-        vatDetailDAO.updateDTO(vatDetail);
+    public void updateIssueDetail(IssueDetail issueDetail) throws Exception {
+        log.info("Update IssueDetail "+issueDetail.toString());
+        issueDetail.setActiveFlag(1);
+        issueDetailDAO.updateDTO(issueDetail);
     }
 
-    public void deleteIssueDetail(IssueDetail vatDetail) throws Exception{
+    public void deleteIssueDetail(IssueDetail issueDetail) throws Exception{
 
-        log.info("Delete IssueDetail "+vatDetail.toString());
-        vatDetail.setActiveFlag(0);
-        vatDetailDAO.updateDTO(vatDetail);
+        log.info("Delete IssueDetail "+issueDetail.toString());
+        issueDetail.setActiveFlag(0);
+        issueDetailDAO.updateDTO(issueDetail);
     }
 
     public List<IssueDetail> findIssueDetail(String property , Object value){
         log.info("=====Find by property IssueDetail start====");
         log.info("property ="+property +" value"+ value.toString());
-        return vatDetailDAO.findByProperty(property, value);
+        return issueDetailDAO.findByProperty(property, value);
     }
 
     public List<IssueDetail> getAllIssueDetail(IssueDetail issueDetail, Paging paging){
@@ -68,12 +63,12 @@ public class IssueDetailService {
             }
 
             if(issueDetail.getIssue().getCode()!=null && !StringUtils.isEmpty(issueDetail.getIssue().getCode())) {
-                queryStr.append(" and model.vat.code=:code");
+                queryStr.append(" and model.issue.code=:code");
                 mapParams.put("code", issueDetail.getIssue().getCode());
             }
 
             if(issueDetail.getIssue().getId()!=null ) {
-                queryStr.append(" and model.vat.id=:id");
+                queryStr.append(" and model.issue.id=:id");
                 mapParams.put("id", issueDetail.getIssue().getId());
             }
 
@@ -103,11 +98,11 @@ public class IssueDetailService {
             }
 
         }
-        return vatDetailDAO.findAll(queryStr.toString(), mapParams,paging);
+        return issueDetailDAO.findAll(queryStr.toString(), mapParams,paging);
     }
     public IssueDetail findByIdIssueDetail(int id) {
         log.info("find IssueDetail by id ="+id);
-        return vatDetailDAO.findById(IssueDetail.class, id);
+        return issueDetailDAO.findById(IssueDetail.class, id);
     }
 
 }
