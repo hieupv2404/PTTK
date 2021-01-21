@@ -15,12 +15,12 @@
 
 
 				<div class="x_content">
-					<a href="<c:url value="/vat/list"/>" class="btn btn-app"><i class="fa fa-backward"></i>Vat List</a>
-					<a href="<c:url value="/vat-detail/export"/>" class="btn btn-app"><i class="fa fa-cloud-download"></i>Export</a>
+					<a href="<c:url value="/issue/list"/>" class="btn btn-app"><i class="fa fa-backward"></i>Vat List</a>
+					<a href="<c:url value="/issue-detail/export"/>" class="btn btn-app"><i class="fa fa-cloud-download"></i>Export</a>
 
 					<div class="container" style="padding: 50px;">
 						<%--@elvariable id="searchForm" type=""--%>
-						<form:form modelAttribute="searchForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/vat-detail/list/1" method="POST">
+						<form:form modelAttribute="searchForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/issue-detail/list/1" method="POST">
 							<div class="form-group">
 								<label for="id" class="control-label col-md-3 col-sm-3 col-xs-12">ID</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
@@ -36,9 +36,9 @@
 <%--								</div>--%>
 <%--							</div>--%>
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="vat.code">Vat </label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="issue.code">Vat </label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<form:input path="vat.code" cssClass="form-control col-md-7 col-xs-12" />
+									<form:input path="issue.code" cssClass="form-control col-md-7 col-xs-12" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -83,7 +83,7 @@
 							<div class="form-group">
 								<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 									<button type="submit" class="btn btn-success">Search</button>
-									<button class="btn btn-success"><a href="<c:url value="/vat-detail/getAll/1"/>"  style="color: white">Get All</a></button>
+									<button class="btn btn-success"><a href="<c:url value="/issue-detail/getAll/1"/>"  style="color: white">Get All</a></button>
 
 								</div>
 							</div>
@@ -99,9 +99,8 @@
 									<th class="column-title">Id</th>
 									<th class="column-title">Vat</th>
 									<th class="column-title">Product</th>
-									<th class="column-title">Qty</th>
+									<th class="column-title">Imei</th>
 									<th class="column-title">Price One</th>
-									<th class="column-title">Price Total</th>
 
 									<th class="column-title no-link last text-center" colspan="3"><span class="nobr">Action</span></th>
 								</tr>
@@ -120,14 +119,13 @@
 									</c:choose>
 									<td class=" ">${pageInfo.getOffset()+loop.index+1}</td>
 									<td class=" ">${product.id }</td>
-									<td class=" ">${product.vat.code }</td>
+									<td class=" ">${product.issue.code }</td>
 									<td class=" ">${product.productInfo.name }</td>
-									<td class=" ">${product.qty }</td>
+									<td class=" ">${product.imei }</td>
 									<td class=" ">${product.priceOne }</td>
-									<td class=" ">${product.priceTotal }</td>
 
-									<td class="text-center"><a href="<c:url value="/vat-detail/view/${product.id }"/>" class="btn btn-round btn-default">View</a></td>
-									<td class="text-center"><a href="<c:url value="/vat-detail/edit/${product.id }"/>" class="btn btn-round btn-primary">Edit</a></td>
+									<td class="text-center"><a href="<c:url value="/issue-detail/view/${product.id }"/>" class="btn btn-round btn-default">View</a></td>
+									<td class="text-center"><a href="<c:url value="/issue-detail/edit/${product.id }"/>" class="btn btn-round btn-primary">Edit</a></td>
 									<td class="text-center"><a href="javascript:void(0);" onclick="confirmDelete(${product.id});" class="btn btn-round btn-danger">Delete</a></td>
 									</tr>
 								</c:forEach>
@@ -163,11 +161,11 @@
 <script type="text/javascript">
 	 function confirmDelete(id){
 		 if(confirm('Do you want delete this record?')){
-			 window.location.href = '<c:url value="/vat-detail/delete/"/>'+id;
+			 window.location.href = '<c:url value="/issue-detail/delete/"/>'+id;
 		 }
 	 }
 	 function gotoPage(page){
-		 $('#searchForm').attr('action','<c:url value="/vat-detail/list/"/>'+page);
+		 $('#searchForm').attr('action','<c:url value="/issue-detail/list/"/>'+page);
 		 $('#searchForm').submit();
 	 }
 	 $(document).ready(function(){

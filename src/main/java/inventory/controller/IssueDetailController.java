@@ -145,7 +145,7 @@ public class IssueDetailController {
 
     }
 
-    @RequestMapping(value = "/issue-detail/vat/{code}")
+    @RequestMapping(value = "/issue-detail/issue/{code}")
     public String showProductInfoList(Model model, HttpSession session, @ModelAttribute("searchForm") IssueDetail vatDetail, @PathVariable("code") String code) throws Exception {
         Paging paging = new Paging(5);
 
@@ -278,9 +278,9 @@ public class IssueDetailController {
     }
 
     @PostMapping("/issue-detail/save")
-    public String save(Model model, @ModelAttribute("modelForm") @Validated IssueDetail vatDetail, BindingResult result, HttpSession session) {
+    public String save(Model model, @ModelAttribute("modelForm") @Validated IssueDetail issueDetail, BindingResult result, HttpSession session) {
         if (result.hasErrors()) {
-            if (vatDetail.getId() != null) {
+            if (issueDetail.getId() != null) {
                 model.addAttribute("titlePage", "Edit Issue Detail");
             } else {
                 model.addAttribute("titlePage", "Add Issue Detail");
@@ -299,7 +299,7 @@ public class IssueDetailController {
                 mapIssue.put(String.valueOf(vat.getId()), vat.getCode());
             }
 
-//            List<Issue> vats = vatService.findIssue("code",vatDetail.getIssue().getCode());
+//            List<Issue> vats = vatService.findIssue("code",issueDetail.getIssue().getCode());
 //            Map<String, String> mapIssue = new HashMap<>();
 //            for (Issue vat : vats) {
 //                mapIssue.put(String.valueOf(vat.getId()), vat.getCode());
@@ -308,31 +308,27 @@ public class IssueDetailController {
             model.addAttribute("mapProductInfo", mapProductInfo);
             model.addAttribute("mapIssue", mapIssue);
 
-            model.addAttribute("modelForm", vatDetail);
+            model.addAttribute("modelForm", issueDetail);
             model.addAttribute("viewOnly", false);
         }
 
         ProductInfo productInfo = new ProductInfo();
-        productInfo.setId(vatDetail.getProductInfoId());
-        vatDetail.setProductInfo(productInfo);
+        productInfo.setId(issueDetail.getProductInfoId());
+        issueDetail.setProductInfo(productInfo);
 
         Issue vat = new Issue();
-        vat.setId(vatDetail.getIssueId());
-        vatDetail.setIssue(vat);
+        vat.setId(issueDetail.getIssueId());
+        issueDetail.setIssue(vat);
 
         int checkPrice = 0, checkQty = 0;
 
-        if (vatDetail.getPriceOne().compareTo(new BigDecimal(0)) < 0) {
-            vatDetail.setPriceOne(vatDetail.getPriceOne().abs());
-            checkPrice = 1;
-        }
 
-        if (vatDetail.getId() != null && vatDetail.getId() != 0) {
+        if (issueDetail.getId() != null && issueDetail.getId() != 0) {
             try {
 
-                issueDetailService.updateIssueDetail(vatDetail);
-//                Issue vat1 = vatService.findByIdIssue(vatDetail.getIssue().getId());
-//                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
+                issueDetailService.updateIssueDetail(issueDetail);
+//                Issue vat1 = vatService.findByIdIssue(issueDetail.getIssue().getId());
+//                vat1.setPrice(vat1.getPrice().add(issueDetail.getPriceTotal()));
 //                vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
 //                vatService.updateIssue(vat1);
                 if (checkQty == 1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS-ed and Update success!!!");
@@ -350,15 +346,15 @@ public class IssueDetailController {
 
         } else {
             try {
-                issueDetailService.saveIssueDetail(vatDetail);
+                issueDetailService.saveIssueDetail(issueDetail);
                 if (checkQty == 1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS-ed and Insert success!!!");
                 else if (checkPrice == 1)
                     session.setAttribute(Constant.MSG_SUCCESS, "Price has ABS-ed and Insert success!!!");
                 else if (checkPrice == 1 && checkQty == 1)
                     session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
                 else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
-//                Issue vat1 = vatService.findByIdIssue(vatDetail.getIssue().getId());
-//                vat1.setPrice(vat1.getPrice().add(vatDetail.getPriceTotal()));
+//                Issue vat1 = vatService.findByIdIssue(issueDetail.getIssue().getId());
+//                vat1.setPrice(vat1.getPrice().add(issueDetail.getPriceTotal()));
 //                vat1.setTotal(vat1.getPrice().add(vat1.getPercent().multiply(vat1.getPrice())));
 //                vatService.updateIssue(vat1);
 

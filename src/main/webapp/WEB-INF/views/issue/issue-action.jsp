@@ -16,30 +16,28 @@
 					<div class="x_content">
 						<br />
 						<%--@elvariable id="modelForm" type=""--%>
-						<form:form modelAttribute="modelForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/vat/save" method="POST">
+						<form:form modelAttribute="modelForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/issue/save" method="POST">
 							<form:hidden path="id" />
-							<form:hidden path="percent" />
 							<form:hidden path="price" />
-							<form:hidden path="total" />
 							<form:hidden path="createDate" />
 							<form:hidden path="activeFlag" />
 							<div class="form-group">
 
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="supplierId">Supplier <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="customerId">Customer <span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<c:choose>
 										<c:when test="${!viewOnly}">
 										
-											<form:select path="supplierId" cssClass="form-control">
-												<form:options items="${mapSupplier}" />
+											<form:select path="customerId" cssClass="form-control">
+												<form:options items="${mapCustomer}" />
 											</form:select>
 											<div class="has-error">
-												<form:errors path="supplierId" cssClass="help-block"></form:errors>
+												<form:errors path="customerId" cssClass="help-block"></form:errors>
 											</div>
 										</c:when>
 										<c:otherwise>
-											<form:input path="supplier.name" disabled="true" cssClass="form-control col-md-7 col-xs-12"/>
+											<form:input path="customer.name" disabled="true" cssClass="form-control col-md-7 col-xs-12"/>
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -62,16 +60,6 @@
 									<form:input path="code" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />
 									<div class="has-error">
 										<form:errors path="code" cssClass="help-block"></form:errors>
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="tax">Tax</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<form:input path="tax" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />
-									<div class="has-error">
-										<form:errors path="tax" cssClass="help-block"></form:errors>
 									</div>
 								</div>
 							</div>
@@ -105,6 +93,6 @@
 				$('#vatlistId').parents().show();
 			});
 	function cancel() {
-		window.location.href = '<c:url value="/vat/list"/>'
+		window.location.href = '<c:url value="/issue/list"/>'
 	}
 </script>

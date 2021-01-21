@@ -3,7 +3,7 @@ package inventory.controller;
 import inventory.model.*;
 import inventory.service.*;
 import inventory.util.Constant;
-import inventory.validate.VatValidator;
+import inventory.validate.IssueValidator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class IssueController {
     private ProductDetailService productDetailService;
 
     @Autowired
-    private VatValidator vatValidator;
+    private IssueValidator issueValidator;
 
     @Autowired
     private UserService userService;
@@ -52,7 +51,7 @@ public class IssueController {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(sdf, true));
         if(binder.getTarget().getClass()== Issue.class) {
-            binder.setValidator(vatValidator);
+            binder.setValidator(issueValidator);
         }
     }
 
@@ -75,17 +74,7 @@ public class IssueController {
             model.addAttribute(Constant.MSG_ERROR, session.getAttribute(Constant.MSG_ERROR));
             session.removeAttribute(Constant.MSG_ERROR);
         }
-//        for (Issue issue1:issues)
-//        {
-////            List<IssueDetail> vatDetailList = vatDetailService.findIssueDetail("issue.id",issue1.getId());
-////            for (IssueDetail vatDetail:vatDetailList){
-////                issue1.setPrice(issue1.getPrice().add(vatDetail.getPriceOne().multiply(BigDecimal.valueOf(vatDetail.getQty()))));
-////            }
-////            issue1.setTotal(issue1.getPrice().add(issue1.getPrice().multiply(issue1.getPercent())));
-////            issue1.setCustomerId(issue1.getCustomer().getId());
-////            issue1.setUserId(issue1.getUser().getId());
-////            vatService.updateIssue(issue1);
-//        }
+
         model.addAttribute("pageInfo", paging);
         model.addAttribute("products", issues);
         return "issue-list";
@@ -134,7 +123,7 @@ public class IssueController {
 
         model.addAttribute("mapCustomer",mapCustomer);
         model.addAttribute("viewOnly", false);
-        return "vat-action";
+        return "issue-action";
     }
     @GetMapping("/issue/edit/{id}")
     public String edit(Model model , @PathVariable("id") int id) {
@@ -165,7 +154,7 @@ public class IssueController {
             model.addAttribute("titlePage", "View Issue");
             model.addAttribute("modelForm", vat);
             model.addAttribute("viewOnly", true);
-            return "vat-action";
+            return "issue-action";
         }
         return "redirect:/issue/list";
     }

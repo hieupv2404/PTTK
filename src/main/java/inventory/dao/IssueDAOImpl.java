@@ -62,7 +62,7 @@ public class IssueDAOImpl extends BaseDAOImpl<Issue> implements IssueDAO<Issue>{
 
     @Override
     public Issue findByIdDTO(int id) {
-        return null;
+        return findById(Issue.class, id);
     }
 
 }

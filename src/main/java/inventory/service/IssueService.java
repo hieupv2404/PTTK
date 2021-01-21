@@ -85,6 +85,7 @@ public class IssueService {
         }
         return issueDAO.findAll(queryStr.toString(), mapParams,paging);
     }
+
     public Issue findByIdIssue(int id) {
         log.info("find Issue by id ="+id);
         return issueDAO.findByIdDTO( id);

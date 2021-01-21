@@ -16,40 +16,40 @@
 					<div class="x_content">
 						<br />
 						<%--@elvariable id="modelForm" type=""--%>
-						<form:form modelAttribute="modelForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/vat-detail/save" method="POST">
+						<form:form modelAttribute="modelForm" cssClass="form-horizontal form-label-left" servletRelativeAction="/issue-detail/save" method="POST">
 							<form:hidden path="id" />
 
 
 <%--							<div class="form-group">--%>
-<%--								&lt;%&ndash;@declare id="vatId"&ndash;%&gt;--%>
-<%--									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="vatId">Vat <span class="required">*</span>--%>
+<%--								&lt;%&ndash;@declare id="issueId"&ndash;%&gt;--%>
+<%--									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="issueId">Vat <span class="required">*</span>--%>
 <%--								</label>--%>
 <%--								<div class="col-md-6 col-sm-6 col-xs-12">--%>
-<%--									<form:input path="vatId" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />--%>
+<%--									<form:input path="issueId" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />--%>
 <%--									<div class="has-error">--%>
-<%--										<form:errors path="vatId" cssClass="help-block"></form:errors>--%>
+<%--										<form:errors path="issueId" cssClass="help-block"></form:errors>--%>
 <%--									</div>--%>
 <%--								</div>--%>
 <%--							</div>--%>
 
 							<div class="form-group">
 
-									<%--@declare id="vatId"--%>
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="vatId">Vat<span class="required">*</span>
+									<%--@declare id="issueId"--%>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="issueId">Issue<span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<c:choose>
 										<c:when test="${!viewOnly}">
 
-											<form:select path="vatId" cssClass="form-control">
-												<form:options items="${mapVat}" />
+											<form:select path="issueId" cssClass="form-control">
+												<form:options items="${mapIssue}" />
 											</form:select>
 											<div class="has-error">
-												<form:errors path="vatId" cssClass="help-block"></form:errors>
+												<form:errors path="issueId" cssClass="help-block"></form:errors>
 											</div>
 										</c:when>
 										<c:otherwise>
-											<form:input path="vat.code" disabled="true" cssClass="form-control col-md-7 col-xs-12"/>
+											<form:input path="issue.code" disabled="true" cssClass="form-control col-md-7 col-xs-12"/>
 										</c:otherwise>
 									</c:choose>
 								</div>
@@ -82,43 +82,12 @@
 
 
 							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="qty">Qty <span class="required">*</span>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="imei">Imei <span class="required">*</span>
 								</label>
 								<div class="col-md-6 col-sm-6 col-xs-12">
-									<form:input path="qty" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />
+									<form:input path="imei" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />
 									<div class="has-error">
-										<form:errors path="qty" cssClass="help-block"></form:errors>
-									</div>
-								</div>
-							</div>
-
-<%--							<div class="form-group">--%>
-<%--								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="productInfoName">Name <span class="required">*</span>--%>
-<%--								</label>--%>
-<%--								<div class="col-md-6 col-sm-6 col-xs-12">--%>
-<%--									<form:input path="productInfoName" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />--%>
-<%--									<div class="has-error">--%>
-<%--										<form:errors path="productInfo.name" cssClass="help-block"></form:errors>--%>
-<%--									</div>--%>
-<%--								</div>--%>
-<%--							</div>--%>
-<%--							<div class="form-group">--%>
-<%--									<label for="supplier.name" class="control-label col-md-3 col-sm-3 col-xs-12">Supplier</label>--%>
-<%--								<div class="col-md-6 col-sm-6 col-xs-12">--%>
-<%--									<form:textarea path="supplier.name" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />--%>
-<%--									<div class="has-error">--%>
-<%--										<form:errors path="supplier.name" cssClass="help-block"></form:errors>--%>
-<%--									</div>--%>
-<%--								</div>--%>
-<%--							</div>--%>
-
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="priceOne">Price One <span class="required">*</span>
-								</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<form:input path="priceOne" cssClass="form-control col-md-7 col-xs-12" disabled="${viewOnly}" />
-									<div class="has-error">
-										<form:errors path="priceOne" cssClass="help-block"></form:errors>
+										<form:errors path="imei" cssClass="help-block"></form:errors>
 									</div>
 								</div>
 							</div>
@@ -145,14 +114,14 @@
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				$('#vat-detaillistId').addClass('current-page').siblings()
+				$('#issue-detaillistId').addClass('current-page').siblings()
 						.removeClass('current-page');
-				var parent = $('#vat-detaillistId').parents('li');
+				var parent = $('#issue-detaillistId').parents('li');
 				parent.addClass('active').siblings().removeClass('active');
-				$('#vat-detaillistId').parents().show();
+				$('#issue-detaillistId').parents().show();
 			});
 	function cancel() {
-		window.location.href = '<c:url value="/vat/list"/>'
+		window.location.href = '<c:url value="/issue/list"/>'
 	}
 
 
