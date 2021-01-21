@@ -100,11 +100,6 @@ public class ProductStatusDetailService {
                 mapParams.put("name", "%"+productStatusDetail.getProductInfo().getName()+"%");
             }
 
-            if(productStatusDetail.getShelf().getName()!=null && !StringUtils.isEmpty(productStatusDetail.getShelf().getName()) ) {
-                queryStr.append(" and model.shelf.name like :nameShelf");
-                mapParams.put("nameShelf", "%"+productStatusDetail.getShelf().getName()+"%");
-            }
-
         }
         return productStatusDetailDAO.findAll(queryStr.toString(), mapParams,paging);
     }

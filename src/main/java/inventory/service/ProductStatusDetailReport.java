@@ -37,7 +37,6 @@ public class ProductStatusDetailReport extends AbstractXlsxView{
 		header.createCell(3).setCellValue("Price");
 		header.createCell(4).setCellValue("Price Total");
 		header.createCell(5).setCellValue("Product Status Code");
-		header.createCell(6).setCellValue("Shelf");
 
 		List<ProductStatusDetailTemp> invoiceTempList =(List<ProductStatusDetailTemp>) model.get(Constant.KEY_GOODS_RECEIPT_REPORT);
 //		List<Invoice> invoices =(List<Invoice>) model.get(Constant.KEY_GOODS_RECEIPT_REPORT);
@@ -51,7 +50,6 @@ public class ProductStatusDetailReport extends AbstractXlsxView{
 			row.createCell(3).setCellValue(Float.parseFloat(invoiceTemp.getPriceOne().toString()));
 			row.createCell(4).setCellValue(Float.parseFloat(invoiceTemp.getPriceTotal().toString()));
 			row.createCell(5).setCellValue(invoiceTemp.getProductStatusName());
-			row.createCell(6).setCellValue(invoiceTemp.getShelfName());
 		}
 //		for(Invoice invoice :invoices) {
 //			Row row = sheet.createRow(rownum++);

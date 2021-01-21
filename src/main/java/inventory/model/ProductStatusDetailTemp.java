@@ -19,7 +19,6 @@ public class ProductStatusDetailTemp implements Serializable {
     private BigDecimal priceOne;
     private BigDecimal priceTotal;
     private int activeFlag;
-    private String shelfName;
 
     public ProductStatusDetailTemp() {
     }
@@ -80,11 +79,5 @@ public class ProductStatusDetailTemp implements Serializable {
         this.activeFlag = activeFlag;
     }
 
-    public String getShelfName() {
-        return shelfName;
-    }
 
-    public void setShelfName(String shelfName) {
-        this.shelfName = shelfName;
-    }
 }

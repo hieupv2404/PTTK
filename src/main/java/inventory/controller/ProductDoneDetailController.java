@@ -97,7 +97,6 @@ public class ProductDoneDetailController {
             productStatusDetailTemp.setQty(productStatusDetail1.getQty());
             productStatusDetailTemp.setPriceOne(productStatusDetail1.getPriceOne());
             productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
-            productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
             totalQty+=productStatusDetail1.getQty();
             totalPriceOne = totalPriceOne.add(productStatusDetail1.getPriceOne());
@@ -160,7 +159,6 @@ public class ProductDoneDetailController {
             productStatusDetailTemp.setQty(productStatusDetail2.getQty());
             productStatusDetailTemp.setPriceOne(productStatusDetail2.getPriceOne());
             productStatusDetailTemp.setPriceTotal(productStatusDetail2.getPriceTotal());
-            productStatusDetailTemp.setShelfName(productStatusDetail2.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
             totalQty+=productStatusDetail2.getQty();
             totalPriceOne = totalPriceOne.add(productStatusDetail2.getPriceOne());
@@ -219,7 +217,6 @@ public class ProductDoneDetailController {
             productStatusDetailTemp.setQty(productStatusDetail1.getQty());
             productStatusDetailTemp.setPriceOne(productStatusDetail1.getPriceOne());
             productStatusDetailTemp.setPriceTotal(productStatusDetail1.getPriceTotal());
-            productStatusDetailTemp.setShelfName(productStatusDetail1.getShelf().getName());
             productStatusDetailTempService.saveProductStatusDetailTemp(productStatusDetailTemp);
             totalQty+=productStatusDetail1.getQty();
             totalPriceOne = totalPriceOne.add(productStatusDetail1.getPriceOne());

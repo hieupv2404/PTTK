@@ -15,7 +15,7 @@
 
 
 				<div class="x_content">
-					<a href="<c:url value="/issue/list"/>" class="btn btn-app"><i class="fa fa-backward"></i>Vat List</a>
+					<a href="<c:url value="/issue/list"/>" class="btn btn-app"><i class="fa fa-backward"></i>Issue List</a>
 					<a href="<c:url value="/issue-detail/export"/>" class="btn btn-app"><i class="fa fa-cloud-download"></i>Export</a>
 
 					<div class="container" style="padding: 50px;">

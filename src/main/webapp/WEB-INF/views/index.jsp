@@ -4,10 +4,10 @@
         <div class="page-title">
             <div class="title_left" style="width: 150%">
                 <div>
-                    <p>Group 1</p>
+                    <p>Group 24</p>
                 </div>
                 <div>
-                    <h3 style="margin: 100px 400px 100px 200px; padding: 100px 200px 100px 200px;" >The Management System for Phone</h3>
+                    <h3 style="margin: 100px 400px 100px 200px; padding: 100px 200px 100px 200px;" >The Management System for Laptop</h3>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 package inventory.dao;
 
+import inventory.enums.EnumForDB;
 import inventory.model.Issue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
