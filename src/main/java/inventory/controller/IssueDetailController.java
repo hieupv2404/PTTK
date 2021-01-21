@@ -69,7 +69,7 @@ public class IssueDetailController {
         int totalQty = 0;
         BigDecimal totalPriceOne = new BigDecimal(0);
         BigDecimal totalPriceTotal = new BigDecimal(0);
-//        for (IssueDetail vatDetail1 : issueDetails) {
+        for (IssueDetail vatDetail1 : issueDetails) {
 //            VatDetailTemp vatDetailTemp = new VatDetailTemp();
 //            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
 //            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
@@ -80,12 +80,12 @@ public class IssueDetailController {
 //            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
 //            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
 //            totalQty += vatDetail1.getQty();
-//            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
 //            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
-//        }
+        }
         model.addAttribute("totalQty", totalQty);
         model.addAttribute("totalPriceOne", totalPriceOne);
-        model.addAttribute("totalPriceTotal", totalPriceTotal);
+//        model.addAttribute("totalPriceTotal", totalPriceTotal);
         if (session.getAttribute(Constant.MSG_SUCCESS) != null) {
             model.addAttribute(Constant.MSG_SUCCESS, session.getAttribute(Constant.MSG_SUCCESS));
             session.removeAttribute(Constant.MSG_SUCCESS);
@@ -114,7 +114,7 @@ public class IssueDetailController {
         int totalQty = 0;
         BigDecimal totalPriceOne = new BigDecimal(0);
         BigDecimal totalPriceTotal = new BigDecimal(0);
-//        for (IssueDetail vatDetail1 : issueDetails) {
+        for (IssueDetail vatDetail1 : issueDetails) {
 //            VatDetailTemp vatDetailTemp = new VatDetailTemp();
 //            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
 //            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
@@ -125,9 +125,9 @@ public class IssueDetailController {
 //            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
 //            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
 //            totalQty += vatDetail1.getQty();
-//            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
 //            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
-//        }
+        }
         model.addAttribute("totalQty", totalQty);
         model.addAttribute("totalPriceOne", totalPriceOne);
         model.addAttribute("totalPriceTotal", totalPriceTotal);
@@ -167,7 +167,7 @@ public class IssueDetailController {
         int totalQty = 0;
         BigDecimal totalPriceOne = new BigDecimal(0);
         BigDecimal totalPriceTotal = new BigDecimal(0);
-//        for (IssueDetail vatDetail1 : issueDetails) {
+        for (IssueDetail vatDetail1 : issueDetails) {
 //            VatDetailTemp vatDetailTemp = new VatDetailTemp();
 //            vatDetail1.setPriceTotal(vatDetail1.getPriceOne().multiply(BigDecimal.valueOf(vatDetail1.getQty())));
 //            vatDetailTemp.setProductName(vatDetail1.getProductInfo().getName());
@@ -178,9 +178,9 @@ public class IssueDetailController {
 //            vatDetailTemp.setSupplierName(vatDetail1.getIssue().getSupplier().getName());
 //            vatDetailTempService.saveVatDetailTemp(vatDetailTemp);
 //            totalQty += vatDetail1.getQty();
-//            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
+            totalPriceOne = totalPriceOne.add(vatDetail1.getPriceOne());
 //            totalPriceTotal = totalPriceTotal.add(vatDetail1.getPriceTotal());
-//        }
+        }
         model.addAttribute("totalQty", totalQty);
         model.addAttribute("totalPriceOne", totalPriceOne);
         model.addAttribute("totalPriceTotal", totalPriceTotal);

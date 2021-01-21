@@ -424,16 +424,16 @@ public class ProductDoneDetailController {
                     }
 
                 }
-                productStatusList1.setPrice(productStatusList1.getPrice().subtract(productStatusDetail1.getPriceTotal()));
+//                productStatusList1.setPrice(productStatusList1.getPrice().subtract(productStatusDetail1.getPriceTotal()));
 
                 productStatusDetailService.updateProductStatusDetail(productStatusDetail);
 //                ProductStatusList productStatusList1 = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
                 productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail.getPriceTotal()));
 
-                productStatusListService.updateProductStatusList(productStatusList1);
+//                productStatusListService.updateProductStatusList(productStatusList1);
 
                 shelf1.setQty(shelf1.getQty()-qtyTemp);
-                shelfService.updateShelf(shelf1);
+//                shelfService.updateShelf(shelf1);
                 if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Update success!!!");
                 else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Update success!!!");
                 else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Update success!!!");
@@ -500,15 +500,15 @@ public class ProductDoneDetailController {
                         }
                         productStatusList1.setPrice(productStatusList1.getPrice().subtract(productStatusDetail1.getPriceTotal()));
 
-                        productStatusDetailService.updateProductStatusDetail(productStatusDetail1);
+//                        productStatusDetailService.updateProductStatusDetail(productStatusDetail1);
                         if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
                         else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
                         else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
                         else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
                         shelf1.setQty(shelf1.getQty()+productStatusDetail.getQty());
-                        shelfService.updateShelf(shelf1);
+//                        shelfService.updateShelf(shelf1);
                         productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail1.getPriceTotal()));
-                        productStatusListService.updateProductStatusList(productStatusList1);
+//                        productStatusListService.updateProductStatusList(productStatusList1);
                         return "redirect:/product-done-detail/list";
 
 
@@ -522,9 +522,9 @@ public class ProductDoneDetailController {
                     else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
                     else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
                     productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail.getPriceTotal()));
-                    productStatusListService.updateProductStatusList(productStatusList1);
+//                    productStatusListService.updateProductStatusList(productStatusList1);
                     shelf1.setQty(shelf1.getQty()+productStatusDetail.getQty());
-                    shelfService.updateShelf(shelf1);
+//                    shelfService.updateShelf(shelf1);
                     return "redirect:/product-done-detail/list";
                 }
 
@@ -551,10 +551,10 @@ public class ProductDoneDetailController {
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete success!!!");
                 ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
                 productStatusList.setPrice(productStatusList.getPrice().subtract(productStatusDetail.getPriceTotal()));
-                productStatusListService.updateProductStatusList(productStatusList);
+//                productStatusListService.updateProductStatusList(productStatusList);
                 Shelf shelf = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
                 shelf.setQty(shelf.getQty()-productStatusDetail.getQty());
-                shelfService.updateShelf(shelf);
+//                shelfService.updateShelf(shelf);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

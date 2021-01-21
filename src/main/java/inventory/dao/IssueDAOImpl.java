@@ -2,6 +2,7 @@ package inventory.dao;
 
 import inventory.enums.EnumForDB;
 import inventory.model.Issue;
+import inventory.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -20,8 +21,8 @@ public class IssueDAOImpl extends BaseDAOImpl<Issue> implements IssueDAO<Issue>{
     private JdbcTemplate jdbcTemplate;
     String dbDriverClassName="com.mysql.jdbc.Driver";
     String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
-    String user = "root";
-    String password = "ult.zda1";
+    String user = Constant.USERNAME;
+    String password = Constant.PASSWORD;
 
     public IssueDAOImpl() throws SQLException {
     }

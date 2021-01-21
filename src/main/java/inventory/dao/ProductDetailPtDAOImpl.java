@@ -2,6 +2,7 @@ package inventory.dao;
 
 import inventory.enums.EnumForDB;
 import inventory.model.ProductDetailPt;
+import inventory.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,8 @@ public class ProductDetailPtDAOImpl extends BaseDAOImpl<ProductDetailPt> impleme
     private JdbcTemplate jdbcTemplate;
     String dbDriverClassName="com.mysql.jdbc.Driver";
     String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
-    String user = "root";
-    String password = "ult.zda1";
+    String user = Constant.USERNAME;
+    String password = Constant.PASSWORD;
 
 
 

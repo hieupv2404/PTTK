@@ -14,5 +14,8 @@ public class Constant {
         public static final String KEY_GOODS_RECEIPT_REPORT="key_goods_receipt";
         public static final Integer PRODUCT_DONE = 1;
         public static final Integer PRODUCT_BACK = 2;
+        public static final String USERNAME ="root";
+        public static final String PASSWORD ="ult.zda1";
+
 
 }

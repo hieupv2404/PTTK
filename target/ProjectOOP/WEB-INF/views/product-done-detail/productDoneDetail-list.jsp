@@ -109,7 +109,6 @@
 									<th class="column-title">Price One</th>
 									<th class="column-title">Price Total</th>
                                     <th class="column-title">Qty Rest</th>
-                                    <th class="column-title">Shelf</th>
 
                                     <th class="column-title no-link last text-center" colspan="3"><span class="nobr">Action</span></th>
 								</tr>
@@ -134,7 +133,6 @@
 									<td class="price" style="font-size: 14px">${product.priceOne }</td>
 									<td class="price" style="font-size: 14px">${product.priceTotal }</td>
                                     <td class=" ">${product.qtyRest }</td>
-                                    <td class=" ">${product.shelf.name }</td>
 									<td class="text-center"><a href="<c:url value="/product-done-detail/view/${product.id }"/>" class="btn btn-round btn-default">View</a></td>
 									<td class="text-center"><a href="<c:url value="/product-done-detail/edit/${product.id }"/>" class="btn btn-round btn-primary">Edit</a></td>
 									<td class="text-center"><a href="javascript:void(0);" onclick="confirmDelete(${product.id});" class="btn btn-round btn-danger">Delete</a></td>

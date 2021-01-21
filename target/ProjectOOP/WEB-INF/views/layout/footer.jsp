@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
  <footer>
           <div class="pull-right">
-           Inventory Management - Group 1
+           Inventory Management - Group 24
           </div>
           <div class="clearfix"></div>
         </footer>

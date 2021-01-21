@@ -403,8 +403,7 @@ public class ProductBackDetailController {
                 }
 
                 productStatusDetailService.updateProductStatusDetail(productStatusDetail);
-                shelf.setQty(shelf.getQty()-qtyTemp);
-                shelfService.updateShelf(shelf);
+
 //                ProductStatusList productStatusList1 = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
                 productStatusList1.setPrice( productStatusList1.getPrice().add(productStatusDetail.getPriceTotal()));
 
@@ -466,16 +465,11 @@ public class ProductBackDetailController {
                                 break;
                             }
                         }
-                        productStatusList1.setPrice(productStatusList1.getPrice().subtract(productStatusDetail1.getPriceTotal()));
                         productStatusDetailService.updateProductStatusDetail(productStatusDetail1);
                         if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
                         else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
                         else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
                         else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
-                        shelf.setQty(shelf.getQty()+productStatusDetail.getQty());
-                        shelfService.updateShelf(shelf);
-                        productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail1.getPriceTotal()));
-                        productStatusListService.updateProductStatusList(productStatusList1);
                         return "redirect:/product-back-detail/list";
 
 
@@ -483,10 +477,6 @@ public class ProductBackDetailController {
                 }
                 if (updateCheck ==0) {
                     productStatusDetailService.saveProductStatusDetail(productStatusDetail);
-                    productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail.getPriceTotal()));
-                    productStatusListService.updateProductStatusList(productStatusList1);
-                    shelf.setQty(shelf.getQty()+productStatusDetail.getQty());
-                    shelfService.updateShelf(shelf);
 
                     if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
                     else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
@@ -514,12 +504,10 @@ public class ProductBackDetailController {
             try {
                 productStatusDetailService.deleteProductStatusDetail(productStatusDetail);
                 session.setAttribute(Constant.MSG_SUCCESS, "Delete success!!!");
-                ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
-                productStatusList.setPrice(productStatusList.getPrice().subtract(productStatusDetail.getPriceTotal()));
-                productStatusListService.updateProductStatusList(productStatusList);
-                Shelf shelf = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
-                shelf.setQty(shelf.getQty()-productStatusDetail.getQty());
-                shelfService.updateShelf(shelf);
+//                ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
+//                productStatusList.setPrice(productStatusList.getPrice().subtract(productStatusDetail.getPriceTotal()));
+//                productStatusListService.updateProductStatusList(productStatusList);
+
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

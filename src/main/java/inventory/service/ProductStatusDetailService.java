@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,25 +29,25 @@ public class ProductStatusDetailService {
 
     private static final Logger log = Logger.getLogger(ProductStatusDetailService.class);
 
-    public void saveProductStatusDetail(ProductStatusDetail productStatusDetail){
+    public void saveProductStatusDetail(ProductStatusDetail productStatusDetail) throws SQLException {
         log.info("Insert ProductStatusDetail "+productStatusDetail.toString());
         productStatusDetail.setPriceTotal(BigDecimal.valueOf(productStatusDetail.getQty()).multiply(productStatusDetail.getPriceOne()));
        productStatusDetail.setActiveFlag(1);
-        productStatusDetailDAO.save(productStatusDetail);
+        productStatusDetailDAO.saveDTO(productStatusDetail);
     }
 
     public void updateProductStatusDetail(ProductStatusDetail productStatusDetail) throws Exception {
         log.info("Update ProductStatusDetail "+productStatusDetail.toString());
         productStatusDetail.setPriceTotal(BigDecimal.valueOf(productStatusDetail.getQty()).multiply(productStatusDetail.getPriceOne()));
         productStatusDetail.setActiveFlag(1);
-        productStatusDetailDAO.update(productStatusDetail);
+        productStatusDetailDAO.updateDTO(productStatusDetail);
     }
 
     public void deleteProductStatusDetail(ProductStatusDetail productStatusDetail) throws Exception{
 
         log.info("Delete ProductStatusDetail "+productStatusDetail.toString());
         productStatusDetail.setActiveFlag(0);
-        productStatusDetailDAO.update(productStatusDetail);
+        productStatusDetailDAO.updateDTO(productStatusDetail);
     }
 
     public List<ProductStatusDetail> findProductStatusDetail(String property , Object value){

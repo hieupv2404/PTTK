@@ -35,6 +35,15 @@
 		<put-attribute name="body"
 					   value="/WEB-INF/views/supplier/supplier-list.jsp"></put-attribute>
 	</definition>
+
+	<definition name="customer-action" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/customer/customer-action.jsp"></put-attribute>
+	</definition>
+	<definition name="customer-list" extends="master">
+		<put-attribute name="body"
+					   value="/WEB-INF/views/customer/customer-list.jsp"></put-attribute>
+	</definition>
 	<definition name="productInfo-action" extends="master">
 		<put-attribute name="body"
 			value="/WEB-INF/views/product-info/productInfo-action.jsp"></put-attribute>
