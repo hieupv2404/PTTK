@@ -34,11 +34,10 @@ public class SupplierDAOImpl extends BaseDAOImpl<Supplier> implements SupplierDA
 
     @Override
     public void saveDTO(Supplier supplier) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call  insert_supplier(?,?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call insert_supplier(?,?,?)}");
         statement.setString(1, supplier.getName());
         statement.setString(2, supplier.getPhone());
         statement.setString(3, supplier.getAddress());
-        statement.setInt(4, supplier.getActiveFlag());
         if (!statement.execute()) {
             statement.close();
             throw new SQLException();
@@ -58,5 +57,10 @@ public class SupplierDAOImpl extends BaseDAOImpl<Supplier> implements SupplierDA
             statement.close();
             throw new SQLException();
         }
+    }
+
+    @Override
+    public Supplier findByIdDTO(int id) {
+        return findById(Supplier.class, id);
     }
 }

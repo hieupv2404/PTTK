@@ -33,12 +33,10 @@ public class ShelfDAOImpl extends BaseDAOImpl<Shelf> implements ShelfDAO<Shelf> 
     Connection conn = DriverManager.getConnection(dbURL, user, password);
     @Override
     public void saveDTO(Shelf shelf) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call insert_shelf(?,?,?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call insert_shelf(?,?,?)}");
         statement.setString(1, shelf.getName());
         statement.setString(2, shelf.getDescription());
-        statement.setInt(3, shelf.getActiveFlag());
-        statement.setInt(4, shelf.getTotal());
-        statement.setInt(5, shelf.getQty());
+        statement.setInt(3, shelf.getTotal());
         if (!statement.execute()) {
             statement.close();
             throw new SQLException();
@@ -49,13 +47,12 @@ public class ShelfDAOImpl extends BaseDAOImpl<Shelf> implements ShelfDAO<Shelf> 
 
     @Override
     public void updateDTO(Shelf shelf) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call update_shelf(?,?,?,?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call update_shelf(?,?,?,?,?)}");
         statement.setString(1, shelf.getName());
         statement.setString(2, shelf.getDescription());
         statement.setInt(3, shelf.getActiveFlag());
         statement.setInt(4, shelf.getTotal());
-        statement.setInt(5, shelf.getQty());
-        statement.setInt(6, shelf.getId());
+        statement.setInt(5, shelf.getId());
         if (!statement.execute()) {
             statement.close();
             throw new SQLException();
