@@ -7,32 +7,56 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public class SupplierDAOImpl extends BaseDAOImpl<Supplier> implements SupplierDAO<Supplier> {
     private JdbcTemplate jdbcTemplate;
+    String dbDriverClassName = "com.mysql.jdbc.Driver";
+    String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
+    String user = "root";
+    String password = "123456789";
+
+    public SupplierDAOImpl() throws SQLException {
+    }
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
-    public void saveDTO(Supplier supplier) {
-        String sql = "INSERT INTO supplier (name, phone, address, create_date,update_date, active_flag)"
-                + " VALUES (?, ?, ?, ?,?,?)";
+    Connection conn = DriverManager.getConnection(dbURL, user, password);
 
-        jdbcTemplate.update(sql, supplier.getName(), supplier.getPhone(), supplier.getAddress(),
-                supplier.getCreateDate(), supplier.getUpdateDate(), supplier.getActiveFlag());
+
+    @Override
+    public void saveDTO(Supplier supplier) throws SQLException {
+        CallableStatement statement = conn.prepareCall("{call  insert_supplier(?,?,?,?)}");
+        statement.setString(1, supplier.getName());
+        statement.setString(2, supplier.getPhone());
+        statement.setString(3, supplier.getAddress());
+        statement.setInt(4, supplier.getActiveFlag());
+        if (!statement.execute()) {
+            statement.close();
+            throw new SQLException();
+        }
+
     }
 
     @Override
-    public void updateDTO(Supplier supplier) {
-        String sql = "UPDATE supplier SET " +
-                "name=?, phone=?, address=?, update_date=?, active_flag=? WHERE id=?";
-
-        jdbcTemplate.update(sql, supplier.getName(), supplier.getPhone(), supplier.getAddress(), supplier.getUpdateDate(), supplier.getActiveFlag(), supplier.getId());
-
+    public void updateDTO(Supplier supplier) throws SQLException {
+        CallableStatement statement = conn.prepareCall("{call update_supplier(?,?,?,?,?)}");
+        statement.setString(1, supplier.getName());
+        statement.setString(2, supplier.getPhone());
+        statement.setString(3, supplier.getAddress());
+        statement.setInt(4, supplier.getActiveFlag());
+        statement.setInt(5, supplier.getId());
+        if (!statement.execute()) {
+            statement.close();
+            throw new SQLException();
+        }
     }
 }

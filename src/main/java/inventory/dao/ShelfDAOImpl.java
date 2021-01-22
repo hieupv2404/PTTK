@@ -7,33 +7,60 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public class ShelfDAOImpl extends BaseDAOImpl<Shelf> implements ShelfDAO<Shelf> {
     private JdbcTemplate jdbcTemplate;
+    String dbDriverClassName = "com.mysql.jdbc.Driver";
+    String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
+    String user = "root";
+    String password = "123456789";
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @Override
-    public void saveDTO(Shelf shelf) {
-        String sql = "INSERT INTO shelf (name, description, active_flag, create_date, update_date,total,qty)"
-                + " VALUES (?, ?, ?, ?,?,?,?)";
+    public ShelfDAOImpl() throws SQLException {
 
-        jdbcTemplate.update(sql, shelf.getName(), shelf.getDescription(), shelf.getActiveFlag(),
-                shelf.getCreateDate(), shelf.getUpdateDate(), shelf.getTotal(), shelf.getQty());
+    }
+
+    Connection conn = DriverManager.getConnection(dbURL, user, password);
+
+    @Override
+    public void saveDTO(Shelf shelf) throws SQLException {
+        CallableStatement statement = conn.prepareCall("{call insert_shelf(?,?,?,?,?)}");
+        statement.setString(1, shelf.getName());
+        statement.setString(2, shelf.getDescription());
+        statement.setInt(3, shelf.getActiveFlag());
+        statement.setInt(4, shelf.getTotal());
+        statement.setInt(5, shelf.getQty());
+        if (!statement.execute()) {
+            statement.close();
+            throw new SQLException();
+        }
+
 
     }
 
     @Override
-    public void updateDTO(Shelf shelf) {
-        String sql = "UPDATE shelf SET " +
-                "name=?, description=?, active_flag=?, create_date=?, update_date=? ,total=?,qty=? WHERE id=?";
-
-        jdbcTemplate.update(sql, shelf.getName(), shelf.getDescription(), shelf.getActiveFlag(), shelf.getCreateDate(), shelf.getUpdateDate(), shelf.getTotal(), shelf.getQty(), shelf.getId());
+    public void updateDTO(Shelf shelf) throws SQLException {
+        CallableStatement statement = conn.prepareCall("{call update_shelf(?,?,?,?,?,?)}");
+        statement.setString(1, shelf.getName());
+        statement.setString(2, shelf.getDescription());
+        statement.setInt(3, shelf.getActiveFlag());
+        statement.setInt(4, shelf.getTotal());
+        statement.setInt(5, shelf.getQty());
+        statement.setInt(6, shelf.getId());
+        if (!statement.execute()) {
+            statement.close();
+            throw new SQLException();
+        }
 
     }
 }

@@ -2,8 +2,10 @@ package inventory.dao;
 
 import inventory.model.Supplier;
 
-public interface SupplierDAO<E> extends BaseDAO<E> {
-    void saveDTO(Supplier supplier);
+import java.sql.SQLException;
 
-    void updateDTO(Supplier supplier);
+public interface SupplierDAO<E> extends BaseDAO<E> {
+    void saveDTO(Supplier supplier)throws SQLException;
+
+    void updateDTO(Supplier supplier) throws SQLException;
 }
