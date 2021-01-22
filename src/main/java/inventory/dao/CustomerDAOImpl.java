@@ -37,11 +37,10 @@ public class CustomerDAOImpl extends BaseDAOImpl<Customer> implements CustomerDA
 
     @Override
     public void saveDTO(Customer customer) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call insert_customer(?,?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call insert_customer(?,?,?)}");
         statement.setString(1, customer.getName());
         statement.setString(2, customer.getPhone());
         statement.setString(3, customer.getAddress());
-        statement.setInt(4, customer.getActiveFlag());
         if (!statement.execute()) {
             statement.close();
             throw new SQLException();

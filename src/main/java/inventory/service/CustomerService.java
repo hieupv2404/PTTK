@@ -45,7 +45,7 @@ public class CustomerService {
     }
 
     public void saveCustomer(Customer customer)  throws Exception{
-        log.info("Insert customer "+customer.toString());
+//        log.info("Insert customer "+customer.toString());
         customer.setActiveFlag(1);
         customer.setCreateDate(new Date());
         customer.setUpdateDate(new Date());
