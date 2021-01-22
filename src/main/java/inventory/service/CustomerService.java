@@ -71,7 +71,7 @@ public class CustomerService {
 
     public Customer findByIdCustomer(int id) {
         log.info("find customer by id ="+id);
-        return customerDAO.findById(Customer.class, id);
+        return customerDAO.findByIdDTO(id);
     }
 
 }
