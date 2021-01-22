@@ -49,7 +49,7 @@ public class IssueDAOImpl extends BaseDAOImpl<Issue> implements IssueDAO<Issue>{
 
     @Override
     public void updateDTO(Issue issue) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call update_product_detail(?,?,?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call update_issue(?,?,?,?,?)}");
         statement.setString(1, issue.getCode());
         statement.setInt(2, issue.getCustomerId());
         statement.setInt(3, issue.getUserId());

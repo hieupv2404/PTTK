@@ -60,6 +60,7 @@
 									<th class="column-title">Id</th>
 									<th class="column-title">Category</th>
 									<th class="column-title">Name</th>
+									<th class="column-title">Qty</th>
 									<th class="column-title">Image</th>
 									<th class="column-title no-link last text-center" colspan="3"><span class="nobr">Action</span></th>
 								</tr>
@@ -80,6 +81,7 @@
 									<td class=" ">${product.id }</td>
 									<td class=" ">${product.category.name }</td>
 									<td class=" ">${product.name }</td>
+									<td class=" ">${product.qty }</td>
 									<td class=" "><img src="<c:url value="${product.imgUrl}"/>" width="100px" height="100px"/></td>
 									<td class="text-center"><a href="<c:url value="/product-info/view/${product.id }"/>" class="btn btn-round btn-default">View</a></td>
 									<td class="text-center"><a href="<c:url value="/product-info/edit/${product.id }"/>" class="btn btn-round btn-primary">Edit</a></td>

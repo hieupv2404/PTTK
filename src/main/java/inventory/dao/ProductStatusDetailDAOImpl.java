@@ -48,9 +48,9 @@ public class ProductStatusDetailDAOImpl extends BaseDAOImpl<ProductStatusDetail>
 
     @Override
     public void updateDTO(ProductStatusDetail productStatusDetail) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call update_product_detail(?,?,?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call update_product_status_detail(?,?,?,?,?)}");
         statement.setInt(1, productStatusDetail.getProductStatusList().getId());
-        statement.setInt(2, productStatusDetail.getProductInfoId());
+        statement.setInt(2, productStatusDetail.getProductInfo().getId());
         statement.setInt(3, productStatusDetail.getQty());
         statement.setInt(4, productStatusDetail.getActiveFlag());
         statement.setInt(5, productStatusDetail.getId());

@@ -26,6 +26,7 @@ public class ProductInfo implements java.io.Serializable {
 	private int activeFlag;
 	private Date createDate;
 	private Date updateDate;
+	private int qty;
 	private Set histories = new HashSet(0);
 	private Set productInStocks = new HashSet(0);
 	private Set invoices = new HashSet(0);
@@ -88,6 +89,14 @@ public class ProductInfo implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getQty() {
+		return qty;
+	}
+
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 
 	public String getDescription() {

@@ -31,7 +31,7 @@ public class ProductStatusDetailService {
 
     public void saveProductStatusDetail(ProductStatusDetail productStatusDetail) throws SQLException {
         log.info("Insert ProductStatusDetail "+productStatusDetail.toString());
-        productStatusDetail.setPriceTotal(BigDecimal.valueOf(productStatusDetail.getQty()).multiply(productStatusDetail.getPriceOne()));
+//        productStatusDetail.setPriceTotal(BigDecimal.valueOf(productStatusDetail.getQty()).multiply(productStatusDetail.getPriceOne()));
        productStatusDetail.setActiveFlag(1);
         productStatusDetailDAO.saveDTO(productStatusDetail);
     }
@@ -87,12 +87,12 @@ public class ProductStatusDetailService {
             }
 
             if(productStatusDetail.getFromPriceTotal()!=null) {
-                queryStr.append(" and model.priceTotal >= :fromPriceTotal");
+                queryStr.append(" and model.priceOne*model.qty >= :fromPriceTotal");
                 mapParams.put("fromPriceTotal", productStatusDetail.getFromPriceTotal());
             }
 
             if(productStatusDetail.getToPriceTotal()!=null) {
-                queryStr.append(" and model.priceTotal <= :toPriceTotal");
+                queryStr.append(" and model.priceOne*model.qty <= :toPriceTotal");
                 mapParams.put("toPriceTotal", productStatusDetail.getToPriceTotal());
             }
 

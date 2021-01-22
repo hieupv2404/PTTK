@@ -153,7 +153,7 @@ public class ProductDoneDetailController {
         for (ProductStatusDetail productStatusDetail2:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
-            productStatusDetail1.setPriceTotal(productStatusDetail1.getPriceOne().multiply(BigDecimal.valueOf(productStatusDetail1.getQty())));
+            productStatusDetail1.setPriceTotal(productStatusDetail2.getPriceOne().multiply(BigDecimal.valueOf(productStatusDetail1.getQty())));
             productStatusDetailTemp.setProductName(productStatusDetail2.getProductInfo().getName());
             productStatusDetailTemp.setProductStatusName(productStatusDetail2.getProductStatusList().getCode());
             productStatusDetailTemp.setQty(productStatusDetail2.getQty());
@@ -454,67 +454,67 @@ public class ProductDoneDetailController {
 
                 List<VatDetail> vatDetailList = vatDetailService.getAllVatDetail(vatDetail,null);
                 int checkProductVat = 0;
-                for (VatDetail vatDetail1 : vatDetailList)
-                {
-
-
-                    if (productStatusDetail.getProductInfo().getId() == vatDetail1.getProductInfo().getId())
-                    {
-                        productStatusDetail.setQtyRest(vatDetail1.getQty()- productStatusDetail.getQty());
-                        productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
-                        checkProductVat = 1;
-                        if ( productStatusDetail.getQtyRest()<0) {
-                            session.setAttribute(Constant.MSG_ERROR,"Insert Error! Out of Vat's Qty");
-                            return "redirect:/product-done-detail/list";
-                        }
-                    }
-
-
-                }
-                if (checkProductVat == 0)
-                {
-                    session.setAttribute(Constant.MSG_ERROR,"Insert Error! Not existing in Vat");
-                    return "redirect:/product-done-detail/list";
-                }
+//                for (VatDetail vatDetail1 : vatDetailList)
+//                {
+//
+//
+//                    if (productStatusDetail.getProductInfo().getId() == vatDetail1.getProductInfo().getId())
+//                    {
+//                        productStatusDetail.setQtyRest(vatDetail1.getQty()- productStatusDetail.getQty());
+//                        productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
+//                        checkProductVat = 1;
+//                        if ( productStatusDetail.getQtyRest()<0) {
+//                            session.setAttribute(Constant.MSG_ERROR,"Insert Error! Out of Vat's Qty");
+//                            return "redirect:/product-done-detail/list";
+//                        }
+//                    }
+//
+//
+//                }
+//                if (checkProductVat == 0)
+//                {
+//                    session.setAttribute(Constant.MSG_ERROR,"Insert Error! Not existing in Vat");
+//                    return "redirect:/product-done-detail/list";
+//                }
                 List<ProductStatusDetail> productStatusDetailList = productStatusDetailService.findProductStatusDetail("productStatusList.id",productStatusDetail.getProductStatusList().getId());
-                int updateCheck =0;
-                for ( ProductStatusDetail productStatusDetail1 : productStatusDetailList)
-                {
-                    if (productStatusDetail1.getProductInfo().getId() == productStatusDetail.getProductInfo().getId())
-                    {
-                        productStatusDetail1.setQty(productStatusDetail1.getQty()+productStatusDetail.getQty());
-                        productStatusDetail1.setQtyRest(productStatusDetail1.getQtyRest()-productStatusDetail.getQty());
+//                int updateCheck =0;
+//                for ( ProductStatusDetail productStatusDetail1 : productStatusDetailList)
+//                {
+//                    if (productStatusDetail1.getProductInfo().getId() == productStatusDetail.getProductInfo().getId())
+//                    {
+//                        productStatusDetail1.setQty(productStatusDetail1.getQty()+productStatusDetail.getQty());
+//                        productStatusDetail1.setQtyRest(productStatusDetail1.getQtyRest()-productStatusDetail.getQty());
+//
+//                        for (VatDetail vatDetail1 : vatDetailList)
+//                        {
+//                            if (productStatusDetail1.getProductInfo().getId() == vatDetail1.getProductInfo().getId())
+//                            {
+//                               int test = vatDetail1.getQty()- productStatusDetail1.getQty();
+//                                if ( test <0) {
+//                                    session.setAttribute(Constant.MSG_ERROR,"Insert Error");
+//                                    return "redirect:/product-done-detail/list";
+//
+//                                }
+//                                break;
+//                            }
+//                        }
+//                        productStatusList1.setPrice(productStatusList1.getPrice().subtract(productStatusDetail1.getPriceTotal()));
+//
+////                        productStatusDetailService.updateProductStatusDetail(productStatusDetail1);
+//                        if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
+//                        else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
+//                        else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
+//                        else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
+//                        shelf1.setQty(shelf1.getQty()+productStatusDetail.getQty());
+////                        shelfService.updateShelf(shelf1);
+//                        productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail1.getPriceTotal()));
+////                        productStatusListService.updateProductStatusList(productStatusList1);
+//                        return "redirect:/product-done-detail/list";
+//
+//
+//                    }
+//                }
 
-                        for (VatDetail vatDetail1 : vatDetailList)
-                        {
-                            if (productStatusDetail1.getProductInfo().getId() == vatDetail1.getProductInfo().getId())
-                            {
-                               int test = vatDetail1.getQty()- productStatusDetail1.getQty();
-                                if ( test <0) {
-                                    session.setAttribute(Constant.MSG_ERROR,"Insert Error");
-                                    return "redirect:/product-done-detail/list";
-
-                                }
-                                break;
-                            }
-                        }
-                        productStatusList1.setPrice(productStatusList1.getPrice().subtract(productStatusDetail1.getPriceTotal()));
-
-//                        productStatusDetailService.updateProductStatusDetail(productStatusDetail1);
-                        if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
-                        else if (checkPrice==1) session.setAttribute(Constant.MSG_SUCCESS,"Price has ABS-ed and Insert success!!!");
-                        else if (checkPrice==1 && checkQty==1) session.setAttribute(Constant.MSG_SUCCESS, "Qty has ABS and Price has ABS and Insert success!!!");
-                        else session.setAttribute(Constant.MSG_SUCCESS, "Insert success!!!");
-                        shelf1.setQty(shelf1.getQty()+productStatusDetail.getQty());
-//                        shelfService.updateShelf(shelf1);
-                        productStatusList1.setPrice(productStatusList1.getPrice().add(productStatusDetail1.getPriceTotal()));
-//                        productStatusListService.updateProductStatusList(productStatusList1);
-                        return "redirect:/product-done-detail/list";
-
-
-                    }
-                }
-                if (updateCheck ==0) {
                     productStatusDetailService.saveProductStatusDetail(productStatusDetail);
 
                     if (checkQty==1) session.setAttribute(Constant.MSG_SUCCESS,"Qty has ABS-ed and Insert success!!!");
@@ -526,7 +526,7 @@ public class ProductDoneDetailController {
                     shelf1.setQty(shelf1.getQty()+productStatusDetail.getQty());
 //                    shelfService.updateShelf(shelf1);
                     return "redirect:/product-done-detail/list";
-                }
+
 
 //                ProductStatusList productStatusList1 = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
 
@@ -552,8 +552,8 @@ public class ProductDoneDetailController {
                 ProductStatusList productStatusList = productStatusListService.findByIdProductStatusList(productStatusDetail.getProductStatusList().getId());
                 productStatusList.setPrice(productStatusList.getPrice().subtract(productStatusDetail.getPriceTotal()));
 //                productStatusListService.updateProductStatusList(productStatusList);
-                Shelf shelf = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
-                shelf.setQty(shelf.getQty()-productStatusDetail.getQty());
+//                Shelf shelf = shelfService.findByIdShelf(productStatusDetail.getShelf().getId());
+//                shelf.setQty(shelf.getQty()-productStatusDetail.getQty());
 //                shelfService.updateShelf(shelf);
             } catch (Exception e) {
                 // TODO Auto-generated catch block

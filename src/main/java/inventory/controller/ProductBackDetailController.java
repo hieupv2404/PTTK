@@ -158,7 +158,7 @@ public class ProductBackDetailController {
         for (ProductStatusDetail productStatusDetail2:productStatusDetails)
         {
             ProductStatusDetailTemp productStatusDetailTemp = new ProductStatusDetailTemp();
-            productStatusDetail1.setPriceTotal(productStatusDetail1.getPriceOne().multiply(BigDecimal.valueOf(productStatusDetail1.getQty())));
+            productStatusDetail1.setPriceTotal(productStatusDetail2.getPriceOne().multiply(BigDecimal.valueOf(productStatusDetail1.getQty())));
             productStatusDetailTemp.setProductName(productStatusDetail2.getProductInfo().getName());
             productStatusDetailTemp.setProductStatusName(productStatusDetail2.getProductStatusList().getCode());
             productStatusDetailTemp.setQty(productStatusDetail2.getQty());

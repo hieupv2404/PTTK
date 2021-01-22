@@ -215,9 +215,8 @@ public class VatDetailController {
 //        Map<String, String> mapVat = new HashMap<>();
 //        mapVat.put(String.valueOf(vat.getId()), vat.getCode());
         List<Vat> vats = vatService.getAllVat(vatFind, null);
-        Collections.sort(vats, new UpdateDateCompatatorVat());
         Map<String, String> mapVat = new HashMap<>();
-        for (Vat vat : vats) {
+        for(Vat vat : vats) {
             mapVat.put(String.valueOf(vat.getId()), vat.getCode());
         }
 

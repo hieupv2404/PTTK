@@ -78,12 +78,12 @@
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="shelf.name">Shelf</label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<form:input path="shelf.name" cssClass="form-control col-md-7 col-xs-12" />
-								</div>
-							</div>
+<%--							<div class="form-group">--%>
+<%--								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="shelf.name">Shelf</label>--%>
+<%--								<div class="col-md-6 col-sm-6 col-xs-12">--%>
+<%--									<form:input path="shelf.name" cssClass="form-control col-md-7 col-xs-12" />--%>
+<%--								</div>--%>
+<%--							</div>--%>
 
 
 							<div class="form-group">
@@ -145,11 +145,12 @@
 						<div class="table-responsive">
 							<table class="table table-striped jambo_table bulk_action">
 								<tbody>
-								<td width="36px"></td>
+								<td width="60px"></td>
 								<td width="40.8px"></td>
 								<td width="189px"></td>
 								<td width="100px">Total</td>
 								<td width="55.2px">${totalQty}</td>
+								<td width="10px"></td>
 								<td class="price" style="font-size: 14px" width="114.4px">${totalPriceOne }</td>
 								<td class="price" style="font-size: 14px" width="122.4px">${totalPriceTotal }</td>
 								<td></td>

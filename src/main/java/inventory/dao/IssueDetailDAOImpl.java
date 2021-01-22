@@ -50,7 +50,7 @@ public class IssueDetailDAOImpl extends BaseDAOImpl<IssueDetail> implements Issu
 
     @Override
     public void updateDTO(IssueDetail issueDetail) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call update_product_detail(?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call update_issue_detail(?,?,?)}");
         statement.setString(1, issueDetail.getImei());
         statement.setInt(2, issueDetail.getActiveFlag());
         statement.setInt(3, issueDetail.getId());
