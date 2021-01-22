@@ -117,7 +117,7 @@
 									<td class="text-center"><a href="<c:url value="/issue/view/${product.id }"/>" class="btn btn-round btn-default">View</a></td>
 									<td class="text-center"><a href="<c:url value="/issue/edit/${product.id }"/>" class="btn btn-round btn-primary">Edit</a></td>
 									<td class="text-center"><a href="javascript:void(0);" onclick="confirmDelete(${product.id});" class="btn btn-round btn-danger">Delete</a></td>
-									<td class="text-center"><a href="<c:url value="/vat-detail/${product.id }/add"/>" class="btn btn-round btn-info">Add Item</a></td>
+									<td class="text-center"><a href="<c:url value="/issue-detail/${product.id }/add"/>" class="btn btn-round btn-info">Add Item</a></td>
 
 									</tr>
 								</c:forEach>

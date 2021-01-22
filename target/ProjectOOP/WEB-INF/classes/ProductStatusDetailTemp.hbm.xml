@@ -14,9 +14,6 @@
         <property generated="never" lazy="false" name="productStatusName" optimistic-lock="true" type="java.lang.String" unique="false">
             <column length="50" name="product_status_name" />
         </property>
-        <property generated="never" lazy="false" name="shelfName" optimistic-lock="true" type="java.lang.String" unique="false">
-            <column length="100" name="shelf_name" />
-        </property>
         <property generated="never" lazy="false" name="qty" optimistic-lock="true" type="int" unique="false">
             <column length="11" name="qty" />
         </property>
