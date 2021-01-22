@@ -2,6 +2,7 @@ package inventory.dao;
 
 
 import inventory.model.Customer;
+import inventory.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,18 +20,17 @@ import java.sql.SQLException;
 public class CustomerDAOImpl extends BaseDAOImpl<Customer> implements CustomerDAO<Customer> {
 
     private JdbcTemplate jdbcTemplate;
-    String dbDriverClassName = "com.mysql.jdbc.Driver";
+    String dbDriverClassName="com.mysql.jdbc.Driver";
     String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
-    String user = "root";
-    String password = "123456789";
-
-    @Autowired
-    public void setDatasource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+    String user = Constant.USERNAME;
+    String password = Constant.PASSWORD;
 
     public CustomerDAOImpl() throws SQLException {
+    }
 
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     Connection conn = DriverManager.getConnection(dbURL, user, password);

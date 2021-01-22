@@ -1,6 +1,7 @@
 package inventory.dao;
 
 import inventory.model.Shelf;
+import inventory.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,22 +17,20 @@ import java.sql.SQLException;
 @Transactional(rollbackFor = Exception.class)
 public class ShelfDAOImpl extends BaseDAOImpl<Shelf> implements ShelfDAO<Shelf> {
     private JdbcTemplate jdbcTemplate;
-    String dbDriverClassName = "com.mysql.jdbc.Driver";
+    String dbDriverClassName="com.mysql.jdbc.Driver";
     String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
-    String user = "root";
-    String password = "123456789";
+    String user = Constant.USERNAME;
+    String password = Constant.PASSWORD;
+
+    public ShelfDAOImpl() throws SQLException {
+    }
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public ShelfDAOImpl() throws SQLException {
-
-    }
-
     Connection conn = DriverManager.getConnection(dbURL, user, password);
-
     @Override
     public void saveDTO(Shelf shelf) throws SQLException {
         CallableStatement statement = conn.prepareCall("{call insert_shelf(?,?,?,?,?)}");

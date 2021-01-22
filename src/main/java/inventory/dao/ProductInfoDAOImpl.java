@@ -1,10 +1,13 @@
 package inventory.dao;
 
 import inventory.model.ProductInfo;
+import inventory.util.Constant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,14 +17,21 @@ import java.sql.SQLException;
 @Transactional(rollbackFor = Exception.class)
 public class ProductInfoDAOImpl extends BaseDAOImpl<ProductInfo> implements ProductInfoDAO<ProductInfo> {
     private JdbcTemplate jdbcTemplate;
-    String dbDriverClassName = "com.mysql.jdbc.Driver";
+    String dbDriverClassName="com.mysql.jdbc.Driver";
     String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
-    String user = "root";
-    String password = "123456789";
-    Connection conn = DriverManager.getConnection(dbURL, user, password);
+    String user = Constant.USERNAME;
+    String password = Constant.PASSWORD;
 
     public ProductInfoDAOImpl() throws SQLException {
     }
+
+    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    Connection conn = DriverManager.getConnection(dbURL, user, password);
+
 
     @Override
     public void saveDTO(ProductInfo productInfo) throws SQLException {

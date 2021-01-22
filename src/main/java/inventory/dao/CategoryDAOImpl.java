@@ -1,34 +1,19 @@
 package inventory.dao;
 
-import inventory.conection.ConnectionDatabase;
 import inventory.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 @Repository
 @Transactional(rollbackFor = Exception.class)
 public class CategoryDAOImpl extends BaseDAOImpl<Category> implements CategoryDAO<Category> {
 
     private JdbcTemplate jdbcTemplate;
-    String dbDriverClassName = "com.mysql.jdbc.Driver";
-    String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
-    String user = "root";
-    String password = "123456789";
-    private ConnectionDatabase connectionDatabase;
-
-    public CategoryDAOImpl() throws SQLException {
-
-    }
-
-    Connection conn = DriverManager.getConnection(dbURL, user, password);
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -36,34 +21,26 @@ public class CategoryDAOImpl extends BaseDAOImpl<Category> implements CategoryDA
     }
 
     @Override
-    public void saveDTO(Category category) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{ call  insert_category(?,?,?,?)}");
-        statement.setString(1, category.getCode());
-        statement.setString(2, category.getName());
-        statement.setString(3, category.getDescription());
-        statement.setInt(4, category.getActiveFlag());
-        if (!statement.execute()) {
-            statement.close();
-            throw new SQLException();
-        }
+    public void saveDTO(Category category) {
+        String sql = "INSERT INTO category (name, code, description,active_flag,create_date,update_date)"
+                + " VALUES (?, ?,?,?,?,?)";
+
+        jdbcTemplate.update(sql, category.getName(), category.getCode(), category.getDescription(), category.getActiveFlag(), category.getCreateDate(), category.getUpdateDate());
     }
 
     @Override
-    public void updateDTO(Category category) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call update_category(?,?,?,?,?)}");
-        statement.setString(1, category.getCode());
-        statement.setString(2, category.getName());
-        statement.setString(3, category.getDescription());
-        statement.setInt(4, category.getActiveFlag());
-        statement.setInt(5, category.getId());
-        if (!statement.execute()) {
-            statement.close();
-            throw new SQLException();
-        }
+    public void updateDTO(Category category) {
+        String sql = "UPDATE category SET " +
+                "name=?, code=?, description=?,  active_flag=?,update_date=? WHERE id=?";
+
+        jdbcTemplate.update(sql, category.getName(), category.getCode(), category.getDescription(), category.getActiveFlag(), category.getUpdateDate(), category.getId());
     }
 
     @Override
     public Category findById(int id) {
-        return null;
+        String sql = "SELECT * FROM category WHERE id=?";
+
+        return jdbcTemplate.queryForObject(sql, new Object[]{id},
+                new BeanPropertyRowMapper<>(Category.class));
     }
 }

@@ -1,6 +1,7 @@
 package inventory.dao;
 
 import inventory.model.Supplier;
+import inventory.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -16,10 +17,10 @@ import java.sql.SQLException;
 @Transactional(rollbackFor = Exception.class)
 public class SupplierDAOImpl extends BaseDAOImpl<Supplier> implements SupplierDAO<Supplier> {
     private JdbcTemplate jdbcTemplate;
-    String dbDriverClassName = "com.mysql.jdbc.Driver";
+    String dbDriverClassName="com.mysql.jdbc.Driver";
     String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
-    String user = "root";
-    String password = "123456789";
+    String user = Constant.USERNAME;
+    String password = Constant.PASSWORD;
 
     public SupplierDAOImpl() throws SQLException {
     }
@@ -30,7 +31,6 @@ public class SupplierDAOImpl extends BaseDAOImpl<Supplier> implements SupplierDA
     }
 
     Connection conn = DriverManager.getConnection(dbURL, user, password);
-
 
     @Override
     public void saveDTO(Supplier supplier) throws SQLException {
