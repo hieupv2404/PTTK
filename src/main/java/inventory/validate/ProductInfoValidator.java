@@ -28,9 +28,7 @@ public class ProductInfoValidator implements Validator {
 		ProductInfo productInfo = (ProductInfo) target;
 		ValidationUtils.rejectIfEmpty(errors, "category.name", "msg.required");
 		ValidationUtils.rejectIfEmpty(errors, "name", "msg.required");
-		ValidationUtils.rejectIfEmpty(errors, "description", "msg.required");
 		if(productInfo.getId()!=null) {
-			ValidationUtils.rejectIfEmpty(errors, "multipartFile", "msg.required");
 		}
 		if (productInfo.getName() != null) {
 			List<ProductInfo> results = productInfoService.findProductInfo("name", productInfo.getName());

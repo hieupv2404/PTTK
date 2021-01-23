@@ -30,8 +30,8 @@ public class UserDAOImpl extends BaseDAOImpl<Users> implements UserDAO<Users> {
     @Override
     public void updateDTO(Users users) {
         String sql = "UPDATE users SET " +
-                "user_name=?, password=?, email=?, name=?, status=? WHERE id=?";
+                "user_name=?, password=?, email=?, name=?, status=?, active_flag=? WHERE id=?";
 
-        jdbcTemplate.update(sql, users.getUserName(), users.getPassword(), users.getEmail(), users.getName(), users.getStatus(), users.getId());
+        jdbcTemplate.update(sql, users.getUserName(), users.getPassword(), users.getEmail(), users.getName(), users.getStatus(), users.getActiveFlag(),users.getId());
     }
 }

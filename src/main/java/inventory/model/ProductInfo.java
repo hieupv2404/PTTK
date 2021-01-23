@@ -19,7 +19,7 @@ public class ProductInfo implements java.io.Serializable {
 	private Integer id;
 	private Category category;
 
-	@NotNull(message = "{msg.required}")
+	@NotNull(message = "${msg.required}")
 	private String name;
 	private String description;
 	private String imgUrl;
