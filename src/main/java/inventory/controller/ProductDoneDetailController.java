@@ -298,17 +298,10 @@ public class ProductDoneDetailController {
             }
             productStatusDetail.setProductStatusListId(productStatusDetail.getProductStatusList().getId());
 
-            List<Shelf> shelves = shelfService.getAllShelf(null, null);
-            Map<String, String> mapShelf = new HashMap<>();
-            for(Shelf shelf : shelves) {
-                mapShelf.put(String.valueOf(shelf.getId()), shelf.getName());
-            }
-            productStatusDetail.setShelfId(productStatusDetail.getShelf().getId());
 
 
 
             model.addAttribute("mapProductInfo", mapProductInfo);
-            model.addAttribute("mapShelf", mapShelf);
             model.addAttribute("mapProductStatusList", mapProductStatusList);
             model.addAttribute("titlePage", "Edit Product Done Detail");
             model.addAttribute("modelForm", productStatusDetail);
@@ -411,19 +404,19 @@ public class ProductDoneDetailController {
 
 
                 List<VatDetail> vatDetailList = vatDetailService.getAllVatDetail(vatDetail,null);
-                for (VatDetail vatDetail1 : vatDetailList)
-                {
-                    if (productStatusDetail.getProductInfo().getId() == vatDetail1.getProductInfo().getId())
-                    {
-                        productStatusDetail.setQtyRest(vatDetail1.getQty()- productStatusDetail.getQty());
-                        productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
-                        if ( productStatusDetail.getQtyRest()<0) {
-                            session.setAttribute(Constant.MSG_ERROR,"Update Error");
-                            return "redirect:/product-done-detail/list";
-                        }
-                    }
-
-                }
+//                for (VatDetail vatDetail1 : vatDetailList)
+//                {
+//                    if (productStatusDetail.getProductInfo().getId() == vatDetail1.getProductInfo().getId())
+//                    {
+//                        productStatusDetail.setQtyRest(vatDetail1.getQty()- productStatusDetail.getQty());
+//                        productStatusDetail.setPriceOne(vatDetail1.getPriceOne());
+//                        if ( productStatusDetail.getQtyRest()<0) {
+//                            session.setAttribute(Constant.MSG_ERROR,"Update Error");
+//                            return "redirect:/product-done-detail/list";
+//                        }
+//                    }
+//
+//                }
 //                productStatusList1.setPrice(productStatusList1.getPrice().subtract(productStatusDetail1.getPriceTotal()));
 
                 productStatusDetailService.updateProductStatusDetail(productStatusDetail);
