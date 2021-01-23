@@ -17,7 +17,7 @@ import java.sql.SQLException;
 @Transactional(rollbackFor = Exception.class)
 public class ProductInfoDAOImpl extends BaseDAOImpl<ProductInfo> implements ProductInfoDAO<ProductInfo> {
     private JdbcTemplate jdbcTemplate;
-    String dbDriverClassName="com.mysql.jdbc.Driver";
+    String dbDriverClassName = "com.mysql.jdbc.Driver";
     String dbURL = "jdbc:mysql://localhost:3306/inventory_management";
     String user = Constant.USERNAME;
     String password = Constant.PASSWORD;
@@ -35,12 +35,11 @@ public class ProductInfoDAOImpl extends BaseDAOImpl<ProductInfo> implements Prod
 
     @Override
     public void saveDTO(ProductInfo productInfo) throws SQLException {
-        CallableStatement statement = conn.prepareCall("{call insert_product_info(?,?,?,?,?)}");
+        CallableStatement statement = conn.prepareCall("{call insert_product_info(?,?,?,?)}");
         statement.setInt(1, productInfo.getCateId());
         statement.setString(2, productInfo.getName());
         statement.setString(3, productInfo.getDescription());
         statement.setString(4, productInfo.getImgUrl());
-        statement.setInt(5, productInfo.getActiveFlag());
         if (!statement.execute()) {
             statement.close();
             throw new SQLException();
@@ -60,5 +59,10 @@ public class ProductInfoDAOImpl extends BaseDAOImpl<ProductInfo> implements Prod
             statement.close();
             throw new SQLException();
         }
+    }
+
+    @Override
+    public ProductInfo findByIdDTO(int id) {
+        return findById(ProductInfo.class, id);
     }
 }

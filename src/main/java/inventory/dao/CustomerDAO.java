@@ -9,5 +9,5 @@ public interface CustomerDAO<E> extends BaseDAO<E> {
 
     void updateDTO(Customer customer) throws SQLException;
 
-    Customer findById(int id);
+    Customer findByIdDTO(int id);
 }

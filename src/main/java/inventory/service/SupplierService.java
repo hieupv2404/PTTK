@@ -47,7 +47,6 @@ public class SupplierService {
 
     public void saveSupplier(Supplier supplier)  throws Exception{
         log.info("Insert supplier "+supplier.toString());
-        supplier.setActiveFlag(1);
         supplier.setCreateDate(new Date());
         supplier.setUpdateDate(new Date());
         supplierDAO.saveDTO(supplier);
@@ -72,7 +71,7 @@ public class SupplierService {
 
     public Supplier findByIdSupplier(int id) {
         log.info("find supplier by id ="+id);
-        return supplierDAO.findById(Supplier.class, id);
+        return supplierDAO.findByIdDTO(id);
     }
 
 }

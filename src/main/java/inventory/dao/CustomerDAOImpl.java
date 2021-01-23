@@ -62,11 +62,9 @@ public class CustomerDAOImpl extends BaseDAOImpl<Customer> implements CustomerDA
     }
 
     @Override
-    public Customer findById(int id) {
-        String sql = "SELECT * FROM customer WHERE id=?";
-
-        return jdbcTemplate.queryForObject(sql, new Object[]{id},
-                new BeanPropertyRowMapper<>(Customer.class));
-
+    public Customer findByIdDTO(int id) {
+        return findById(Customer.class, id);
     }
+
+
 }

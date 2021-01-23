@@ -40,7 +40,7 @@ public class ShelfService {
         category.setActiveFlag(0);
         category.setUpdateDate(new Date());
         log.info("Delete category " + category.toString());
-        shelfDAO.update(category);
+        shelfDAO.updateDTO(category);
     }
 
     public List<Shelf> findShelf(String property, Object value) {

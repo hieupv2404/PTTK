@@ -39,7 +39,7 @@ public class ProductInfoService {
         String fileName = System.currentTimeMillis()+"_"+productInfo.getMultipartFile().getOriginalFilename();
         processUploadFile(productInfo.getMultipartFile(),fileName);
         productInfo.setImgUrl("/upload/"+fileName);
-        productInfoDAO.save(productInfo);
+        productInfoDAO.saveDTO(productInfo);
     }
 
     public void updateProductInfo(ProductInfo productInfo) throws Exception {
@@ -53,13 +53,13 @@ public class ProductInfoService {
             productInfo.setImgUrl("/upload/"+fileName);
         }
         productInfo.setUpdateDate(new Date());
-        productInfoDAO.update(productInfo);
+        productInfoDAO.updateDTO(productInfo);
     }
     public void deleteProductInfo(ProductInfo productInfo) throws Exception{
         productInfo.setActiveFlag(0);
         productInfo.setUpdateDate(new Date());
         log.info("Delete productInfo "+productInfo.toString());
-        productInfoDAO.update(productInfo);
+        productInfoDAO.updateDTO(productInfo);
     }
     public List<ProductInfo> findProductInfo(String property , Object value){
         log.info("=====Find by property productInfo start====");
@@ -89,7 +89,7 @@ public class ProductInfoService {
     }
     public ProductInfo findByIdProductInfo(int id) {
         log.info("find productInfo by id ="+id);
-        return productInfoDAO.findById(ProductInfo.class, id);
+        return productInfoDAO.findByIdDTO(id);
     }
     private void processUploadFile(MultipartFile multipartFile, String fileName) throws IllegalStateException, IOException {
         if(!multipartFile.getOriginalFilename().isEmpty()) {
@@ -108,18 +108,18 @@ public class ProductInfoService {
         category.setActiveFlag(1);
         category.setCreateDate(new Date());
         category.setUpdateDate(new Date());
-        categoryDAO.save(category);
+        categoryDAO.saveDTO(category);
     }
     public void updateCategory(Category category) throws Exception {
         log.info("Update category "+category.toString());
         category.setUpdateDate(new Date());
-        categoryDAO.update(category);
+        categoryDAO.updateDTO(category);
     }
     public void deleteCategory(Category category) throws Exception{
         category.setActiveFlag(0);
         category.setUpdateDate(new Date());
         log.info("Delete category "+category.toString());
-        categoryDAO.update(category);
+        categoryDAO.updateDTO(category);
     }
     public List<Category> findCategory(String property , Object value){
         log.info("=====Find by property category start====");
